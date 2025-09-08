@@ -1,0 +1,69 @@
+{
+  "name": "equilateral-agents-open-core",
+  "version": "1.0.0",
+  "description": "Production-ready multi-agent orchestration with database-mediated coordination",
+  "main": "index.js",
+  "keywords": [
+    "ai-agents",
+    "multi-agent",
+    "orchestration", 
+    "database-coordination",
+    "aws",
+    "enterprise-automation",
+    "claude-code"
+  ],
+  "author": "HappyHippo.ai",
+  "license": "MIT",
+  "homepage": "https://github.com/happyhippo-ai/equilateral-agents-open-core",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/happyhippo-ai/equilateral-agents-open-core.git"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "jest",
+    "setup": "node scripts/setup.js",
+    "agents": "node equilateral-core/cli/orchestrator-cli.js",
+    "migrate": "node scripts/migrate.js",
+    "health": "node scripts/health-check.js"
+  },
+  "dependencies": {
+    "sqlite3": "^5.1.6",
+    "sqlite": "^5.1.1",
+    "pg": "^8.11.3",
+    "aws-sdk": "^2.1691.0",
+    "axios": "^1.6.0",
+    "commander": "^11.1.0",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2",
+    "jest": "^29.7.0"
+  },
+  "optionalDependencies": {
+    "pg": "^8.11.3"
+  },
+  "peerDependencies": {
+    "pg": "^8.0.0"
+  },
+  "config": {
+    "database": {
+      "default": "sqlite",
+      "sqlite": {
+        "file": "./data/equilateral-agents.db",
+        "description": "SQLite for open core - single tenant, limited concurrency"
+      },
+      "postgresql": {
+        "description": "PostgreSQL for commercial tiers - multi-tenant, high performance"
+      }
+    }
+  },
+  "funding": {
+    "type": "commercial",
+    "url": "https://equilateral-agents.com/commercial"
+  }
+}
