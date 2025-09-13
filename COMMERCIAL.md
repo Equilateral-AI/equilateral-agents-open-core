@@ -34,11 +34,12 @@ EquilateralAgents™ Commercial provides advanced agent capabilities that automa
 
 ---
 
-## 💼 Professional Tier - $149/month
+## 💼 Professional Tier - $149/month **(BYOL)**
 
 **For growing development teams that need automated standards enforcement and intelligent AI model selection**
 
-**Includes up to 10 developers** | Additional seats: $15/month per developer
+**Includes up to 10 developers** | Additional seats: $15/month per developer  
+***Note: Bring Your Own License (BYOL) - You provide your own API keys for AI services. We optimize your spend but costs are not included in our service.***
 
 ### 🧠 Intelligent Model Selection
 - **Opus for Analysis** - Complex business logic analysis, architectural decisions, strategic recommendations
@@ -77,11 +78,12 @@ EquilateralAgents™ Commercial provides advanced agent capabilities that automa
 
 ---
 
-## 🏢 Enterprise Tier - $499/month
+## 🏢 Enterprise Tier - $499/month **(BYOL)**
 
 **For enterprises requiring complete compliance automation and advanced AI orchestration**
 
-**Includes up to 25 developers** | Additional seats: $20/month per developer
+**Includes up to 25 developers** | Additional seats: $20/month per developer  
+***Note: Bring Your Own License (BYOL) - You provide your own API keys for AI services. We optimize your spend but costs are not included in our service.***
 
 ### 🚀 Advanced Model Orchestration
 - **Dynamic Model Routing** - ML-based selection of optimal model per task type and complexity
@@ -161,15 +163,119 @@ EquilateralAgents™ Commercial provides advanced agent capabilities that automa
 
 ---
 
+## 💰 BYOL (Bring Your Own License) Model
+
+**ALL EquilateralAgents™ tiers use the BYOL model - you maintain control of your infrastructure and API keys**
+
+### Why BYOL?
+- **Data Control** - Zero data retention with your code and data remaining in your infrastructure
+- **Security Compliance** - Meets enterprise security and regulatory requirements  
+- **Cost Transparency** - You see exactly what you pay for LLM usage and cloud resources
+- **Flexibility** - Use existing cloud commitments and negotiated rates
+- **Integration** - Works with your existing IDE subscriptions and cloud accounts
+- **Privacy** - Optional anonymized analytics help improve platform intelligence while preserving your privacy
+
+### BYOL Requirements by Tier
+
+#### 🆓 Open Core - You Provide:
+- **GitHub Access Token** - For reading/writing your repositories (agents interact with your code)
+- **LLM API Keys** - OpenAI, Anthropic, or existing IDE subscription (GitHub Copilot, Cursor)  
+- **AWS Credentials** - Your AWS account for deployment validation and cost analysis
+- **Security APIs** (Optional) - NVD_API_KEY, SNYK_TOKEN for enhanced scanning
+- **Database** - SQLite included (zero configuration)
+
+#### 💼 Professional ($149/month) - You Provide:
+- **Git Platform Access** - GitHub, GitLab, or enterprise Git tokens for repository access
+- **LLM API Keys** - For intelligent model selection (Opus/Sonnet/Haiku optimization)
+- **Cloud Infrastructure** - AWS/Azure/GCP credentials and resources
+- **Security Tools** - Your security scanning and compliance APIs
+- **Database** - PostgreSQL, MySQL, or managed database service
+- **IDE Integration** - Works with your existing Copilot, Cursor, or other subscriptions
+
+#### 🏢 Enterprise ($499/month) - You Provide:
+- **Enterprise Git Access** - GitHub Enterprise, GitLab Enterprise, or internal Git servers
+- **LLM API Keys** - Advanced model orchestration across multiple providers
+- **Multi-Cloud Infrastructure** - AWS, Azure, GCP resources and credentials
+- **Enterprise Tools** - Your SSO, compliance tools, security platforms, monitoring systems
+- **Database Systems** - Your enterprise database infrastructure
+- **Identity Management** - Integration with your existing identity providers
+
+#### 🚀 Enterprise Plus (Custom) - You Provide:
+- **Custom Infrastructure** - On-premises, air-gapped, or hybrid cloud setup
+- **Enterprise Integration** - Your specific tools, databases, and security systems
+- **Custom APIs** - Integration with your proprietary systems
+- **Dedicated Resources** - Custom resource allocation based on your requirements
+
+### BYOL Benefits
+
+**Cost Savings:**
+- Use existing AWS/Azure/GCP commitments and reserved instances
+- Leverage negotiated enterprise rates with cloud providers
+- No markup on infrastructure costs - you pay cloud providers directly
+
+**Security & Compliance:**
+- Zero data retention policy - your code and sensitive data remain in your control
+- Meet regulatory requirements for data residency and data sovereignty
+- Integrate with existing security and compliance tools
+- Optional anonymized usage patterns help improve agent algorithms
+
+**Operational Excellence:**
+- Use familiar cloud management and billing systems
+- Integrate with existing monitoring and alerting infrastructure
+- Maintain consistent operational procedures across all systems
+
+### Getting Started with BYOL
+
+1. **Assessment** - We help assess your existing infrastructure and API key setup
+2. **Configuration** - Guided setup of your BYOL configuration  
+3. **Integration** - Connect EquilateralAgents™ to your existing tools and credentials
+4. **Optimization** - Ongoing guidance to optimize costs and performance
+
+**BYOL Consultation Available** - Our team provides guidance on optimal BYOL setup for your organization.
+
+### Deployment Architecture
+
+**EquilateralAgents™ runs entirely within your infrastructure:**
+
+```
+Your Infrastructure:
+├── EquilateralAgents™ Software Installation
+│   ├── Installed on your servers/workstations
+│   ├── Uses your GitHub/GitLab access tokens
+│   ├── Reads and writes your repositories locally
+│   └── Stores all data in your databases
+├── Your LLM API Keys (OpenAI/Anthropic/Claude)
+├── Your Cloud Credentials (AWS/GCP/Azure)
+├── Your Security Tool APIs (Snyk/NVD/etc)
+└── Your Development Tools (IDE subscriptions, etc)
+
+Data Flow:
+Your Repos ← EquilateralAgents™ (your infra) → Your LLM APIs
+             ↓
+        Your databases & logs
+
+HappyHippo.ai provides:
+├── Software license validation (minimal data)
+├── Agent pack downloads and updates
+├── Documentation and implementation support
+└── Optional anonymized usage analytics (configurable)
+```
+
+**Key Principle:** Zero data retention policy - your code, data, and credentials remain in your infrastructure. EquilateralAgents™ is installed software with optional anonymized analytics to improve platform intelligence.
+
+---
+
 ## 📈 Feature Comparison
 
 | Capability | Open Core | Professional | Enterprise | Enterprise Plus |
 |------------|-----------|--------------|------------|----------------|
 | Core Agents | 15 | 35+ | 65+ | Unlimited Custom |
+| **BYOL Model** | **✅ Required** | **✅ Required** | **✅ Required** | **✅ Required** |
+| LLM API Keys | Your keys | Your keys | Your keys | Your keys |
+| Cloud Infrastructure | Your AWS | Your AWS/Azure/GCP | Multi-cloud | Custom/On-prem |
 | Standards Enforcement | Basic | Advanced | Complete | Custom |
 | Compliance Automation | None | Basic | Advanced | Industry-Specific |
 | Boundary Management | Manual | Automated | Intelligent | Custom Rules |
-| AWS Integration | Standard | Advanced | Enterprise | Custom |
 | Support | Community | Priority Email | Phone + Success Manager | Dedicated Team |
 | SLA | None | 99% | 99.9% | Custom |
 | Custom Development | None | Limited | Included | Unlimited |
@@ -182,6 +288,7 @@ EquilateralAgents™ Commercial provides advanced agent capabilities that automa
 - Includes 10 developers
 - Additional developers: $15/month each
 - Example: 20 developers = $149 + (10 × $15) = $299/month
+- **BYOL:** You provide LLM keys + AWS/Azure/GCP infrastructure
 - 3 production environments
 - Standard compliance frameworks
 - Email support
@@ -190,6 +297,7 @@ EquilateralAgents™ Commercial provides advanced agent capabilities that automa
 - Includes 25 developers  
 - Additional developers: $20/month each
 - Example: 50 developers = $499 + (25 × $20) = $999/month
+- **BYOL:** You provide LLM keys + multi-cloud infrastructure + enterprise tools
 - Unlimited environments
 - Advanced compliance automation
 - Phone support + Success Manager
@@ -197,9 +305,26 @@ EquilateralAgents™ Commercial provides advanced agent capabilities that automa
 **Enterprise Plus - Custom pricing**
 - Includes up to 100 developers
 - Volume discounts for larger teams
+- **BYOL:** Custom infrastructure consultation included
 - Custom agents and workflows
 - On-premises deployment options
 - Dedicated implementation team
+
+### BYOL Cost Examples
+
+**Typical monthly costs YOU pay directly to providers (not included in EquilateralAgents™ pricing):**
+
+**Professional Team (10 developers):**
+- EquilateralAgents™ license: $149/month
+- Your LLM API usage: $50-200/month (depending on usage)
+- Your AWS infrastructure: $100-500/month (depending on workloads)
+- **Total estimated monthly cost: $299-849/month**
+
+**Enterprise Team (25 developers):**
+- EquilateralAgents™ license: $499/month
+- Your LLM API usage: $200-800/month (depending on usage)
+- Your cloud infrastructure: $500-2000/month (depending on scale)
+- **Total estimated monthly cost: $1,199-3,299/month**
 
 ---
 
@@ -231,32 +356,41 @@ EquilateralAgents™ Commercial provides advanced agent capabilities that automa
 
 ## 🚀 Get Started
 
-### Start Your Free Trial
-All commercial tiers include a **30-day free trial** with full feature access.
+### Qualified Trial Access
+All commercial tiers include a **30-day full-feature trial** with guided implementation support.
 
+**Trial access requires qualification and consultation:**
+- Ensure proper architecture fit for your organization
+- Provide personalized setup and configuration guidance
+- Include strategic consultation during evaluation period
+- Access granted via license key after qualification call
+
+### Request Trial Access - Contact Our Team
+**Professional Tier Trial** - [Request Trial Access](mailto:info@happyhippo.ai?subject=Professional%20Tier%20Trial%20Request&body=Please%20provide:%0A-%20Team%20size%20and%20roles%0A-%20Current%20development%20challenges%0A-%20Timeline%20for%20implementation%0A-%20Preferred%20consultation%20time%0A%0AWe%20will%20schedule%20a%2030-minute%20consultation%20and%20provide%20trial%20license%20key.)
+
+**Enterprise Tier Trial** - [Request Trial Access](mailto:info@happyhippo.ai?subject=Enterprise%20Tier%20Trial%20Request&body=Please%20provide:%0A-%20Organization%20size%20and%20structure%0A-%20Compliance%20requirements%0A-%20Enterprise%20integration%20needs%0A-%20Current%20development%20methodology%0A-%20Preferred%20consultation%20time%0A%0AWe%20will%20schedule%20a%2060-minute%20consultation%20and%20provide%20trial%20license%20key.)
+
+**Enterprise Plus Consultation** - [Request Custom Consultation](mailto:info@happyhippo.ai?subject=Enterprise%20Plus%20Custom%20Consultation&body=Please%20provide:%0A-%20Custom%20requirements%20overview%0A-%20Industry%20specifications%0A-%20Deployment%20preferences%0A-%20Timeline%20and%20budget%20considerations%0A-%20Preferred%20consultation%20time%0A%0AWe%20will%20schedule%20a%20comprehensive%20consultation%20and%20design%20custom%20trial.)
+
+**Trial License Activation:**
 ```bash
-# Install EquilateralAgents™ Professional Trial
-npm install -g @equilateral/agents-professional
+# After qualification consultation, activate with provided license key
+equilateral init --tier professional --license YOUR_TRIAL_LICENSE_KEY
 
-# Initialize with Professional features
-equilateral init --tier professional --trial
+# 30-day full access with guided support
+# Includes implementation consultation and best practices guidance
 ```
-
-### Schedule a Demo
-**Professional Tier** - [Book a 30-minute demo →](https://calendly.com/equilateral-professional)
-**Enterprise Tier** - [Schedule architecture consultation →](https://calendly.com/equilateral-enterprise)
-**Enterprise Plus** - [Contact sales team →](mailto:sales@pareidolia.com)
 
 ### Migration from Open Core
-Seamless upgrade path from Open Core to Commercial tiers:
+Contact our team for personalized migration guidance:
 
-```bash
-# Upgrade existing project to Professional
-equilateral upgrade --tier professional
+**Migration Process:**
+1. **Assessment** - We analyze your current open core usage and requirements
+2. **Architecture Planning** - Design optimal commercial tier configuration for your needs
+3. **Guided Migration** - Step-by-step migration support with our technical team
+4. **Training & Support** - Team training and ongoing support during transition
 
-# Migration includes automatic agent orchestration updates
-# All existing workflows maintain compatibility
-```
+**Contact for Migration:** [info@happyhippo.ai](mailto:info@happyhippo.ai?subject=Open%20Core%20Migration&body=Please%20provide%20details%20about%20your%20current%20open%20core%20usage,%20team%20size,%20and%20migration%20timeline.)
 
 ---
 
@@ -284,9 +418,9 @@ EquilateralAgents™ Commercial provides **automated intelligence** that scales 
 
 ## 📞 Contact & Support
 
-**Sales Inquiries** - sales@happyhippo.ai
-**Technical Support** - support@equilateral-agents.com  
-**Architecture Consultation** - architects@happyhippo.ai
+**Sales Inquiries** - info@happyhippo.ai
+**Technical Support** - info@happyhippo.ai  
+**Architecture Consultation** - info@happyhippo.ai
 
 **HappyHippo.ai**  
 Enterprise AI Automation Specialists

@@ -1,0 +1,7 @@
+Git operations should be run manually from the terminal in the correct directory:
+
+cd /Users/jamesford/Source/EquilateralAgents-Open-Core
+git add .
+git status
+git commit -m "Implement license-controlled trial access system"
+git push origin main
