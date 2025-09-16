@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Discord Community
+    url: https://discord.gg/equilateral
+    about: Ask questions and discuss with the community
+  - name: Commercial Support
+    url: https://equilateral.ai/support
+    about: Get professional support for commercial deployments
+  - name: Documentation
+    url: https://docs.equilateral.ai
+    about: Check our documentation for usage guides

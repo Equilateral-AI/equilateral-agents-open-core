@@ -1,0 +1,153 @@
+name: EquilateralAgents Code Review
+description: 'AI-enhanced code review and quality checks'
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+    inputs:
+      workflow_type:
+        description: 'Workflow to run'
+        required: true
+        default: 'code-review'
+        type: choice
+        options:
+          - code-review
+          - security-scan
+          - deployment-check
+          - quality-gate
+
+jobs:
+  equilateral-analysis:
+    runs-on: ubuntu-latest
+    name: 'EquilateralAgents Analysis'
+
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+      checks: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install EquilateralAgents
+        run: |
+          npm install equilateral-agents-open-core
+
+      - name: Configure AI Provider
+        env:
+          # Users can configure their preferred AI provider
+          LLM_PROVIDER: ${{ secrets.LLM_PROVIDER || 'github' }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          echo "Configuring AI provider: $LLM_PROVIDER"
+
+      - name: Run EquilateralAgents Workflow
+        id: agents
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LLM_PROVIDER: ${{ secrets.LLM_PROVIDER || 'github' }}
+        run: |
+          node -e "
+          const { AgentOrchestrator } = require('equilateral-agents-open-core');
+          const orchestrator = new AgentOrchestrator({
+            projectPath: process.cwd(),
+            github: {
+              context: ${{ toJSON(github) }},
+              token: process.env.GITHUB_TOKEN
+            }
+          });
+
+          (async () => {
+            await orchestrator.start();
+            const workflow = '${{ github.event.inputs.workflow_type || 'code-review' }}';
+            const result = await orchestrator.executeWorkflow(workflow, {
+              pr: ${{ github.event.pull_request.number || 0 }},
+              sha: '${{ github.sha }}',
+              aiEnhanced: !!process.env.LLM_PROVIDER
+            });
+
+            // Output results for GitHub
+            console.log('::set-output name=results::' + JSON.stringify(result));
+
+            // Create check run with results
+            if (result.summary) {
+              console.log('## EquilateralAgents Analysis Results');
+              console.log(result.summary);
+            }
+          })().catch(console.error);
+          "
+
+      - name: Post PR Comment
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const results = ${{ steps.agents.outputs.results || '{}' }};
+            const aiEnabled = '${{ secrets.LLM_PROVIDER }}' !== '';
+
+            let comment = `## 🤖 EquilateralAgents Analysis\n\n`;
+
+            if (results.summary) {
+              comment += results.summary;
+            }
+
+            if (results.issues && results.issues.length > 0) {
+              comment += '\n\n### Issues Found:\n';
+              results.issues.forEach(issue => {
+                comment += `- **${issue.severity}**: ${issue.message}\n`;
+              });
+            }
+
+            if (aiEnabled && results.aiRecommendations) {
+              comment += '\n\n### 🧠 AI Recommendations:\n';
+              comment += results.aiRecommendations;
+            }
+
+            comment += '\n\n---\n';
+            comment += aiEnabled
+              ? '*Analysis enhanced with AI*'
+              : '*[Configure AI](https://github.com/marketplace/equilateral-agents#ai-setup) for intelligent recommendations*';
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+
+      - name: Create Check Run
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const results = ${{ steps.agents.outputs.results || '{}' }};
+            const conclusion = results.failed > 0 ? 'failure' : 'success';
+
+            github.rest.checks.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              name: 'EquilateralAgents',
+              head_sha: '${{ github.sha }}',
+              status: 'completed',
+              conclusion: conclusion,
+              output: {
+                title: 'EquilateralAgents Analysis',
+                summary: results.summary || 'Analysis complete',
+                text: JSON.stringify(results, null, 2)
+              }
+            });

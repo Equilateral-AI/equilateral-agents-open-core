@@ -1,0 +1,81 @@
+{
+  "name": "equilateral-agents-open-core",
+  "version": "1.0.2",
+  "description": "The Force Multiplier for Your AI Development Tools - Open Core orchestration framework",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "equilateral-core/**/*.js",
+    "agent-packs/**/*.js",
+    "LICENSE",
+    "README.md",
+    "AI-INTEGRATION.md",
+    "BYOL-SETUP.md"
+  ],
+  "keywords": [
+    "ai-agents",
+    "multi-agent",
+    "orchestration",
+    "automation",
+    "aws",
+    "bedrock",
+    "github-actions",
+    "development-tools",
+    "claude-code",
+    "llm",
+    "byol"
+  ],
+  "author": "HappyHippo.ai",
+  "license": "MIT",
+  "homepage": "https://github.com/JamesFord-HappyHippo/equilateral-agents-open-core",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JamesFord-HappyHippo/equilateral-agents-open-core.git"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "scripts": {
+    "test": "jest --testPathPattern=test/ --passWithNoTests",
+    "prepublishOnly": "npm test",
+    "start": "node demo-all-agents-enhanced.js",
+    "dev": "nodemon index.js",
+    "agents": "node equilateral-core/cli/orchestrator-cli.js",
+    "demo": "node demo-all-agents-enhanced.js",
+    "demo:basic": "node demo-all-agents.js",
+    "ai-demo": "node examples/ai-enhanced-workflow.js",
+    "github-demo": "node examples/github-integration.js",
+    "aws-demo": "node examples/aws-bedrock-demo.js",
+    "wow": "node examples/test-analyze-demo.js",
+    "wow:advanced": "echo 'Advanced features available in commercial version' && node examples/test-analyze-demo.js",
+    "wow:form": "node examples/smart-form-filler.js",
+    "playground": "node examples/playground.js",
+    "tutorial": "echo 'Tutorial coming soon - try playground instead!' && npm run playground",
+    "benchmark": "echo 'Benchmark coming soon - try wow instead!' && npm run wow",
+    "compare": "node demo-all-agents-enhanced.js --compare"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1691.0",
+    "axios": "^1.6.0",
+    "commander": "^11.1.0",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.2"
+  },
+  "funding": {
+    "type": "commercial",
+    "url": "https://equilateral.ai/commercial"
+  },
+  "bugs": {
+    "url": "https://github.com/JamesFord-HappyHippo/equilateral-agents-open-core/issues"
+  },
+  "directories": {
+    "lib": "equilateral-core",
+    "example": "examples"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

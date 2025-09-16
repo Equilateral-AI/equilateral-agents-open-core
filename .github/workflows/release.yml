@@ -1,0 +1,157 @@
+name: Create Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (e.g., 1.0.1, 1.1.0)'
+        required: true
+        type: string
+      release_type:
+        description: 'Type of release'
+        required: true
+        default: 'release'
+        type: choice
+        options:
+          - release
+          - prerelease
+      generate_changelog:
+        description: 'Generate changelog from commits'
+        required: false
+        default: true
+        type: boolean
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    name: 'Create GitHub Release'
+
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Validate version format
+        run: |
+          if ! [[ "${{ github.event.inputs.version }}" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9\-\.]+)?$ ]]; then
+            echo "Error: Version must follow semantic versioning (e.g., 1.0.0, 1.0.0-beta.1)"
+            exit 1
+          fi
+
+      - name: Check if version already exists
+        run: |
+          if git tag | grep -q "^v${{ github.event.inputs.version }}$"; then
+            echo "Error: Version v${{ github.event.inputs.version }} already exists"
+            exit 1
+          fi
+
+      - name: Update package.json version
+        run: |
+          npm version ${{ github.event.inputs.version }} --no-git-tag-version
+          echo "Updated package.json to version ${{ github.event.inputs.version }}"
+
+      - name: Update VERSION file
+        run: |
+          echo "${{ github.event.inputs.version }}" > VERSION
+          echo "Updated VERSION file"
+
+      - name: Generate changelog
+        id: changelog
+        if: github.event.inputs.generate_changelog == 'true'
+        run: |
+          # Get the latest tag
+          LATEST_TAG=$(git tag --sort=-version:refname | head -n 1 || echo "")
+
+          if [ -z "$LATEST_TAG" ]; then
+            echo "No previous tags found, generating changelog from all commits"
+            CHANGELOG=$(git log --pretty=format:"- %s (%h)" --reverse)
+          else
+            echo "Generating changelog since $LATEST_TAG"
+            CHANGELOG=$(git log ${LATEST_TAG}..HEAD --pretty=format:"- %s (%h)" --reverse)
+          fi
+
+          # Save changelog to file for multiline output
+          cat > changelog.txt << EOF
+          ## What's Changed
+
+          $CHANGELOG
+
+          **Full Changelog**: https://github.com/${{ github.repository }}/compare/${LATEST_TAG}...v${{ github.event.inputs.version }}
+          EOF
+
+          echo "Generated changelog"
+
+      - name: Commit version changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add package.json VERSION
+          git commit -m "chore: bump version to ${{ github.event.inputs.version }}"
+          git tag -a "v${{ github.event.inputs.version }}" -m "Release v${{ github.event.inputs.version }}"
+
+      - name: Push changes and tags
+        run: |
+          git push origin main
+          git push origin "v${{ github.event.inputs.version }}"
+
+      - name: Create GitHub Release
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+
+            let body = "Release v${{ github.event.inputs.version }}";
+
+            // Read changelog if it exists
+            if (fs.existsSync('changelog.txt') && ${{ github.event.inputs.generate_changelog }}) {
+              body = fs.readFileSync('changelog.txt', 'utf8');
+            }
+
+            const release = await github.rest.repos.createRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag_name: 'v${{ github.event.inputs.version }}',
+              target_commitish: 'main',
+              name: 'v${{ github.event.inputs.version }}',
+              body: body,
+              draft: false,
+              prerelease: '${{ github.event.inputs.release_type }}' === 'prerelease'
+            });
+
+            console.log(`Release created: ${release.data.html_url}`);
+
+            // Set output for next steps
+            core.setOutput('release_url', release.data.html_url);
+            core.setOutput('release_id', release.data.id);
+
+      - name: Create summary
+        run: |
+          echo "## 🚀 Release Created Successfully!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Version:** v${{ github.event.inputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Type:** ${{ github.event.inputs.release_type }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Release URL:** ${{ steps.release.outputs.release_url }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Next Steps" >> $GITHUB_STEP_SUMMARY
+          echo "- The NPM publish workflow will automatically trigger from this release" >> $GITHUB_STEP_SUMMARY
+          echo "- Check the [Actions tab](../../actions) to monitor the NPM publication" >> $GITHUB_STEP_SUMMARY
+          echo "- Update any dependent projects to use the new version" >> $GITHUB_STEP_SUMMARY

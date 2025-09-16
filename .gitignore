@@ -1,0 +1,84 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Testing
+coverage/
+.nyc_output/
+
+# Build outputs
+dist/
+build/
+*.tgz
+
+# AWS
+.aws-sam/
+samconfig.toml
+packaged.yaml
+
+# Credentials and keys
+*.pem
+*.key
+*.crt
+*.p12
+credentials.json
+*-credentials.json
+
+# Internal/Confidential documents
+INTERNAL-*.md
+TODO-*.md
+*-INTERNAL.md
+*-TODO.md
+Jim_Todo/
+../Jim_Todo/
+IP-PROTECTION-*.md
+COMMERCIAL*.md
+COMMUNITY-*.md
+docs/ARCHITECTURE.md
+PATENT-*.md
+PROPRIETARY-*.md
+
+# Temporary files
+tmp/
+temp/
+.tmp/
+*.tmp
+
+# Workflow history (may contain sensitive data)
+.equilateral/
+
+# MacOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
