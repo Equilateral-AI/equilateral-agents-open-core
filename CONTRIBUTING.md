@@ -277,7 +277,7 @@ equilateral-open-core/
 
 ### Get Help
 
-- 💬 **Discord**: [discord.gg/equilateral](https://discord.gg/equilateral)
+- 💬 **Discord**: [discord.gg/hugPmRn49Z](https://discord.gg/hugPmRn49Z)
 - 🐛 **Issues**: [GitHub Issues](https://github.com/equilateral/open-core/issues)
 - 📧 **Email**: info@happyhippo.ai
 
@@ -303,7 +303,7 @@ Active contributors may be invited to become Core Contributors with:
 
 Not sure about something? That's fine! Feel free to:
 1. Open an issue for discussion
-2. Ask in Discord #contributing channel
+2. Ask in Discord #general channel
 3. Email info@happyhippo.ai
 
 We're here to help and excited to see what you build!
