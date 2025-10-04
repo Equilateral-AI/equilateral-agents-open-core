@@ -147,40 +147,80 @@ See [AI-INTEGRATION.md](AI-INTEGRATION.md) for configuration details.
 
 ## Development Standards
 
-This project uses **[EquilateralAgents Open Standards](https://github.com/JamesFord-HappyHippo/EquilateralAgents-Open-Standards)**:
+This project uses a **three-tier standards system**:
 
-### Core Principles
+### 1. Official Standards (`.standards/`)
+**[EquilateralAgents Open Standards](https://github.com/JamesFord-HappyHippo/EquilateralAgents-Open-Standards)** - Universal principles
+
+Core Principles:
 - **No mocks** in production code (fail fast, fail loud)
 - **Error-first design** (design errors before happy paths)
 - **Cost-conscious infrastructure** (estimate before deploying)
 - **Explicit over implicit** (obvious code beats clever code)
 
-### Add to Your Project
+### 2. Community Standards (`.standards-community/`)
+**[Community Patterns](https://github.com/JamesFord-HappyHippo/EquilateralAgents-Community-Standards)** - Battle-tested patterns (optional)
+
+Proven solutions from the community:
+- Agent coordination patterns
+- Real-world examples
+- Custom workflows
+- Integration patterns
+
+### 3. Local Standards (`.standards-local/`)
+**Your Team's Standards** - Project-specific conventions (git-ignored)
+
+Your own:
+- Team naming conventions
+- Company-specific patterns
+- Private best practices
+
+### Quick Setup
+
+**Clone with standards:**
 ```bash
+git clone --recurse-submodules https://github.com/happyhippo-ai/equilateral-agents-open-core.git
+```
+
+**Add to existing project:**
+```bash
+# Official standards (required)
 git submodule add https://github.com/JamesFord-HappyHippo/EquilateralAgents-Open-Standards.git .standards
+
+# Community standards (optional)
+git submodule add https://github.com/JamesFord-HappyHippo/EquilateralAgents-Community-Standards.git .standards-community
+
+# Your team standards (optional)
+mkdir .standards-local && cd .standards-local && git init
 ```
 
 ### Configure Your AI Assistant
+
 Create `.cursorrules` or `CLAUDE.md`:
 
 ```markdown
-# Project Standards: ./.standards/
+# Three-Tier Standards
 
-## Critical Rules
-- No mocks/fallbacks in production code
-- Design error states before happy paths
-- Check standards before code changes
-- Fail fast, fail loud
+## 1. Check Official Standards (.standards/)
+- Universal principles apply to ALL code
+- No mocks, fail fast, error-first design
+
+## 2. Check Community Patterns (.standards-community/)
+- Proven solutions for common problems
+- Real-world examples and workflows
+
+## 3. Check Local Standards (.standards-local/)
+- Your team's conventions
+- Company-specific patterns
 
 ## Before Every Change
-1. Check .standards/ for existing patterns
-2. Follow established conventions
-3. Design error handling first
-
-See .standards/ for complete documentation.
+1. Check .standards/ for universal principles
+2. Check .standards-community/ for proven patterns
+3. Check .standards-local/ for team conventions
+4. Design error handling first
 ```
 
-Full integration guide: [docs/STANDARDS_INTEGRATION.md](docs/STANDARDS_INTEGRATION.md)
+**Share your patterns:** Found something that works? Submit to [Community Standards](https://github.com/JamesFord-HappyHippo/EquilateralAgents-Community-Standards)
 
 ## Project Structure
 

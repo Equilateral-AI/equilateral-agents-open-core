@@ -67,8 +67,11 @@ temp/
 # Workflow history (may contain sensitive data)
 .equilateral/
 
-# External repositories (users clone separately)
+# External repositories (now submodules - see .gitmodules)
 EquilateralAgents-Open-Standards/
+
+# Local team standards (not shared publicly)
+.standards-local/
 
 # MacOS
 .DS_Store
