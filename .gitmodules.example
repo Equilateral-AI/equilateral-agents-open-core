@@ -1,0 +1,25 @@
+# Example .gitmodules configuration
+#
+# To use EquilateralAgents Open Standards as a submodule in your project:
+#
+# 1. Add the submodule:
+#    git submodule add https://github.com/JamesFord-HappyHippo/EquilateralAgents-Open-Standards.git .standards
+#
+# 2. This will create a .gitmodules file like this:
+
+[submodule ".standards"]
+	path = .standards
+	url = https://github.com/JamesFord-HappyHippo/EquilateralAgents-Open-Standards.git
+	branch = main
+
+# 3. Update submodule when standards evolve:
+#    git submodule update --remote .standards
+#
+# 4. Customize for your team:
+#    - Add .standards/team_conventions.md for team-specific rules
+#    - Add .standards/overrides.md for justified deviations
+#    - Keep universal principles updated from upstream
+#
+# 5. Contribute back:
+#    - Discovered universal patterns? Submit PR to the standards repo
+#    - Share production-tested principles that apply to any technology stack

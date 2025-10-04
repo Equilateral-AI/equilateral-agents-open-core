@@ -43,6 +43,10 @@ class AgentOrchestrator extends EventEmitter {
         this.agents = new Map();
         this.isRunning = false;
         this.workflowHistory = [];
+
+        // Background execution support
+        this.backgroundWorkflows = new Map();
+        this.enableBackground = config.enableBackground !== false;
     }
 
     /**
@@ -256,7 +260,7 @@ class AgentOrchestrator extends EventEmitter {
         const context = { taskId, timestamp: new Date() };
 
         console.log(`Executing ${agentId}: ${taskType}`);
-        
+
         const result = await agent.executeTask({
             taskType,
             taskData,
@@ -272,6 +276,152 @@ class AgentOrchestrator extends EventEmitter {
         });
 
         return result;
+    }
+
+    /**
+     * Execute workflow in background (non-blocking)
+     * Returns immediately with a workflow handle
+     */
+    async executeWorkflowBackground(workflowType, context = {}) {
+        if (!this.enableBackground) {
+            console.warn('Background execution not enabled. Use config.enableBackground = true');
+            return this.executeWorkflow(workflowType, context);
+        }
+
+        const workflowId = `bg-${Date.now()}`;
+
+        console.log(`🚀 Starting workflow in background: ${workflowType} (${workflowId})`);
+
+        // Create workflow handle
+        const handle = {
+            workflowId,
+            workflowType,
+            status: 'running',
+            startTime: new Date(),
+            getStatus: () => this.getBackgroundWorkflowStatus(workflowId),
+            getResult: () => this.getBackgroundWorkflowResult(workflowId),
+            cancel: () => this.cancelBackgroundWorkflow(workflowId)
+        };
+
+        // Store handle
+        this.backgroundWorkflows.set(workflowId, {
+            ...handle,
+            promise: null,
+            result: null,
+            error: null
+        });
+
+        // Execute workflow asynchronously
+        const workflowPromise = this.executeWorkflow(workflowType, { ...context, workflowId })
+            .then(result => {
+                const bgWorkflow = this.backgroundWorkflows.get(workflowId);
+                if (bgWorkflow) {
+                    bgWorkflow.status = 'completed';
+                    bgWorkflow.result = result;
+                    bgWorkflow.endTime = new Date();
+                }
+                this.emit('backgroundWorkflowCompleted', { workflowId, result });
+                console.log(`✅ Background workflow completed: ${workflowId}`);
+                return result;
+            })
+            .catch(error => {
+                const bgWorkflow = this.backgroundWorkflows.get(workflowId);
+                if (bgWorkflow) {
+                    bgWorkflow.status = 'failed';
+                    bgWorkflow.error = error.message;
+                    bgWorkflow.endTime = new Date();
+                }
+                this.emit('backgroundWorkflowFailed', { workflowId, error: error.message });
+                console.error(`❌ Background workflow failed: ${workflowId}`, error.message);
+                throw error;
+            });
+
+        // Store promise
+        this.backgroundWorkflows.get(workflowId).promise = workflowPromise;
+
+        this.emit('backgroundWorkflowStarted', { workflowId, workflowType });
+
+        return handle;
+    }
+
+    /**
+     * Get status of background workflow
+     */
+    getBackgroundWorkflowStatus(workflowId) {
+        const workflow = this.backgroundWorkflows.get(workflowId);
+        if (!workflow) {
+            return { found: false };
+        }
+
+        return {
+            found: true,
+            workflowId,
+            workflowType: workflow.workflowType,
+            status: workflow.status,
+            startTime: workflow.startTime,
+            endTime: workflow.endTime,
+            duration: workflow.endTime ? workflow.endTime - workflow.startTime : Date.now() - workflow.startTime
+        };
+    }
+
+    /**
+     * Get result of background workflow (waits if still running)
+     */
+    async getBackgroundWorkflowResult(workflowId) {
+        const workflow = this.backgroundWorkflows.get(workflowId);
+        if (!workflow) {
+            throw new Error(`Background workflow not found: ${workflowId}`);
+        }
+
+        // If still running, wait for completion
+        if (workflow.status === 'running' && workflow.promise) {
+            try {
+                await workflow.promise;
+            } catch (error) {
+                // Error already captured in workflow object
+            }
+        }
+
+        return {
+            workflowId,
+            status: workflow.status,
+            result: workflow.result,
+            error: workflow.error,
+            startTime: workflow.startTime,
+            endTime: workflow.endTime
+        };
+    }
+
+    /**
+     * Cancel background workflow
+     */
+    cancelBackgroundWorkflow(workflowId) {
+        const workflow = this.backgroundWorkflows.get(workflowId);
+        if (!workflow) {
+            throw new Error(`Background workflow not found: ${workflowId}`);
+        }
+
+        if (workflow.status === 'running') {
+            workflow.status = 'cancelled';
+            workflow.endTime = new Date();
+            this.emit('backgroundWorkflowCancelled', { workflowId });
+            console.log(`🚫 Background workflow cancelled: ${workflowId}`);
+        }
+
+        return { workflowId, status: workflow.status };
+    }
+
+    /**
+     * List all background workflows
+     */
+    listBackgroundWorkflows() {
+        return Array.from(this.backgroundWorkflows.values()).map(wf => ({
+            workflowId: wf.workflowId,
+            workflowType: wf.workflowType,
+            status: wf.status,
+            startTime: wf.startTime,
+            endTime: wf.endTime
+        }));
     }
 }
 

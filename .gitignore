@@ -67,6 +67,9 @@ temp/
 # Workflow history (may contain sensitive data)
 .equilateral/
 
+# External repositories (users clone separately)
+EquilateralAgents-Open-Standards/
+
 # MacOS
 .DS_Store
 .AppleDouble

@@ -1,14 +1,16 @@
 {
   "name": "equilateral-agents-open-core",
-  "version": "1.0.2",
-  "description": "The Force Multiplier for Your AI Development Tools - Open Core orchestration framework",
+  "version": "2.0.0",
+  "description": "22 Production-Ready AI Agents + Orchestration Framework - The Complete Development Toolkit",
   "main": "index.js",
   "files": [
     "index.js",
     "equilateral-core/**/*.js",
     "agent-packs/**/*.js",
+    "workflows/**/*.js",
     "LICENSE",
     "README.md",
+    "AGENT_INVENTORY.md",
     "AI-INTEGRATION.md",
     "BYOL-SETUP.md"
   ],
@@ -52,21 +54,27 @@
     "playground": "node examples/playground.js",
     "tutorial": "echo 'Tutorial coming soon - try playground instead!' && npm run playground",
     "benchmark": "echo 'Benchmark coming soon - try wow instead!' && npm run wow",
-    "compare": "node demo-all-agents-enhanced.js --compare"
+    "compare": "node demo-all-agents-enhanced.js --compare",
+    "workflow:security": "node -e \"require('./workflows/security-review-workflow.js')\"",
+    "workflow:quality": "node -e \"require('./workflows/code-quality-workflow.js')\"",
+    "workflow:deploy": "node -e \"require('./workflows/deployment-pipeline-workflow.js')\"",
+    "workflow:fullstack": "node -e \"require('./workflows/full-stack-development-workflow.js')\"",
+    "workflow:infrastructure": "node -e \"require('./workflows/infrastructure-validation-workflow.js')\"",
+    "demo:background": "node examples/background-execution-demo.js"
   },
   "dependencies": {
     "aws-sdk": "^2.1691.0",
     "axios": "^1.6.0",
     "commander": "^11.1.0",
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "better-sqlite3": "^9.2.2"
+  },
+  "optionalDependencies": {
+    "better-sqlite3": "^9.2.2"
   },
   "devDependencies": {
     "jest": "^29.7.0",
     "nodemon": "^3.0.2"
-  },
-  "funding": {
-    "type": "commercial",
-    "url": "https://equilateral.ai/commercial"
   },
   "bugs": {
     "url": "https://github.com/JamesFord-HappyHippo/equilateral-agents-open-core/issues"

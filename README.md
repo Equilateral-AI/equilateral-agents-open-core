@@ -1,160 +1,101 @@
-# EquilateralAgents™ Open Core v1.0.2
+# EquilateralAgents Open Core
+
+**22 production-ready AI agents. Zero config. MIT licensed.**
+
+Transform your AI coding assistant into a coordinated development team. Works with Claude Code, Cursor, Continue, Windsurf, or standalone.
 
 [![npm version](https://badge.fury.io/js/equilateral-agents-open-core.svg)](https://www.npmjs.com/package/equilateral-agents-open-core)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D16.0.0-brightgreen.svg)](https://nodejs.org/)
-[![GitHub release](https://img.shields.io/github/release/happyhippo-ai/equilateral-agents-open-core.svg)](https://github.com/happyhippo-ai/equilateral-agents-open-core/releases)
-[![Build Status](https://github.com/happyhippo-ai/equilateral-agents-open-core/workflows/EquilateralAgents%20Code%20Review/badge.svg)](https://github.com/happyhippo-ai/equilateral-agents-open-core/actions)
-[![Downloads](https://img.shields.io/npm/dm/equilateral-agents-open-core.svg)](https://www.npmjs.com/package/equilateral-agents-open-core)
-
-**The Force Multiplier for Your AI Development Tools**
-
-Transform your AI coding assistants into a coordinated development team. EquilateralAgents provides the orchestration layer that makes Claude Code, Cursor, Copilot, and other AI tools work together intelligently.
-
-**Developer-friendly automation framework. MIT licensed.**
 
 ---
 
-## ✨ What is EquilateralAgents?
-
-EquilateralAgents is a practical framework for coordinating intelligent agents in your development workflow. **It amplifies your existing AI tools** rather than replacing them.
-
-### 🚀 The Force Multiplier Pattern
-
-```
-Your AI Assistant + EquilateralAgents = Automated Development Team
-```
-
-- **With Claude Code/Cursor**: Agents provide structured analysis → AI generates fixes → Agents validate
-- **With Your LLM API**: Bring your OpenAI/Anthropic key → Agents become AI-enhanced
-- **Without AI**: Still works for basic automation and CI/CD pipelines
-
-**This Open Source Version:**
-- ✅ **Fully Functional** - Not a demo, actually works for real projects
-- ✅ **AI-Ready** - Works with any LLM (OpenAI, Claude, local models)
-- ✅ **MIT Licensed** - Use commercially, modify freely, no strings attached
-- ✅ **Self-Contained** - No cloud dependencies, runs entirely locally
-- ✅ **Extensible** - Build your own agents, integrate your tools
-
-**What Makes It Different:**
-- 🧠 **Amplifies Intelligence** - Makes your AI tools smarter through orchestration
-- 🔧 **Solves Real Problems** - Test failures, code analysis, deployments
-- 📚 **Learn From Us** - See how we build agents, use our patterns
-- 🤝 **BYOL Friendly** - Use your existing AI subscriptions
-- 🚫 **No Vendor Lock-in** - Standard Node.js, works with any AI
-
----
-
-## 🎯 AI Integration Options
-
-### Option 1: Run in Your AI Assistant (Recommended)
-```bash
-# In Claude Code, Cursor, Continue, Windsurf, etc:
-npm install
-npm run wow  # Watch the magic happen
-```
-
-### Option 2: Bring Your Own LLM
-```bash
-# .env file
-LLM_PROVIDER=openai
-OPENAI_API_KEY=sk-...
-
-# Run with AI enhancement
-npm run ai-demo
-```
-
-### Option 3: Basic Automation (No AI)
-```bash
-npm install
-npm start  # Works without any AI configuration
-```
-
-## 🚀 Quick Start
-
-### Install
+## Quick Start
 ```bash
 git clone https://github.com/happyhippo-ai/equilateral-agents-open-core.git
 cd equilateral-agents-open-core
-npm install
+npm install && npm run wow
 ```
 
-### Basic Usage
+No database setup. No API keys. No configuration files. Works immediately.
+
+## What's Included
+
+**22 Production-Ready Agents**
+- Code review, security scanning, testing, deployment, infrastructure management
+- See [AGENT_INVENTORY.md](AGENT_INVENTORY.md) for complete list
+
+**5 Battle-Tested Workflows**
+- Security review, code quality, deployment pipeline, full-stack development, infrastructure validation
+- See [workflows/README.md](workflows/README.md) for details
+
+**Zero-Config Database**
+- SQLite auto-creates on first run
+- Falls back to JSON if SQLite unavailable
+- No manual setup required
+
+**Background Execution**
+- Non-blocking workflows
+- Progress monitoring
+- Multiple concurrent executions
+
+**Communication Protocols**
+- MCP (Model Context Protocol) - Claude Desktop integration
+- A2A (Agent-to-Agent) - JSON-RPC 2.0 peer communication
+- Internal event bus - Priority queuing and pub/sub messaging
+
+**Universal Standards**
+- [EquilateralAgents Open Standards](https://github.com/JamesFord-HappyHippo/EquilateralAgents-Open-Standards)
+- Technology-agnostic principles
+- No mocks, fail fast, error-first design
+
+## Run Production Workflows
+
+```bash
+# Security review
+npm run workflow:security
+
+# Code quality analysis (0-100 score)
+npm run workflow:quality
+
+# Deployment pipeline validation
+npm run workflow:deploy
+
+# Full-stack development
+npm run workflow:fullstack
+
+# Infrastructure validation
+npm run workflow:infrastructure
+```
+
+## Background Execution API
+
 ```javascript
 const AgentOrchestrator = require('./equilateral-core/AgentOrchestrator');
-const CodeAnalyzerAgent = require('./agent-packs/development/CodeAnalyzerAgent');
 
-// Create orchestrator
-const orchestrator = new AgentOrchestrator();
-
-// Register agents
-const analyzer = new CodeAnalyzerAgent();
-orchestrator.registerAgent(analyzer);
-
-// Start orchestrator
+const orchestrator = new AgentOrchestrator({ enableBackground: true });
 await orchestrator.start();
 
-// Execute a workflow
-const result = await orchestrator.executeWorkflow('code-review', {
+// Start workflow, continue working immediately
+const handle = await orchestrator.executeWorkflowBackground('security-review', {
     projectPath: './my-project'
 });
 
-console.log('Workflow completed:', result);
+console.log(`Started: ${handle.workflowId}`);
+
+// Do other work
+doOtherWork();
+
+// Check status anytime
+console.log(`Status: ${handle.getStatus().status}`);
+
+// Get result when ready
+const result = await handle.getResult();
 ```
 
----
+See [BACKGROUND_EXECUTION.md](BACKGROUND_EXECUTION.md) for complete API.
 
-## 🤖 Available Agents
-
-### Development Agents
-- **CodeAnalyzerAgent** - Static code analysis and metrics
-- **TestOrchestrationAgent** - Test execution and reporting
-- **DeploymentValidationAgent** - Pre-deployment checks
-
-### Security Agents
-- **SecurityScannerAgent** - Vulnerability scanning
-- **ComplianceCheckAgent** - Standards compliance validation
-
-### Infrastructure Agents
-- **ResourceOptimizationAgent** - Cloud resource analysis
-- **DeploymentAgent** - Deployment automation
-
----
-
-## 🔄 Workflow Examples
-
-### Code Review Workflow
-```javascript
-// Analyzes code, scans for security issues, runs tests
-await orchestrator.executeWorkflow('code-review');
-```
-
-### Deployment Check Workflow
-```javascript
-// Validates deployment readiness
-await orchestrator.executeWorkflow('deployment-check');
-```
-
-### Custom Workflow
-```javascript
-// Define your own workflow
-orchestrator.getWorkflowDefinition = (type) => {
-    if (type === 'my-workflow') {
-        return {
-            tasks: [
-                { agentId: 'code-analyzer', taskType: 'analyze' },
-                { agentId: 'test-runner', taskType: 'test' }
-            ]
-        };
-    }
-};
-
-await orchestrator.executeWorkflow('my-workflow');
-```
-
----
-
-## 🛠️ Creating Custom Agents
+## Custom Agents
 
 ```javascript
 const BaseAgent = require('./equilateral-core/BaseAgent');
@@ -163,126 +104,156 @@ class MyCustomAgent extends BaseAgent {
     constructor() {
         super({
             agentId: 'my-agent',
-            capabilities: ['task1', 'task2']
+            capabilities: ['analyze', 'report']
         });
     }
 
     async executeTask(task) {
         switch (task.taskType) {
-            case 'task1':
-                // Your task logic here
-                return { success: true, data: 'result' };
+            case 'analyze':
+                return { success: true, findings: [...] };
             default:
                 throw new Error(`Unknown task: ${task.taskType}`);
         }
     }
 }
+
+module.exports = MyCustomAgent;
 ```
 
----
+## AI Integration
 
-## 📁 Project Structure
-
-```
-equilateral-agents/
-├── equilateral-core/       # Core orchestration framework
-│   ├── AgentOrchestrator.js
-│   └── BaseAgent.js
-├── agent-packs/            # Specialized agents
-│   ├── development/
-│   ├── security/
-│   └── infrastructure/
-└── examples/               # Usage examples
-```
-
----
-
-## 🤖 AI Enhancement
-
-EquilateralAgents becomes more powerful when combined with AI:
-
-```javascript
-// Enable AI for any agent
-const agent = new CodeAnalyzerAgent({
-  enableAI: true,  // Uses your configured LLM
-  ai: {
-    capabilities: ['explain_complexity', 'suggest_refactors'],
-    temperature: 0.3
-  }
-});
-```
-
-See [AI-INTEGRATION.md](./AI-INTEGRATION.md) for detailed configuration.
-
----
-
-## 🔑 Configuration
-
-### Environment Variables
+**Option 1: In Your AI Assistant (Recommended)**
 ```bash
-# Optional: Configure project path
-export PROJECT_PATH=/path/to/your/project
-
-# Optional: AWS credentials for cloud agents
-export AWS_ACCESS_KEY_ID=your_key
-export AWS_SECRET_ACCESS_KEY=your_secret
-export AWS_REGION=us-east-1
-
-# Optional: API keys for enhanced features
-export GITHUB_TOKEN=your_token
+# Claude Code, Cursor, Continue, etc.
+npm install && npm run wow
 ```
 
-### Workflow History
-Workflow history is automatically saved to `.equilateral/workflow-history.json` in your project directory.
+**Option 2: Your Own LLM**
+```bash
+# .env
+LLM_PROVIDER=openai
+OPENAI_API_KEY=sk-...
+
+npm run ai-demo
+```
+
+**Option 3: Basic Automation (No AI)**
+```bash
+npm start  # Works without AI
+```
+
+See [AI-INTEGRATION.md](AI-INTEGRATION.md) for configuration details.
+
+## Development Standards
+
+This project uses **[EquilateralAgents Open Standards](https://github.com/JamesFord-HappyHippo/EquilateralAgents-Open-Standards)**:
+
+### Core Principles
+- **No mocks** in production code (fail fast, fail loud)
+- **Error-first design** (design errors before happy paths)
+- **Cost-conscious infrastructure** (estimate before deploying)
+- **Explicit over implicit** (obvious code beats clever code)
+
+### Add to Your Project
+```bash
+git submodule add https://github.com/JamesFord-HappyHippo/EquilateralAgents-Open-Standards.git .standards
+```
+
+### Configure Your AI Assistant
+Create `.cursorrules` or `CLAUDE.md`:
+
+```markdown
+# Project Standards: ./.standards/
+
+## Critical Rules
+- No mocks/fallbacks in production code
+- Design error states before happy paths
+- Check standards before code changes
+- Fail fast, fail loud
+
+## Before Every Change
+1. Check .standards/ for existing patterns
+2. Follow established conventions
+3. Design error handling first
+
+See .standards/ for complete documentation.
+```
+
+Full integration guide: [docs/STANDARDS_INTEGRATION.md](docs/STANDARDS_INTEGRATION.md)
+
+## Project Structure
+
+```
+equilateral-agents-open-core/
+├── equilateral-core/           # Orchestration framework
+│   ├── AgentOrchestrator.js
+│   ├── infrastructure/         # Core agents (3)
+│   ├── database/               # SQLite/JSON adapters
+│   └── protocols/              # MCP, A2A, AP2, WebSockets
+├── agent-packs/                # Specialized agents (19)
+│   ├── development/            # Code, testing, generation
+│   ├── security/               # Scanning, review, compliance
+│   ├── infrastructure/         # Deploy, config, monitoring
+│   └── quality/                # Audit, review, validation
+├── workflows/                  # Production workflows (5)
+├── AGENT_INVENTORY.md          # Complete agent docs
+├── BACKGROUND_EXECUTION.md     # Async API reference
+└── AI-INTEGRATION.md           # LLM configuration
+```
+
+## Documentation
+
+- [Agent Inventory](AGENT_INVENTORY.md) - All 22 agents with capabilities
+- [Workflows](workflows/README.md) - Complete workflow guide
+- [Background Execution](BACKGROUND_EXECUTION.md) - Async API reference
+- [Protocols](equilateral-core/protocols/README.md) - Communication protocols
+- [AI Integration](AI-INTEGRATION.md) - LLM configuration
+- [Standards Integration](docs/STANDARDS_INTEGRATION.md) - Setup guide
+
+## Enterprise Features
+
+Need specialized capabilities?
+
+**Available:**
+- Privacy & compliance automation (GDPR, CCPA, DSR fulfillment)
+- Advanced security (STRIDE threat modeling, penetration testing)
+- Business intelligence & ML-based cost optimization
+- Multi-repository orchestration with learning
+- Team collaboration with role-based access
+
+**Contact:** info@happyhippo.ai
+
+## Security Notice
+
+**Important:** EquilateralAgents runs with your user account privileges.
+
+Agents can:
+- Read/write files in your project
+- Execute shell commands
+- Access environment variables (API keys, tokens)
+- Make network requests
+
+**Best Practices:**
+- Review agent code before running
+- Use separate API keys for development
+- Run in isolated environments for untrusted workflows
+- Monitor agent activity logs in `.equilateral/`
+
+See [SECURITY.md](SECURITY.md) for complete guidelines.
+
+## Contributing
+
+Contributions welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+Found a universal pattern? Submit to [EquilateralAgents Open Standards](https://github.com/JamesFord-HappyHippo/EquilateralAgents-Open-Standards)
+
+## License
+
+MIT License - see [LICENSE](LICENSE)
+
+**Trademarks:** EquilateralAgents™ and Equilateral AI™ are trademarks of HappyHippo.ai
 
 ---
 
-## 🎯 Use Cases
-
-### With AI Enhancement
-- **Automatic Test Repair** - AI fixes failing tests based on agent analysis
-- **Intelligent Code Review** - AI explains issues and generates fixes
-- **Smart Deployments** - AI makes go/no-go decisions based on validations
-- **Refactoring Assistant** - AI suggests and implements improvements
-
-### Without AI (Basic Automation)
-- **CI/CD Integration** - Add structured checks to your pipeline
-- **Code Quality Gates** - Automated standards enforcement
-- **Security Scanning** - Continuous vulnerability detection
-- **Deployment Validation** - Pre-flight checks before production
-
----
-
-## 🚀 Commercial Features
-
-**Need enterprise features?** The commercial edition includes:
-
-### Built-in Intelligence (No API Keys Required)
-- ✨ Embedded AI models - no external dependencies
-- ✨ Optimized routing to appropriate models per task
-- ✨ Cost-effective model selection
-- ✨ Fine-tuned models for specific workflows
-
-### Enterprise Scale
-- ⚡ Multi-repository orchestration
-- ⚡ Advanced coordination strategies
-- ⚡ Production-ready persistence
-- ⚡ Team collaboration features
-
-### Professional Support
-- 📞 Priority support and SLAs
-- 🎓 Training and best practices
-- 🔧 Custom agent development
-- 🏢 Enterprise integrations
-
-Learn more at [equilateral.ai/commercial](https://equilateral.ai/commercial)
-
----
-
-## 📄 License
-
-MIT License - see [LICENSE](./LICENSE) file for details.
-
-**Trademarks:** EquilateralAgents™ and Equilateral AI™ are trademarks of HappyHippo.ai.
-
-**Built with ❤️ by HappyHippo.ai**
+**Built by [HappyHippo.ai](https://happyhippo.ai)**

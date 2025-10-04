@@ -175,8 +175,9 @@ Error: Model 'gpt-4' not available
 |----------|----------|------|--------|---------|
 | OpenAI GPT-4 | Complex reasoning | $$$ | Medium | Excellent |
 | OpenAI GPT-3.5 | General tasks | $ | Fast | Good |
-| Claude Opus | Code & analysis | $$$ | Medium | Excellent |
-| Claude Haiku | Simple tasks | $ | Fast | Good |
+| Claude Opus | Long context tasks | $$$ | Slow | Excellent |
+| Claude Sonnet | Balanced performance | $$ | Fast | Excellent |
+| Claude Haiku | Simple/fast tasks | $ | Very Fast | Good |
 | Ollama | Local/free | Free | Varies | Good |
 | Copilot | Code completion | $$ | Fast | Good |
 

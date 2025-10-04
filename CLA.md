@@ -81,7 +81,7 @@ By submitting a pull request, you indicate your acceptance of this CLA. Please a
 If contributing on behalf of your employer, please:
 
 1. Have an authorized representative sign this agreement
-2. Email the signed agreement to: cla@equilateral.ai
+2. Email the signed agreement to: info@happyhippo.ai
 3. Include your organization in CONTRIBUTORS.md
 
 ---
@@ -101,7 +101,7 @@ Email: [Your Email Address]
 ## Questions?
 
 If you have questions about this CLA, please contact:
-- Email: legal@equilateral.ai
+- Email: info@happyhippo.ai
 - Discord: #cla-questions channel
 
 ---
