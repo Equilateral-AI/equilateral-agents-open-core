@@ -32,7 +32,7 @@
   "homepage": "https://github.com/JamesFord-HappyHippo/equilateral-agents-open-core",
   "repository": {
     "type": "git",
-    "url": "https://github.com/JamesFord-HappyHippo/equilateral-agents-open-core.git"
+    "url": "git+https://github.com/JamesFord-HappyHippo/equilateral-agents-open-core.git"
   },
   "engines": {
     "node": ">=16.0.0"
