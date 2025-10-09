@@ -1,5 +1,5 @@
 // SecurityReviewerAgent.js - Comprehensive security analysis with production cost controls
-// Based on Tim-Combo security roadmap and validation patterns
+// Security review patterns following Equilateral standards
 
 const fs = require('fs').promises;
 const path = require('path');

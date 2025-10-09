@@ -41,7 +41,7 @@ class TimComboAgentMemoryManager {
       created: new Date().toISOString(),
       last_updated: new Date().toISOString(),
       capabilities: config.capabilities || [],
-      memory_namespace: `project/tim-combo/${agentId}`,
+      memory_namespace: `project/equilateral/${agentId}`,
       ...config
     };
 
@@ -60,7 +60,7 @@ ${(config.capabilities || []).map(cap => `- ${cap}`).join('\n')}
 - Agent initialized with base configuration
 
 ## Integration Handler Access
-- Can access Tim-Combo PostgreSQL database via executeQuery()
+- Can access PostgreSQL database via executeQuery()
 - Can read/write integration templates and instances
 - Can leverage existing handler patterns
 

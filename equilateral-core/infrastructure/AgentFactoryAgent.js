@@ -153,7 +153,7 @@ exports.handler = wrapHandler(${handlerName});
   }
 
   /**
-   * Generate complete feature following all Tim-Combo patterns
+   * Generate complete feature following all Equilateral patterns
    */
   generateCompleteFeature(config) {
     const {
@@ -203,7 +203,7 @@ exports.handler = wrapHandler(${handlerName});
     return {
       featureName,
       generatedFiles,
-      summary: `Generated complete ${featureName} feature with ${generatedFiles.length} files following Tim-Combo standards`
+      summary: `Generated complete ${featureName} feature with ${generatedFiles.length} files following Equilateral standards`
     };
   }
 

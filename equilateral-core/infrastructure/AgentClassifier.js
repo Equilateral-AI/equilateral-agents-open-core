@@ -198,7 +198,7 @@ class TimComboAgentClassifier {
   }
 
   /**
-   * Tim-Combo specific agent classification patterns
+   * Equilateral-specific agent classification patterns
    */
   getTimComboAgentSuggestion(description) {
     const classification = this.classifyTask(description);
@@ -224,7 +224,7 @@ class TimComboAgentClassifier {
       return { type: 'tester', confidence: 0.9, agent: this.agentProfiles['tester'] };
     }
 
-    // Specialized Agent Classification (Tim-Combo specific)
+    // Specialized Agent Classification (Equilateral-specific)
     if (description.includes('frontend') || description.includes('React') || description.includes('TypeScript')) {
       return { type: 'frontend-specialist', confidence: 0.9 };
     }

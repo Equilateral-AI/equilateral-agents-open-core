@@ -79,7 +79,7 @@ class UIUXSpecialistAgent {
     /**
      * Perform comprehensive UI/UX analysis across entire project
      */
-    async performUIUXAudit(targetDirectory = '/Users/jamesford/Source/Tim-Combo') {
+    async performUIUXAudit(targetDirectory = process.cwd()) {
         try {
             console.log('🎨 Starting comprehensive UI/UX audit...');
             
