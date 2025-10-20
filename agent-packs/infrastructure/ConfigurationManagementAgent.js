@@ -35,36 +35,41 @@ class ConfigurationManagementAgent extends EventEmitter {
             ...options
         };
 
-        // 3-account architecture configuration
-        this.accountConfigs = {
+        // Multi-account architecture configuration
+        // IMPORTANT: Load from environment variables in production!
+        // See examples/configuration-management-example.js for patterns
+        this.accountConfigs = options.accountConfigs || {
             dev: {
-                account: '532595801838',
-                profile: 'dev-sso',
-                region: 'us-east-2',
-                secretsManagerPrefix: 'tim-dev',
-                parameterStorePrefix: '/tim/dev',
-                lambdaBucket: 'tim-dev-lambda',
-                cognitoPool: 'us-east-2_oWj5l1j6m',
-                apiUrl: 'https://n2eqji12v4.execute-api.us-east-2.amazonaws.com/prod'
+                account: process.env.AWS_ACCOUNT_ID_DEV || 'YOUR_DEV_ACCOUNT_ID',
+                profile: process.env.AWS_PROFILE_DEV || 'dev-profile',
+                region: process.env.AWS_REGION || 'us-east-1',
+                secretsManagerPrefix: process.env.SECRETS_PREFIX_DEV || 'myapp-dev',
+                parameterStorePrefix: process.env.PARAM_PREFIX_DEV || '/myapp/dev',
+                lambdaBucket: process.env.LAMBDA_BUCKET_DEV || 'myapp-dev-lambda',
+                cognitoPool: process.env.COGNITO_POOL_DEV || 'us-east-1_XXXXXXXXX',
+                apiUrl: process.env.API_URL_DEV || 'https://api-dev.example.com'
             },
-            sandbox: {
-                account: '455510265254',
-                profile: 'sandbox-sso', 
-                region: 'us-east-2',
-                secretsManagerPrefix: 'tim-sb',
-                parameterStorePrefix: '/tim/sandbox',
-                lambdaBucket: 'tim-sb-be-live',
-                cognitoPool: 'us-east-2_57sEtr0xp',
-                apiUrl: 'https://k0y33bw7t8.execute-api.us-east-2.amazonaws.com/prod'
+            staging: {
+                account: process.env.AWS_ACCOUNT_ID_STAGING || 'YOUR_STAGING_ACCOUNT_ID',
+                profile: process.env.AWS_PROFILE_STAGING || 'staging-profile',
+                region: process.env.AWS_REGION || 'us-east-1',
+                secretsManagerPrefix: process.env.SECRETS_PREFIX_STAGING || 'myapp-staging',
+                parameterStorePrefix: process.env.PARAM_PREFIX_STAGING || '/myapp/staging',
+                lambdaBucket: process.env.LAMBDA_BUCKET_STAGING || 'myapp-staging-lambda',
+                cognitoPool: process.env.COGNITO_POOL_STAGING || 'us-east-1_YYYYYYYYY',
+                apiUrl: process.env.API_URL_STAGING || 'https://api-staging.example.com'
             },
-            media: {
-                account: '855652006097',
-                profile: 'media-sso',
-                region: 'us-east-2',
-                secretsManagerPrefix: 'tim-media',
-                parameterStorePrefix: '/tim/media',
-                frontendBucket: 'tim-sb-fe-live-855652006097',
-                cloudFrontDistribution: 'E25ON3LWW4KFNF'
+            production: {
+                account: process.env.AWS_ACCOUNT_ID_PROD || 'YOUR_PROD_ACCOUNT_ID',
+                profile: process.env.AWS_PROFILE_PROD || 'prod-profile',
+                region: process.env.AWS_REGION || 'us-east-1',
+                secretsManagerPrefix: process.env.SECRETS_PREFIX_PROD || 'myapp-prod',
+                parameterStorePrefix: process.env.PARAM_PREFIX_PROD || '/myapp/prod',
+                lambdaBucket: process.env.LAMBDA_BUCKET_PROD || 'myapp-prod-lambda',
+                cognitoPool: process.env.COGNITO_POOL_PROD || 'us-east-1_ZZZZZZZZZ',
+                apiUrl: process.env.API_URL_PROD || 'https://api.example.com',
+                frontendBucket: process.env.FRONTEND_BUCKET_PROD || 'myapp-prod-frontend',
+                cloudFrontDistribution: process.env.CLOUDFRONT_DIST_PROD || 'EXAMPLEID123'
             }
         };
 

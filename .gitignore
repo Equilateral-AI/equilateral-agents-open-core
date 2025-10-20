@@ -67,6 +67,10 @@ temp/
 # Workflow history (may contain sensitive data)
 .equilateral/
 
+# Discord integration (contains sensitive tokens)
+setup-discord-channels.js
+discord-config.json
+
 # External repositories (now submodules - see .gitmodules)
 EquilateralAgents-Open-Standards/
 

@@ -95,6 +95,58 @@ const result = await handle.getResult();
 
 See [BACKGROUND_EXECUTION.md](BACKGROUND_EXECUTION.md) for complete API.
 
+## MCP Server Integration
+
+**Use with Claude Desktop and MCP-compatible tools:**
+
+```javascript
+const MinimalMCPServer = require('./equilateral-core/protocols/MinimalMCPServer');
+
+// Create MCP server with EquilateralAgents tools
+const server = new MinimalMCPServer({
+    name: 'equilateral-agents',
+    version: '2.0.1',
+    transports: ['stdio', 'http'],
+    port: 3000
+});
+
+// Register agent capabilities as MCP tools
+server.registerTool('security-scan', {
+    description: 'Run comprehensive security scan on project',
+    inputSchema: {
+        type: 'object',
+        properties: {
+            projectPath: { type: 'string', description: 'Path to project' }
+        },
+        required: ['projectPath']
+    },
+    handler: async (args) => {
+        const orchestrator = new AgentOrchestrator();
+        await orchestrator.start();
+        return await orchestrator.executeWorkflow('security-review', args);
+    }
+});
+
+await server.initialize();
+```
+
+**Claude Desktop Configuration:**
+
+Add to your `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "equilateral-agents": {
+      "command": "node",
+      "args": ["path/to/equilateral-core/protocols/MinimalMCPServer.js"]
+    }
+  }
+}
+```
+
+See [equilateral-core/protocols/README.md](equilateral-core/protocols/README.md) for full protocol documentation.
+
 ## Custom Agents
 
 ```javascript
