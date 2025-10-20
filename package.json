@@ -1,6 +1,6 @@
 {
   "name": "equilateral-agents-open-core",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "22 Production-Ready AI Agents + Orchestration Framework - The Complete Development Toolkit",
   "main": "index.js",
   "exports": {
@@ -16,6 +16,7 @@
     "workflows/**/*.js",
     "LICENSE",
     "README.md",
+    "CHANGELOG.md",
     "AGENT_INVENTORY.md",
     "AI-INTEGRATION.md",
     "BYOL-SETUP.md"
@@ -35,10 +36,10 @@
   ],
   "author": "HappyHippo.ai",
   "license": "MIT",
-  "homepage": "https://github.com/JamesFord-HappyHippo/equilateral-agents-open-core",
+  "homepage": "https://github.com/Equilateral-AI/equilateral-agents-open-core",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JamesFord-HappyHippo/equilateral-agents-open-core.git"
+    "url": "git+https://github.com/Equilateral-AI/equilateral-agents-open-core.git"
   },
   "engines": {
     "node": ">=16.0.0"
@@ -84,7 +85,7 @@
     "nodemon": "^3.0.2"
   },
   "bugs": {
-    "url": "https://github.com/JamesFord-HappyHippo/equilateral-agents-open-core/issues"
+    "url": "https://github.com/Equilateral-AI/equilateral-agents-open-core/issues"
   },
   "directories": {
     "lib": "equilateral-core",
