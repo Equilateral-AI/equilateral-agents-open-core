@@ -29,6 +29,7 @@
  */
 
 const BaseAgent = require('../../equilateral-core/BaseAgent');
+const PathScanningHelper = require('../../equilateral-core/PathScanningHelper');
 const fs = require('fs').promises;
 const path = require('path');
 
@@ -38,6 +39,14 @@ class DeploymentValidationAgent extends BaseAgent {
             agentType: 'deployment',
             capabilities: ['basic_validation', 'safety_checks', 'config_verification'],
             ...config
+        });
+        // Initialize path scanner for deployment validation
+        this.pathScanner = new PathScanningHelper({
+            verbose: config.verbose !== false,
+            extensions: {
+                all: ['.js', '.ts', '.json', '.yaml', '.yml']
+            },
+            maxDepth: config.maxDepth || 10
         });
 
         this.validationRules = new Map();

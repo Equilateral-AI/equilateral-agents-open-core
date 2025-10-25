@@ -7,6 +7,7 @@
 
 const fs = require('fs').promises;
 const path = require('path');
+const PathScanningHelper = require('../../equilateral-core/PathScanningHelper');
 const AgentConfiguration = require('../config/AgentConfiguration');
 const ModelConfiguration = require('../config/ModelConfiguration');
 const { ModelAwareAgent } = require('../config/ModelIntegrationExample');
@@ -61,10 +62,19 @@ class CodeReviewAgent extends ModelAwareAgent {
             }
         };
 
+        // Initialize path scanner for code review
+        this.pathScanner = new PathScanningHelper({
+            verbose: configOverrides.verbose !== false,
+            extensions: {
+                all: ['.js', '.jsx', '.ts', '.tsx', '.py', '.java', '.cs', '.cpp', '.c', '.php', '.rb', '.go', '.rs']
+            },
+            maxDepth: configOverrides.maxDepth || 10
+        });
+
         // Initialize code-specific capabilities
         this.codeCapabilities = this.initializeCodeCapabilities();
         this.languageSpecializations = this.initializeLanguageSpecializations();
-        
+
         this.reviewCategories = {
             'code_quality': {
                 description: 'Analyze code quality metrics and maintainability',
@@ -1174,25 +1184,14 @@ class CodeReviewAgent extends ModelAwareAgent {
     }
 
     async scanDirectory(dirPath) {
-        const files = [];
-        try {
-            const entries = await fs.readdir(dirPath, { withFileTypes: true });
-            
-            for (const entry of entries) {
-                const fullPath = path.join(dirPath, entry.name);
-                
-                if (entry.isDirectory() && !entry.name.startsWith('.') && entry.name !== 'node_modules') {
-                    const subFiles = await this.scanDirectory(fullPath);
-                    files.push(...subFiles);
-                } else if (entry.isFile() && this.isCodeFile(path.extname(entry.name))) {
-                    files.push({ path: fullPath, name: entry.name });
-                }
-            }
-        } catch (error) {
-            console.error(`Error scanning directory ${dirPath}:`, error);
-        }
-        
-        return files;
+        console.warn('scanDirectory is deprecated - using PathScanningHelper instead');
+        const filePaths = await this.pathScanner.scanProject(dirPath, { language: 'all' });
+
+        // Convert to expected format { path, name }
+        return filePaths.map(filePath => ({
+            path: filePath,
+            name: path.basename(filePath)
+        }));
     }
 
     // ==========================================

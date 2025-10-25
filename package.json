@@ -1,7 +1,7 @@
 {
   "name": "equilateral-agents-open-core",
-  "version": "2.0.2",
-  "description": "22 Production-Ready AI Agents + Orchestration Framework - The Complete Development Toolkit",
+  "version": "2.1.0",
+  "description": "22 Self-Learning AI Agents with Community Standards Contribution - Production-Ready Orchestration Framework",
   "main": "index.js",
   "exports": {
     ".": "./index.js",
@@ -67,7 +67,9 @@
     "workflow:deploy": "node -e \"require('./workflows/deployment-pipeline-workflow.js')\"",
     "workflow:fullstack": "node -e \"require('./workflows/full-stack-development-workflow.js')\"",
     "workflow:infrastructure": "node -e \"require('./workflows/infrastructure-validation-workflow.js')\"",
-    "demo:background": "node examples/background-execution-demo.js"
+    "demo:background": "node examples/background-execution-demo.js",
+    "demo:memory": "node examples/agent-memory-example.js",
+    "memory:stats": "node -e \"const {SimpleAgentMemory} = require('./index.js'); const fs = require('fs'); const dirs = fs.readdirSync('.agent-memory'); dirs.forEach(d => { const m = new SimpleAgentMemory(d); console.log(m.getStats()); });\""
   },
   "dependencies": {
     "aws-sdk": "^2.1691.0",

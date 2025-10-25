@@ -30,6 +30,7 @@
  */
 
 const BaseAgent = require('../../equilateral-core/BaseAgent');
+const PathScanningHelper = require('../../equilateral-core/PathScanningHelper');
 const AWS = require('aws-sdk');
 
 class DeploymentAgent extends BaseAgent {
@@ -38,6 +39,14 @@ class DeploymentAgent extends BaseAgent {
             agentType: 'infrastructure',
             capabilities: ['aws_deploy', 'basic_validation', 'simple_rollback', 'cost_estimation'],
             ...config
+        });
+        // Initialize path scanner for deployment
+        this.pathScanner = new PathScanningHelper({
+            verbose: config.verbose !== false,
+            extensions: {
+                all: ['.js', '.ts', '.json', '.yaml', '.yml']
+            },
+            maxDepth: config.maxDepth || 10
         });
 
         // BYOL AWS Configuration

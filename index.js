@@ -30,6 +30,7 @@
 // Core exports
 const AgentOrchestrator = require('./equilateral-core/AgentOrchestrator');
 const BaseAgent = require('./equilateral-core/BaseAgent');
+const SimpleAgentMemory = require('./equilateral-core/SimpleAgentMemory');
 
 // Example agents
 const CodeAnalyzerAgent = require('./agent-packs/development/CodeAnalyzerAgent');
@@ -38,7 +39,8 @@ module.exports = {
     // Core framework
     AgentOrchestrator,
     BaseAgent,
-    
+    SimpleAgentMemory,
+
     // Example agents
     agents: {
         CodeAnalyzerAgent
@@ -46,7 +48,7 @@ module.exports = {
 
     // Version info
     version: require('./package.json').version,
-    
+
     // Quick start helper
     createOrchestrator: (config = {}) => {
         return new AgentOrchestrator(config);

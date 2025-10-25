@@ -29,6 +29,7 @@
  */
 
 const BaseAgent = require('../../equilateral-core/BaseAgent');
+const PathScanningHelper = require('../../equilateral-core/PathScanningHelper');
 const fs = require('fs').promises;
 const path = require('path');
 
@@ -38,6 +39,14 @@ class ComplianceCheckAgent extends BaseAgent {
             agentType: 'security',
             capabilities: ['basic_compliance', 'policy_validation', 'audit_reporting'],
             ...config
+        });
+        // Initialize path scanner for compliance checking
+        this.pathScanner = new PathScanningHelper({
+            verbose: config.verbose !== false,
+            extensions: {
+                all: ['.js', '.ts', '.py', '.java']
+            },
+            maxDepth: config.maxDepth || 10
         });
 
         this.complianceFrameworks = new Map();

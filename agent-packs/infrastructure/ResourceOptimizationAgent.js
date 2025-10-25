@@ -29,6 +29,7 @@
  */
 
 const BaseAgent = require('../../equilateral-core/BaseAgent');
+const PathScanningHelper = require('../../equilateral-core/PathScanningHelper');
 const AWS = require('aws-sdk');
 
 class ResourceOptimizationAgent extends BaseAgent {
@@ -37,6 +38,14 @@ class ResourceOptimizationAgent extends BaseAgent {
             agentType: 'infrastructure', 
             capabilities: ['basic_optimization', 'cost_recommendations', 'usage_analysis'],
             ...config
+        });
+        // Initialize path scanner for resource optimization
+        this.pathScanner = new PathScanningHelper({
+            verbose: config.verbose !== false,
+            extensions: {
+                all: ['.js', '.ts', '.json', '.yaml', '.yml', '.tf']
+            },
+            maxDepth: config.maxDepth || 10
         });
 
         this.awsConfig = {

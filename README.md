@@ -1,12 +1,39 @@
 # EquilateralAgents Open Core
 
-**22 production-ready AI agents. Zero config. MIT licensed.**
+**22 self-learning AI agents. Zero config. MIT licensed.**
 
 Transform your AI coding assistant into a coordinated development team. Works with Claude Code, Cursor, Continue, Windsurf, or standalone.
 
 [![npm version](https://badge.fury.io/js/equilateral-agents-open-core.svg)](https://www.npmjs.com/package/equilateral-agents-open-core)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D16.0.0-brightgreen.svg)](https://nodejs.org/)
+
+---
+
+## 🆕 What's New in v2.1.0
+
+**Self-Learning Agents** - Agents now automatically learn from execution history and optimize workflows:
+
+```bash
+# Run any workflow - agents learn automatically
+/ea:security-review        # Learns vulnerability patterns
+/ea:code-quality          # Learns code patterns
+
+# View what agents have learned
+/ea:memory                # See success rates, optimization suggestions
+
+# Or via npm
+npm run demo:memory       # See agent learning in action
+npm run memory:stats      # View statistics for all agents
+```
+
+**Key Features:**
+- 🧠 **Pattern Recognition** - Agents track last 100 executions and identify success/failure patterns
+- 📊 **Optimization Suggestions** - Get recommended workflows based on historical performance
+- 🤝 **Community Standards** - Contribute learned patterns back to the community (unique!)
+- 🔍 **Guaranteed src/ Scanning** - All agents now reliably scan source directories
+
+See [RELEASE_NOTES_v2.1.0.md](RELEASE_NOTES_v2.1.0.md) for complete details.
 
 ---
 
@@ -146,6 +173,122 @@ Add to your `claude_desktop_config.json`:
 ```
 
 See [equilateral-core/protocols/README.md](equilateral-core/protocols/README.md) for full protocol documentation.
+
+## Claude Code Plugin (Skills & Commands)
+
+**Native integration with Claude Code using skills and slash commands:**
+
+EquilateralAgents includes a Claude Code plugin that provides:
+- **Self-learning agents** - Agents learn from execution history and optimize workflows (NEW in v2.1.0!)
+- **Auto-activation skill** - Claude automatically suggests workflows based on context
+- **Slash commands** - Execute workflows with simple commands like `/ea:security-review`
+- **Agent memory** - Track learning patterns and performance metrics
+- **Upgrade prompts** - Clear information about commercial features when relevant
+
+### Available Commands
+
+**Open Core (Free):**
+- `/ea:security-review` - Multi-layer security assessment (🧠 learns vulnerability patterns)
+- `/ea:code-quality` - Code analysis with quality scoring (🧠 learns code patterns)
+- `/ea:deploy-feature` - Deployment validation and rollback checks (🧠 learns deployment patterns)
+- `/ea:infrastructure-check` - IaC validation with cost estimation (🧠 learns config best practices)
+- `/ea:test-workflow` - Background test execution (🧠 learns test patterns)
+- `/ea:memory` - View agent learning statistics and optimization suggestions (NEW in v2.1.0!)
+- `/ea:list` - List all available workflows
+
+**Commercial (Upgrade Required):**
+- `/ea:gdpr-check` - GDPR compliance validation
+- `/ea:hipaa-compliance` - HIPAA compliance validation
+- `/ea:full-stack-dev` - End-to-end feature development
+
+### How It Works
+
+1. **Skill Auto-Activation:**
+   - When you mention "security" → Claude suggests `/ea:security-review`
+   - When you mention "deploy" → Claude suggests `/ea:deploy-feature`
+   - When you mention "GDPR" → Claude suggests `/ea:gdpr-check` (with upgrade info)
+
+2. **Evidence-Based Results:**
+   - "✅ Verified: 15/15 security checks passed"
+   - "📊 Quality Score: 87/100"
+   - "💾 Audit Trail: .equilateral/workflow-history.json"
+
+3. **Clear Upgrade Paths:**
+   - Commercial features show what's included
+   - Pricing and contact information
+   - Clear distinction from open-core features
+
+### Plugin Structure
+
+```
+.claude/
+├── skills/
+│   └── equilateral-agents/
+│       ├── SKILL.md         # Auto-activation skill
+│       └── reference.md     # Quick reference guide
+└── commands/
+    ├── ea-security-review.md
+    ├── ea-code-quality.md
+    ├── ea-deploy-feature.md
+    ├── ea-infrastructure-check.md
+    ├── ea-test-workflow.md
+    ├── ea-memory.md         # NEW in v2.1.0 - Agent learning statistics
+    ├── ea-list.md
+    ├── ea-gdpr-check.md     # Commercial
+    ├── ea-hipaa-compliance.md # Commercial
+    └── ea-full-stack-dev.md # Commercial
+```
+
+### Installation Options
+
+**Option 1: Claude Code Marketplace (Recommended)**
+
+```bash
+# In Claude Code, run:
+/plugin marketplace add happyhippo-ai/equilateral-agents-open-core
+/plugin install equilateral-agents-open-core
+```
+
+**Option 2: Direct Clone**
+
+```bash
+git clone https://github.com/happyhippo-ai/equilateral-agents-open-core.git
+cd equilateral-agents-open-core
+npm install
+
+# Claude Code automatically detects .claude/ directory
+```
+
+**Option 3: npm Package**
+
+```bash
+npm install equilateral-agents-open-core
+# See MARKETPLACE_SUBMISSION.md for configuration
+```
+
+### Usage with Claude Code
+
+Once installed, commands are available immediately:
+
+```bash
+# List all available workflows (see v2.1.0 features)
+/ea:list
+
+# Run workflows (agents learn automatically)
+/ea:security-review       # Security assessment - agents learn vulnerability patterns
+/ea:code-quality          # Code quality analysis - agents learn code patterns
+/ea:deploy-feature        # Deployment validation - agents learn deployment patterns
+
+# View agent learning (NEW in v2.1.0!)
+/ea:memory                # See what agents have learned, success rates, optimization suggestions
+
+# Natural language also works:
+# "Let's do a security review" → Claude suggests /ea:security-review
+# "Check agent learning" → Claude suggests /ea:memory
+/ea:deploy-feature        # Validate deployment
+```
+
+See [PLUGIN_USAGE.md](PLUGIN_USAGE.md) for complete documentation and [MARKETPLACE_SUBMISSION.md](MARKETPLACE_SUBMISSION.md) for marketplace details.
 
 ## Custom Agents
 
@@ -297,6 +440,9 @@ equilateral-agents-open-core/
 ## Documentation
 
 - [Agent Inventory](AGENT_INVENTORY.md) - All 22 agents with capabilities
+- [Claude Code Plugin](PLUGIN_USAGE.md) - Skills and slash commands guide
+- [Marketplace Submission](MARKETPLACE_SUBMISSION.md) - Installation and distribution
+- [Plugin Validation](PLUGIN_VALIDATION.md) - Compliance verification
 - [Workflows](workflows/README.md) - Complete workflow guide
 - [Background Execution](BACKGROUND_EXECUTION.md) - Async API reference
 - [Protocols](equilateral-core/protocols/README.md) - Communication protocols

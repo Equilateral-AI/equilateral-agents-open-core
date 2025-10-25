@@ -6,6 +6,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const PathScanningHelper = require('../../equilateral-core/PathScanningHelper');
 
 class TemplateValidationAgent {
     constructor() {
@@ -49,6 +50,15 @@ class TemplateValidationAgent {
                 min_workflow_steps: 4
             }
         };
+
+        // Initialize path scanner for template validation
+        this.pathScanner = new PathScanningHelper({
+            verbose: false,
+            extensions: {
+                all: ['.json', '.yaml', '.yml', '.tf', '.template']
+            },
+            maxDepth: 10
+        });
     }
 
     /**

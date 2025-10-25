@@ -6,6 +6,7 @@ const path = require('path');
 const AgentConfiguration = require('../config/AgentConfiguration');
 const ModelConfiguration = require('../config/ModelConfiguration');
 const { ModelAwareAgent } = require('../config/ModelIntegrationExample');
+const PathScanningHelper = require('../../equilateral-core/PathScanningHelper');
 
 class SecurityReviewerAgent extends ModelAwareAgent {
     constructor(config = {}) {
@@ -22,6 +23,14 @@ class SecurityReviewerAgent extends ModelAwareAgent {
                     }
                 }
             }
+        });
+        // Initialize path scanner for security review
+        this.pathScanner = new PathScanningHelper({
+            verbose: config.verbose !== false,
+            extensions: {
+                all: ['.js', '.ts', '.py', '.java', '.go', '.rs']
+            },
+            maxDepth: config.maxDepth || 10
         });
         
         this.agentConfig = new AgentConfiguration(config);

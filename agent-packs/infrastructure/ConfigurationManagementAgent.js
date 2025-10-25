@@ -21,10 +21,19 @@
 const fs = require('fs').promises;
 const path = require('path');
 const EventEmitter = require('events');
+const PathScanningHelper = require('../../equilateral-core/PathScanningHelper');
 
 class ConfigurationManagementAgent extends EventEmitter {
     constructor(options = {}) {
         super();
+        // Initialize path scanner for configuration management
+        this.pathScanner = new PathScanningHelper({
+            verbose: config.verbose !== false,
+            extensions: {
+                all: ['.json', '.yaml', '.yml', '.env', '.config']
+            },
+            maxDepth: config.maxDepth || 10
+        });
         
         this.config = {
             projectRoot: options.projectRoot || process.cwd(),

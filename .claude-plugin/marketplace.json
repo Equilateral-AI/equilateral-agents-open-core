@@ -1,0 +1,71 @@
+{
+  "name": "equilateral-agents",
+  "version": "2.0.2",
+  "description": "EquilateralAgents - 22 production-ready AI agents with database-driven orchestration for security, quality, deployment, and compliance workflows. Includes open-core and enterprise features.",
+  "owner": {
+    "name": "HappyHippo.ai",
+    "email": "info@happyhippo.ai",
+    "url": "https://happyhippo.ai"
+  },
+  "homepage": "https://github.com/happyhippo-ai/equilateral-agents-open-core",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/happyhippo-ai/equilateral-agents-open-core.git"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ai-agents",
+    "claude-code",
+    "security",
+    "code-quality",
+    "deployment",
+    "compliance",
+    "gdpr",
+    "hipaa",
+    "infrastructure",
+    "orchestration"
+  ],
+  "plugins": [
+    {
+      "name": "equilateral-agents-open-core",
+      "version": "2.0.2",
+      "description": "Complete EquilateralAgents open-core plugin with 22 AI agents, skills, and slash commands for security reviews, code quality analysis, deployment validation, infrastructure checks, and compliance workflows.",
+      "author": "HappyHippo.ai",
+      "homepage": "https://github.com/happyhippo-ai/equilateral-agents-open-core",
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/happyhippo-ai/equilateral-agents-open-core.git"
+      },
+      "license": "MIT",
+      "keywords": [
+        "agents",
+        "workflows",
+        "security",
+        "quality",
+        "deployment",
+        "compliance"
+      ],
+      "source": ".",
+      "commands": [
+        "ea-security-review",
+        "ea-code-quality",
+        "ea-deploy-feature",
+        "ea-infrastructure-check",
+        "ea-test-workflow",
+        "ea-list",
+        "ea-gdpr-check",
+        "ea-hipaa-compliance",
+        "ea-full-stack-dev"
+      ],
+      "skills": [
+        "equilateral-agents"
+      ],
+      "documentation": {
+        "readme": "README.md",
+        "usage": "PLUGIN_USAGE.md",
+        "validation": "PLUGIN_VALIDATION.md",
+        "agents": "AGENT_INVENTORY.md"
+      }
+    }
+  ]
+}

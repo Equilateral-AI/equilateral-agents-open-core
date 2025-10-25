@@ -19,6 +19,7 @@
 
 const fs = require('fs').promises;
 const path = require('path');
+const PathScanningHelper = require('../../equilateral-core/PathScanningHelper');
 
 // Simple response utilities
 const createSuccessResponse = (data, message, metadata) => ({
@@ -97,6 +98,15 @@ class FrontendAuditorAgent {
         this.violations = [];
         this.warnings = [];
         this.passed = [];
+
+        // Initialize path scanner for frontend auditing
+        this.pathScanner = new PathScanningHelper({
+            verbose: false,
+            extensions: {
+                javascript: ['.js', '.jsx', '.ts', '.tsx']
+            },
+            maxDepth: 10
+        });
     }
 
     /**

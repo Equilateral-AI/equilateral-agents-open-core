@@ -17,6 +17,7 @@ const SaaSEnablementLayer = require('../core/SaaSEnablementLayer');
 const TenantContextManager = require('../core/TenantContextManager');
 const RoleBasedAccessControl = require('../core/RoleBasedAccessControl');
 const { v4: uuidv4 } = require('uuid');
+const PathScanningHelper = require('../../equilateral-core/PathScanningHelper');
 
 // Response utilities
 const createSuccessResponse = (data, message, metadata) => ({
@@ -121,7 +122,16 @@ class MonitoringOrchestrationAgent {
         this.aggregatedMetrics = new Map();
         this.costMetrics = new Map();
         this.complianceMetrics = new Map();
-        
+
+        // Initialize path scanner for monitoring orchestration
+        this.pathScanner = new PathScanningHelper({
+            verbose: configOverrides.verbose !== false,
+            extensions: {
+                all: ['.json', '.yaml', '.yml', '.js', '.ts']
+            },
+            maxDepth: configOverrides.maxDepth || 10
+        });
+
         this.initialized = false;
     }
 

@@ -30,6 +30,7 @@
  */
 
 const BaseAgent = require('../../equilateral-core/BaseAgent');
+const PathScanningHelper = require('../../equilateral-core/PathScanningHelper');
 const fs = require('fs').promises;
 const path = require('path');
 const crypto = require('crypto');
@@ -48,6 +49,15 @@ class SecurityScannerAgent extends BaseAgent {
             snykToken: config.snykToken || process.env.SNYK_TOKEN,
             useFreeScanning: !config.nvdApiKey && !process.env.NVD_API_KEY
         };
+
+        // Initialize path scanner for security scanning
+        this.pathScanner = new PathScanningHelper({
+            verbose: config.verbose !== false,
+            extensions: {
+                all: ['.js', '.ts', '.jsx', '.tsx', '.py', '.java', '.go', '.rs', '.c', '.cpp', '.h', '.hpp']
+            },
+            maxDepth: config.maxDepth || 10
+        });
 
         this.vulnerabilityPatterns = new Map();
         this.secretsPatterns = new Map();
@@ -177,10 +187,19 @@ class SecurityScannerAgent extends BaseAgent {
      */
     async scanVulnerabilities(projectPath) {
         const findings = [];
-        
+
         try {
-            const files = await this.getCodeFiles(projectPath);
-            
+            this.logActivity('scanning_vulnerabilities', { projectPath });
+            const files = await this.pathScanner.scanProject(projectPath, { language: 'all' });
+
+            const scanStats = this.pathScanner.getStats(files, projectPath);
+            if (!scanStats.hasSrcDirectory) {
+                this.logActivity('warning_no_src_directory', {
+                    message: 'No src/ directory found - vulnerability scan may not cover user code',
+                    directoriesScanned: Array.from(scanStats.directories)
+                });
+            }
+
             for (const filePath of files) {
                 const content = await fs.readFile(filePath, 'utf8');
                 const relativeFile = path.relative(projectPath, filePath);
@@ -219,10 +238,19 @@ class SecurityScannerAgent extends BaseAgent {
      */
     async scanForSecretsInPath(projectPath) {
         const findings = [];
-        
+
         try {
-            const files = await this.getAllFiles(projectPath);
-            
+            this.logActivity('scanning_secrets', { projectPath });
+            const files = await this.pathScanner.scanProject(projectPath, { language: 'all' });
+
+            const scanStats = this.pathScanner.getStats(files, projectPath);
+            if (!scanStats.hasSrcDirectory) {
+                this.logActivity('warning_no_src_directory', {
+                    message: 'No src/ directory found - secrets scan may not cover user code',
+                    directoriesScanned: Array.from(scanStats.directories)
+                });
+            }
+
             for (const filePath of files) {
                 // Skip binary files and common ignore patterns
                 if (this.shouldSkipFile(filePath)) continue;
@@ -375,47 +403,21 @@ class SecurityScannerAgent extends BaseAgent {
     }
 
     /**
-     * Helper methods
+     * Helper methods (DEPRECATED - use pathScanner instead)
+     * Kept for backward compatibility
      */
     async getCodeFiles(projectPath, extensions = ['.js', '.ts', '.jsx', '.tsx', '.py', '.java']) {
-        const files = [];
-        const getAllFiles = async (dir) => {
-            const entries = await fs.readdir(dir, { withFileTypes: true });
-            for (const entry of entries) {
-                const fullPath = path.join(dir, entry.name);
-                if (entry.isDirectory() && !this.shouldSkipDirectory(entry.name)) {
-                    await getAllFiles(fullPath);
-                } else if (entry.isFile() && extensions.some(ext => fullPath.endsWith(ext))) {
-                    files.push(fullPath);
-                }
-            }
-        };
-        
-        await getAllFiles(projectPath);
-        return files;
+        console.warn('getCodeFiles is deprecated - using PathScanningHelper instead');
+        return await this.pathScanner.scanProject(projectPath, { language: 'all' });
     }
 
     async getAllFiles(projectPath) {
-        const files = [];
-        const getAllFiles = async (dir) => {
-            const entries = await fs.readdir(dir, { withFileTypes: true });
-            for (const entry of entries) {
-                const fullPath = path.join(dir, entry.name);
-                if (entry.isDirectory() && !this.shouldSkipDirectory(entry.name)) {
-                    await getAllFiles(fullPath);
-                } else if (entry.isFile()) {
-                    files.push(fullPath);
-                }
-            }
-        };
-        
-        await getAllFiles(projectPath);
-        return files;
+        console.warn('getAllFiles is deprecated - using PathScanningHelper instead');
+        return await this.pathScanner.scanProject(projectPath, { language: 'all' });
     }
 
     shouldSkipDirectory(dirName) {
-        const skipDirs = ['node_modules', '.git', 'dist', 'build', '.next', 'coverage'];
-        return skipDirs.includes(dirName);
+        return this.pathScanner.shouldSkipDirectory(dirName);
     }
 
     shouldSkipFile(filePath) {

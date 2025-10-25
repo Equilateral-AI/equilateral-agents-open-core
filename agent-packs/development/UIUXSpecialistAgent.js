@@ -8,6 +8,7 @@
 const fs = require('fs').promises;
 const path = require('path');
 const { createSuccessResponse, createErrorResponse } = require('../../helpers/responseUtil');
+const PathScanningHelper = require('../../equilateral-core/PathScanningHelper');
 
 class UIUXSpecialistAgent {
     constructor() {
@@ -74,6 +75,15 @@ class UIUXSpecialistAgent {
                 display: ['Card', 'Badge', 'Avatar', 'Table', 'Timeline']
             }
         };
+
+        // Initialize path scanner for UI/UX validation
+        this.pathScanner = new PathScanningHelper({
+            verbose: false,
+            extensions: {
+                all: ['.js', '.jsx', '.ts', '.tsx', '.css', '.scss', '.html']
+            },
+            maxDepth: 10
+        });
     }
 
     /**

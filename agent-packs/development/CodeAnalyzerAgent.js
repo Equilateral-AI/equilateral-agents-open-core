@@ -29,6 +29,7 @@
  */
 
 const BaseAgent = require('../../equilateral-core/BaseAgent');
+const PathScanningHelper = require('../../equilateral-core/PathScanningHelper');
 const fs = require('fs').promises;
 const path = require('path');
 
@@ -39,6 +40,15 @@ class CodeAnalyzerAgent extends BaseAgent {
             agentType: 'development',
             capabilities: ['analyze', 'lint', 'complexity'],
             ...config
+        });
+
+        // Initialize path scanner with JavaScript-specific configuration
+        this.pathScanner = new PathScanningHelper({
+            verbose: config.verbose !== false,
+            extensions: {
+                javascript: ['.js', '.jsx', '.mjs', '.cjs']
+            },
+            maxDepth: config.maxDepth || 10
         });
     }
 
@@ -93,11 +103,25 @@ class CodeAnalyzerAgent extends BaseAgent {
 
         try {
             const stats = await fs.stat(targetPath);
-            
+
             if (stats.isDirectory()) {
-                // Analyze directory
-                const files = await this.getJavaScriptFiles(targetPath);
+                // Analyze directory using PathScanningHelper
+                this.log('info', '🔍 Scanning project for JavaScript files...');
+                const files = await this.pathScanner.scanProject(targetPath, {
+                    language: 'javascript'
+                });
+
+                const scanStats = this.pathScanner.getStats(files, targetPath);
                 analysis.fileCount = files.length;
+                analysis.scanStats = {
+                    hasSrcDirectory: scanStats.hasSrcDirectory,
+                    directoriesScanned: Array.from(scanStats.directories),
+                    filesByDirectory: Object.fromEntries(scanStats.byDirectory)
+                };
+
+                if (!scanStats.hasSrcDirectory) {
+                    this.log('warn', '⚠️  No src/ directory found - may not have scanned user code');
+                }
                 
                 for (const file of files.slice(0, 10)) { // Limit to 10 files for demo
                     const fileAnalysis = await this.analyzeFile(file);
@@ -263,27 +287,12 @@ class CodeAnalyzerAgent extends BaseAgent {
     }
 
     /**
-     * Get JavaScript files in directory
+     * Get JavaScript files in directory (DEPRECATED - use pathScanner instead)
+     * Kept for backward compatibility
      */
     async getJavaScriptFiles(dir) {
-        const files = [];
-        
-        async function scan(directory) {
-            const entries = await fs.readdir(directory, { withFileTypes: true });
-            
-            for (const entry of entries) {
-                const fullPath = path.join(directory, entry.name);
-                
-                if (entry.isDirectory() && !entry.name.startsWith('.') && entry.name !== 'node_modules') {
-                    await scan(fullPath);
-                } else if (entry.isFile() && entry.name.endsWith('.js')) {
-                    files.push(fullPath);
-                }
-            }
-        }
-
-        await scan(dir);
-        return files;
+        this.log('warn', 'getJavaScriptFiles is deprecated - using PathScanningHelper instead');
+        return await this.pathScanner.scanProject(dir, { language: 'javascript' });
     }
 }
 

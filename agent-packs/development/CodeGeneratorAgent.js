@@ -30,6 +30,7 @@
  */
 
 const BaseAgent = require('../../equilateral-core/BaseAgent');
+const PathScanningHelper = require('../../equilateral-core/PathScanningHelper');
 const axios = require('axios');
 
 class CodeGeneratorAgent extends BaseAgent {
@@ -38,6 +39,15 @@ class CodeGeneratorAgent extends BaseAgent {
             agentType: 'development',
             capabilities: ['template_generation', 'boilerplate_creation', 'basic_code_generation'],
             ...config
+        });
+        // Initialize path scanner for code generation
+        this.pathScanner = new PathScanningHelper({
+            verbose: config.verbose !== false,
+            extensions: {
+                javascript: ['.js', '.jsx', '.mjs', '.cjs'],
+                typescript: ['.ts', '.tsx']
+            },
+            maxDepth: config.maxDepth || 10
         });
         
         // BYOL Configuration

@@ -29,6 +29,7 @@
  */
 
 const BaseAgent = require('../../equilateral-core/BaseAgent');
+const PathScanningHelper = require('../../equilateral-core/PathScanningHelper');
 const fs = require('fs').promises;
 const path = require('path');
 const { spawn } = require('child_process');
@@ -39,6 +40,14 @@ class TestOrchestrationAgent extends BaseAgent {
             agentType: 'quality',
             capabilities: ['basic_test_execution', 'test_reporting', 'coverage_analysis'],
             ...config
+        });
+        // Initialize path scanner for test orchestration
+        this.pathScanner = new PathScanningHelper({
+            verbose: config.verbose !== false,
+            extensions: {
+                all: ['.js', '.ts', '.py', '.java']
+            },
+            maxDepth: config.maxDepth || 10
         });
 
         this.supportedFrameworks = ['jest', 'mocha', 'pytest', 'junit'];

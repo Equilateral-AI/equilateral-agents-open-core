@@ -8,6 +8,7 @@
 const fs = require('fs').promises;
 const path = require('path');
 const AgentConfiguration = require('../config/AgentConfiguration');
+const PathScanningHelper = require('../../equilateral-core/PathScanningHelper');
 
 // Simple response utilities to avoid environment dependencies
 const createSuccessResponse = (data, message, metadata) => ({
@@ -70,6 +71,15 @@ class AuditorAgent {
         this.violations = [];
         this.warnings = [];
         this.passed = [];
+
+        // Initialize path scanner for code auditing
+        this.pathScanner = new PathScanningHelper({
+            verbose: configOverrides.verbose !== false,
+            extensions: {
+                all: ['.js', '.jsx', '.ts', '.tsx', '.py', '.java', '.go', '.rs']
+            },
+            maxDepth: configOverrides.maxDepth || 10
+        });
     }
 
     /**

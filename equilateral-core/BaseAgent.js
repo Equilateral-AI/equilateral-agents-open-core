@@ -32,6 +32,7 @@
 
 const EventEmitter = require('events');
 const { getSharedProvider } = require('./LLMProvider');
+const SimpleAgentMemory = require('./SimpleAgentMemory');
 
 class BaseAgent extends EventEmitter {
     constructor(config = {}) {
@@ -46,6 +47,10 @@ class BaseAgent extends EventEmitter {
         // AI enhancement configuration
         this.aiEnabled = config.enableAI || config.ai?.enabled || false;
         this.llmProvider = this.aiEnabled ? getSharedProvider(config.ai) : null;
+
+        // Memory system configuration (opt-in)
+        this.memoryEnabled = config.enableMemory !== false; // Default: true
+        this.memory = this.memoryEnabled ? new SimpleAgentMemory(this.agentId, config.memory || {}) : null;
     }
 
     /**
@@ -79,9 +84,45 @@ class BaseAgent extends EventEmitter {
 
     /**
      * Execute a task - must be overridden by subclasses
+     *
+     * Note: Subclasses should call this.recordExecution() after task completion
+     * to enable learning and pattern recognition
      */
     async executeTask(task) {
         throw new Error(`Agent ${this.agentId} must implement executeTask method`);
+    }
+
+    /**
+     * Execute task with automatic memory recording
+     */
+    async executeTaskWithMemory(task) {
+        const startTime = Date.now();
+
+        try {
+            const result = await this.executeTask(task);
+
+            // Record successful execution
+            if (this.memoryEnabled && this.memory) {
+                this.memory.recordExecution(task, {
+                    success: true,
+                    duration: Date.now() - startTime,
+                    result
+                });
+            }
+
+            return result;
+        } catch (error) {
+            // Record failed execution
+            if (this.memoryEnabled && this.memory) {
+                this.memory.recordExecution(task, {
+                    success: false,
+                    duration: Date.now() - startTime,
+                    error: error.message
+                });
+            }
+
+            throw error;
+        }
     }
 
     /**
@@ -220,6 +261,73 @@ class BaseAgent extends EventEmitter {
      */
     hasAI() {
         return this.aiEnabled && this.llmProvider && this.llmProvider.isAvailable();
+    }
+
+    /**
+     * Record task execution in memory (manual mode)
+     * Use this when you override executeTask and want to control memory recording
+     */
+    recordExecution(task, outcome) {
+        if (!this.memoryEnabled || !this.memory) {
+            return null;
+        }
+        return this.memory.recordExecution(task, outcome);
+    }
+
+    /**
+     * Get success patterns for a task type
+     */
+    getSuccessPatterns(taskType) {
+        if (!this.memoryEnabled || !this.memory) {
+            return null;
+        }
+        return this.memory.getSuccessPatterns(taskType);
+    }
+
+    /**
+     * Suggest optimal workflow based on past experience
+     */
+    suggestOptimalWorkflow(context) {
+        if (!this.memoryEnabled || !this.memory) {
+            return { hasExperience: false, message: 'Memory not enabled' };
+        }
+        return this.memory.suggestOptimalWorkflow(context);
+    }
+
+    /**
+     * Get memory performance metrics
+     */
+    getMemoryMetrics() {
+        if (!this.memoryEnabled || !this.memory) {
+            return null;
+        }
+        return this.memory.getPerformanceMetrics();
+    }
+
+    /**
+     * Get memory statistics
+     */
+    getMemoryStats() {
+        if (!this.memoryEnabled || !this.memory) {
+            return null;
+        }
+        return this.memory.getStats();
+    }
+
+    /**
+     * Reset agent memory
+     */
+    resetMemory() {
+        if (this.memoryEnabled && this.memory) {
+            this.memory.reset();
+        }
+    }
+
+    /**
+     * Check if memory is enabled
+     */
+    hasMemory() {
+        return this.memoryEnabled && this.memory !== null;
     }
 }
 

@@ -16,6 +16,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const PathScanningHelper = require('../../equilateral-core/PathScanningHelper');
 
 // Simple response utilities for consistent responses
 const createSuccessResponse = (data, message, metadata = {}) => ({
@@ -62,6 +63,15 @@ class TestAgent {
             'css': { priority: 6, stable: false }
         };
         
+        // Initialize path scanner for UI testing
+        this.pathScanner = new PathScanningHelper({
+            verbose: config.verbose !== false,
+            extensions: {
+                javascript: ['.js', '.jsx', '.ts', '.tsx']
+            },
+            maxDepth: config.maxDepth || 10
+        });
+
         this.ensureDirectoryStructure();
         this.initializeElementMappings();
     }
