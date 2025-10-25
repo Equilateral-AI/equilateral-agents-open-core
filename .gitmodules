@@ -1,6 +1,6 @@
 [submodule ".standards"]
 	path = .standards
-	url = https://github.com/JamesFord-HappyHippo/EquilateralAgents-Open-Standards.git
+	url = https://github.com/Equilateral-AI/EquilateralAgents-Open-Standards.git
 [submodule ".standards-community"]
 	path = .standards-community
-	url = https://github.com/JamesFord-HappyHippo/EquilateralAgents-Community-Standards.git
+	url = https://github.com/Equilateral-AI/EquilateralAgents-Community-Standards.git
