@@ -1,8 +1,14 @@
 # EquilateralAgents - Claude Code Marketplace Submission Guide
 
 **Plugin Name:** equilateral-agents-open-core
-**Version:** 2.0.2
+**Version:** 2.1.0
 **Status:** ✅ READY FOR MARKETPLACE
+
+**New in v2.1.0:**
+- 🧠 Self-learning agents with execution memory
+- 📊 Agent memory command (`/ea:memory`)
+- 🤝 Community standards contribution
+- 🔍 Enhanced path scanning
 
 ---
 
@@ -23,8 +29,8 @@ We've created a marketplace configuration at `.claude-plugin/marketplace.json`:
 ```json
 {
   "name": "equilateral-agents",
-  "version": "2.0.2",
-  "description": "EquilateralAgents - 22 production-ready AI agents...",
+  "version": "2.1.0",
+  "description": "EquilateralAgents - 22 self-learning AI agents...",
   "owner": {
     "name": "HappyHippo.ai",
     "email": "info@happyhippo.ai",
@@ -33,9 +39,9 @@ We've created a marketplace configuration at `.claude-plugin/marketplace.json`:
   "plugins": [
     {
       "name": "equilateral-agents-open-core",
-      "version": "2.0.2",
+      "version": "2.1.0",
       "source": ".",
-      "commands": [9 commands],
+      "commands": [10 commands],
       "skills": ["equilateral-agents"]
     }
   ]
@@ -52,7 +58,7 @@ Users can install directly from our GitHub repository:
 
 ```bash
 # In Claude Code, run:
-/plugin marketplace add happyhippo-ai/equilateral-agents-open-core
+/plugin marketplace add Equilateral-AI/equilateral-agents-open-core
 
 # Then browse and install:
 /plugin install equilateral-agents-open-core
@@ -61,7 +67,7 @@ Users can install directly from our GitHub repository:
 ### Method 2: Clone and Use Locally
 
 ```bash
-git clone https://github.com/happyhippo-ai/equilateral-agents-open-core.git
+git clone https://github.com/Equilateral-AI/equilateral-agents-open-core.git
 cd equilateral-agents-open-core
 npm install
 
@@ -95,7 +101,7 @@ npm install equilateral-agents-open-core
 1. Visit the submission page
 2. Fill out the form with:
    - Plugin name: `equilateral-agents-open-core`
-   - Repository: `https://github.com/happyhippo-ai/equilateral-agents-open-core`
+   - Repository: `https://github.com/Equilateral-AI/equilateral-agents-open-core`
    - Description: Our marketplace.json description
    - Category: Development Tools, AI/ML, DevOps
 3. Submit for review
@@ -114,13 +120,13 @@ npm install equilateral-agents-open-core
 ```json
 {
   "name": "equilateral-agents-open-core",
-  "description": "22 production-ready AI agents for security, quality, deployment",
+  "description": "22 self-learning AI agents with memory and community standards contribution",
   "source": {
     "source": "github",
-    "repo": "happyhippo-ai/equilateral-agents-open-core"
+    "repo": "Equilateral-AI/equilateral-agents-open-core"
   },
   "category": "development",
-  "tags": ["agents", "security", "quality", "compliance"]
+  "tags": ["agents", "self-learning", "memory", "security", "quality", "compliance"]
 }
 ```
 3. Create pull request
@@ -162,9 +168,9 @@ Our `.claude-plugin/marketplace.json` meets all requirements:
 | Required: `plugins` array | ✅ | 1 plugin entry |
 | Plugin: `name` | ✅ | "equilateral-agents-open-core" |
 | Plugin: `source` | ✅ | "." (root of repository) |
-| Plugin: `version` | ✅ | "2.0.2" |
-| Plugin: `description` | ✅ | Complete description |
-| Plugin: `commands` | ✅ | 9 commands listed |
+| Plugin: `version` | ✅ | "2.1.0" |
+| Plugin: `description` | ✅ | Complete description with v2.1.0 features |
+| Plugin: `commands` | ✅ | 10 commands listed (includes ea-memory) |
 | Plugin: `skills` | ✅ | 1 skill listed |
 | Plugin: `license` | ✅ | MIT |
 | Plugin: `keywords` | ✅ | Relevant keywords |
@@ -186,7 +192,7 @@ Add to `.claude/settings.json` (committed to git):
     "equilateral-agents": {
       "source": {
         "source": "github",
-        "repo": "happyhippo-ai/equilateral-agents-open-core"
+        "repo": "Equilateral-AI/equilateral-agents-open-core"
       }
     }
   }

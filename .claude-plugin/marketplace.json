@@ -1,16 +1,16 @@
 {
   "name": "equilateral-agents",
-  "version": "2.0.2",
-  "description": "EquilateralAgents - 22 production-ready AI agents with database-driven orchestration for security, quality, deployment, and compliance workflows. Includes open-core and enterprise features.",
+  "version": "2.1.0",
+  "description": "EquilateralAgents - 22 self-learning AI agents with community standards contribution. Features agent memory, pattern recognition, and workflow optimization for security, quality, deployment, and compliance.",
   "owner": {
     "name": "HappyHippo.ai",
     "email": "info@happyhippo.ai",
     "url": "https://happyhippo.ai"
   },
-  "homepage": "https://github.com/happyhippo-ai/equilateral-agents-open-core",
+  "homepage": "https://github.com/Equilateral-AI/equilateral-agents-open-core",
   "repository": {
     "type": "git",
-    "url": "https://github.com/happyhippo-ai/equilateral-agents-open-core.git"
+    "url": "https://github.com/Equilateral-AI/equilateral-agents-open-core.git"
   },
   "license": "MIT",
   "keywords": [
@@ -28,22 +28,25 @@
   "plugins": [
     {
       "name": "equilateral-agents-open-core",
-      "version": "2.0.2",
-      "description": "Complete EquilateralAgents open-core plugin with 22 AI agents, skills, and slash commands for security reviews, code quality analysis, deployment validation, infrastructure checks, and compliance workflows.",
+      "version": "2.1.0",
+      "description": "Self-learning AI agents that improve over time. Features agent memory (tracks last 100 executions), pattern recognition, community standards contribution, and workflow optimization. Includes security, quality, deployment, infrastructure, and compliance workflows.",
       "author": "HappyHippo.ai",
-      "homepage": "https://github.com/happyhippo-ai/equilateral-agents-open-core",
+      "homepage": "https://github.com/Equilateral-AI/equilateral-agents-open-core",
       "repository": {
         "type": "git",
-        "url": "https://github.com/happyhippo-ai/equilateral-agents-open-core.git"
+        "url": "https://github.com/Equilateral-AI/equilateral-agents-open-core.git"
       },
       "license": "MIT",
       "keywords": [
         "agents",
+        "self-learning",
+        "memory",
         "workflows",
         "security",
         "quality",
         "deployment",
-        "compliance"
+        "compliance",
+        "community-standards"
       ],
       "source": ".",
       "commands": [
@@ -52,6 +55,7 @@
         "ea-deploy-feature",
         "ea-infrastructure-check",
         "ea-test-workflow",
+        "ea-memory",
         "ea-list",
         "ea-gdpr-check",
         "ea-hipaa-compliance",
