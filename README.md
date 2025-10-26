@@ -7,6 +7,7 @@ Transform your AI coding assistant into a coordinated development team. Works wi
 [![npm version](https://badge.fury.io/js/equilateral-agents-open-core.svg)](https://www.npmjs.com/package/equilateral-agents-open-core)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D16.0.0-brightgreen.svg)](https://nodejs.org/)
+[![Claude Code Plugin](https://img.shields.io/badge/Claude_Code-Plugin-5A67D8?logo=anthropic&logoColor=white)](https://github.com/Equilateral-AI/equilateral-agents-open-core)
 
 ---
 
@@ -34,6 +35,48 @@ npm run memory:stats      # View statistics for all agents
 - 🔍 **Guaranteed src/ Scanning** - All agents now reliably scan source directories
 
 See [RELEASE_NOTES_v2.1.0.md](RELEASE_NOTES_v2.1.0.md) for complete details.
+
+---
+
+## 🚀 Installation
+
+### For Claude Code Users (Recommended)
+
+Install directly from the Claude Code marketplace:
+
+```bash
+/plugin marketplace add Equilateral-AI/equilateral-agents-open-core
+/plugin install equilateral-agents-open-core
+```
+
+Once installed, you'll have access to all slash commands:
+- `/ea:security-review` - Multi-layer security assessment
+- `/ea:code-quality` - Code analysis with quality scoring
+- `/ea:memory` - View agent learning statistics (NEW!)
+- `/ea:list` - See all available workflows
+
+**Benefits:**
+- ✅ **Zero Configuration** - Works immediately after installation
+- 🧠 **Self-Learning** - Agents automatically improve from execution history
+- 🔒 **Security First** - Built-in security scanning and compliance checks
+- 📊 **Evidence-Based** - Get audit trails and quality scores
+- 🤝 **Community Powered** - Contribute learned patterns back to the community
+
+### For Other AI Assistants (Cursor, Continue, Windsurf)
+
+Clone and run:
+
+```bash
+git clone https://github.com/Equilateral-AI/equilateral-agents-open-core.git
+cd equilateral-agents-open-core
+npm install && npm run wow
+```
+
+### For Standalone Use
+
+```bash
+npm install equilateral-agents-open-core
+```
 
 ---
 
