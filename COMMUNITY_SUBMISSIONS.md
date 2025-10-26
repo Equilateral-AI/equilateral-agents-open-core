@@ -209,9 +209,9 @@ For questions or follow-ups:
 
 | Repository | PR# | Status | Date Submitted | Date Merged |
 |------------|-----|--------|----------------|-------------|
-| hesreallyhim/awesome-claude-code-agents | | ⏳ TODO | | |
-| ccplugins/awesome-claude-code-plugins | | ⏳ TODO | | |
-| hesreallyhim/awesome-claude-code | | ⏳ TODO | | |
+| hesreallyhim/awesome-claude-code-agents | [#3](https://github.com/hesreallyhim/awesome-claude-code-agents/pull/3) | ✅ SUBMITTED | 2025-10-26 | |
+| ccplugins/awesome-claude-code-plugins | [#1](https://github.com/ccplugins/awesome-claude-code-plugins/pull/1) | ✅ SUBMITTED | 2025-10-26 | |
+| hesreallyhim/awesome-claude-code | [#267](https://github.com/hesreallyhim/awesome-claude-code/pull/267) | ✅ SUBMITTED | 2025-10-26 | |
 | davila7/claude-code-templates | | ⏳ TODO | | |
 | wshobson/agents | | ⏳ TODO | | |
 | VoltAgent/awesome-claude-code-subagents | | ⏳ TODO | | |
