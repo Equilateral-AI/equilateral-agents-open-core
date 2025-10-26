@@ -1,72 +1,25 @@
-# Development files
-.git/
-.github/
+# Exclude submodules from npm package
+.standards/
+.standards-community/
+
+# Exclude development files
+test-*.js
+scripts/add-pathscanner-to-constructors.js
+scripts/update-all-agents.js
+scripts/verify-pathscanner-rollout.js
+
+# Exclude documentation not needed in npm package
+AGENT_ROLLOUT_BREAKDOWN.md
+AGENT_UPDATE_TEMPLATE.md
+PATH_SCANNING_FIX.md
+PATH_SCANNING_IMPLEMENTATION_SUMMARY.md
+PATH_SCANNING_ROLLOUT_COMPLETE.md
+MARKETPLACE_SUBMISSION.md
+PLUGIN_VALIDATION.md
+
+# Exclude Claude Code plugin files (for GitHub installation only, not npm)
 .claude/
-.vscode/
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+.claude-plugin/
 
-# Demo and example files (exclude from npm package)
-demo-*.js
-examples/
-docs/
-tools/
-workflows/
-
-# Development scripts
-commit_changes.sh
-git_status.txt
-
-# Documentation that's not needed in npm package
-BYOL-TERMS.md
-COMMERCIAL.md
-AWS-MARKETPLACE.md
-GITHUB-MARKETPLACE.md
-CLAUDE.md
-CODE_OF_CONDUCT.md
-COMMUNITY-*.md
-CONTRIBUTING.md
-CONTRIBUTORS.md
-CLA.md
-IP-PROTECTION-AUDIT.md
-LICENSE-DUAL.md
-OPEN_CORE_STRATEGY.md
-SPECKIT_AGENT_INTEGRATION.md
-
-# AWS-specific files
-aws-marketplace/
-action.yml
-
-# Test files
-test/
+# Exclude tests
 tests/
-*.test.js
-__tests__/
-
-# Coverage reports
-coverage/
-.nyc_output/
-
-# IDE files
-.idea/
-*.swp
-*.swo
-*~
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# Node modules (should be ignored by default but being explicit)
-node_modules/
-
-# Environment files
-.env*
-!.env.example
-
-# Build artifacts
-dist/
-build/
-*.tgz
