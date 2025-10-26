@@ -42,7 +42,7 @@ See [RELEASE_NOTES_v2.1.0.md](RELEASE_NOTES_v2.1.0.md) for complete details.
 
 ### For Claude Code Users (Recommended)
 
-Install directly from the Claude Code marketplace:
+Install the plugin directly from GitHub:
 
 ```bash
 /plugin marketplace add Equilateral-AI/equilateral-agents-open-core
