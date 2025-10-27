@@ -30,12 +30,13 @@
       "name": "equilateral-agents-open-core",
       "version": "2.1.0",
       "description": "Self-learning AI agents that improve over time. Features agent memory (tracks last 100 executions), pattern recognition, community standards contribution, and workflow optimization. Includes security, quality, deployment, infrastructure, and compliance workflows.",
-      "author": "HappyHippo.ai",
-      "homepage": "https://github.com/Equilateral-AI/equilateral-agents-open-core",
-      "repository": {
-        "type": "git",
-        "url": "https://github.com/Equilateral-AI/equilateral-agents-open-core.git"
+      "author": {
+        "name": "HappyHippo.ai",
+        "email": "info@happyhippo.ai",
+        "url": "https://happyhippo.ai"
       },
+      "homepage": "https://github.com/Equilateral-AI/equilateral-agents-open-core",
+      "repository": "https://github.com/Equilateral-AI/equilateral-agents-open-core",
       "license": "MIT",
       "keywords": [
         "agents",
@@ -48,28 +49,22 @@
         "compliance",
         "community-standards"
       ],
-      "source": ".",
+      "source": "./",
       "commands": [
-        "ea-security-review",
-        "ea-code-quality",
-        "ea-deploy-feature",
-        "ea-infrastructure-check",
-        "ea-test-workflow",
-        "ea-memory",
-        "ea-list",
-        "ea-gdpr-check",
-        "ea-hipaa-compliance",
-        "ea-full-stack-dev"
+        "./.claude/commands/ea-security-review.md",
+        "./.claude/commands/ea-code-quality.md",
+        "./.claude/commands/ea-deploy-feature.md",
+        "./.claude/commands/ea-infrastructure-check.md",
+        "./.claude/commands/ea-test-workflow.md",
+        "./.claude/commands/ea-memory.md",
+        "./.claude/commands/ea-list.md",
+        "./.claude/commands/ea-gdpr-check.md",
+        "./.claude/commands/ea-hipaa-compliance.md",
+        "./.claude/commands/ea-full-stack-dev.md"
       ],
       "skills": [
-        "equilateral-agents"
-      ],
-      "documentation": {
-        "readme": "README.md",
-        "usage": "PLUGIN_USAGE.md",
-        "validation": "PLUGIN_VALIDATION.md",
-        "agents": "AGENT_INVENTORY.md"
-      }
+        "./.claude/skills/equilateral-agents"
+      ]
     }
   ]
 }

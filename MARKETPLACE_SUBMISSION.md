@@ -40,9 +40,15 @@ We've created a marketplace configuration at `.claude-plugin/marketplace.json`:
     {
       "name": "equilateral-agents-open-core",
       "version": "2.1.0",
-      "source": ".",
-      "commands": [10 commands],
-      "skills": ["equilateral-agents"]
+      "author": {
+        "name": "HappyHippo.ai",
+        "email": "info@happyhippo.ai",
+        "url": "https://happyhippo.ai"
+      },
+      "repository": "https://github.com/Equilateral-AI/equilateral-agents-open-core",
+      "source": "./",
+      "commands": ["./.claude/commands/ea-*.md"],
+      "skills": ["./.claude/skills/equilateral-agents"]
     }
   ]
 }
