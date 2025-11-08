@@ -363,30 +363,18 @@ const gaps = Object.entries(successRates)
 
 ### Automated Standards Organization
 
-The included `scripts/librarian-agent.js` maintains your standards library:
+**DIY Approach:**
 
-```bash
-# Organize standards library
-node scripts/librarian-agent.js
+You can build your own librarian agent to maintain your standards library. It should:
+- Scan all `.md` files in `.standards-local/`
+- Parse content to extract title, sections, keywords
+- Auto-classify into categories (security, architecture, performance, etc.)
+- Validate standard format (check for required sections)
+- Generate category READMEs and master INDEX
 
-# Dry run (see what would change)
-node scripts/librarian-agent.js --dry-run --verbose
-```
-
-**What it does:**
-- Scans all `.md` files in `.standards-local/`
-- Parses content to extract title, sections, keywords
-- Auto-classifies into correct category (security, architecture, performance, etc.)
-- Moves misplaced standards to correct directories
-- Archives deprecated standards to `.standards-local/.archive/`
-- Validates standard format (checks for required sections)
-- Finds cross-references between related standards
-- Generates category READMEs with grouped listings
-- Creates master `INDEX.md` with keyword navigation
-
-**Classification algorithm:**
+**Classification approach:**
 ```javascript
-// Analyzes title and content for category keywords
+// Basic keyword-based classification
 const categories = {
     security: ['auth', 'credential', 'password', 'token', 'vulnerability'],
     performance: ['n+1', 'query', 'cache', 'timeout', 'optimization'],
@@ -394,10 +382,19 @@ const categories = {
     // ...
 };
 
-// Scores each category based on keyword matches
-// Title matches weighted 3x higher than content matches
-// Selects highest-scoring category
+// Count keyword matches in title and content
+// Classify to highest-scoring category
 ```
+
+**Commercial Librarian Agent:**
+
+The commercial version includes a production-ready librarian agent with:
+- ML-based classification (learns from your patterns)
+- Automated cross-referencing (finds related standards)
+- Conflict detection (identifies overlapping or contradicting standards)
+- Automated archival (detects deprecated patterns)
+- Integration with 138+ existing standards
+- Real-time organization (as standards are created)
 
 ### Weekly Automation with Cron
 
@@ -409,11 +406,8 @@ Set up weekly knowledge harvest:
 # Run knowledge harvest every Monday at 9 AM
 0 9 * * MON cd /path/to/project && node scripts/harvest-knowledge.js
 
-# Organize standards library every Monday at 10 AM
-0 10 * * MON cd /path/to/project && node scripts/librarian-agent.js
-
 # Email results (optional)
-0 11 * * MON cd /path/to/project && node scripts/harvest-knowledge.js | mail -s "Knowledge Harvest Report" you@example.com
+0 10 * * MON cd /path/to/project && node scripts/harvest-knowledge.js | mail -s "Knowledge Harvest Report" you@example.com
 ```
 
 ### Integration with CI/CD
@@ -439,9 +433,6 @@ jobs:
 
       - name: Run knowledge harvest
         run: node scripts/harvest-knowledge.js --since=7d
-
-      - name: Organize standards
-        run: node scripts/librarian-agent.js
 
       - name: Upload report
         uses: actions/upload-artifact@v2
@@ -670,15 +661,19 @@ Both are valuable. Start with DIY scripts. Upgrade to commercial when you need c
 ## Summary
 
 **Manual approach:** Good for week 1-2, learning the process
+- Review agent memory files manually
+- Identify patterns yourself
+- Create standards as you notice them
 
 **Script automation:** Good for month 1+, scaling the process
-- `harvest-knowledge.js` - Weekly pattern analysis
-- `librarian-agent.js` - Automated organization
+- `harvest-knowledge.js` - Automated pattern analysis and recommendations
+- DIY librarian - Build your own organization scripts (or do manually)
 
 **Commercial automation:** Good for enterprises with multiple projects
-- Real-time pattern detection
+- Production-ready librarian agent (ML-based classification)
+- Real-time pattern detection (not just weekly)
 - Cross-enterprise learning
 - 138+ pre-built standards
-- Production-grade ML
+- Automated standard generation
 
-**Start simple. Add automation as you scale. Upgrade to commercial when the DIY approach becomes limiting.**
+**Start simple. Add harvest automation as you scale. Upgrade to commercial when you need the librarian agent or want to skip building 138+ standards.**
