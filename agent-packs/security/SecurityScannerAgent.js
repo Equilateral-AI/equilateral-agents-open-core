@@ -37,7 +37,8 @@ const crypto = require('crypto');
 
 class SecurityScannerAgent extends BaseAgent {
     constructor(config = {}) {
-        super('security-scanner', {
+        super({
+            agentId: 'security-scanner',
             agentType: 'security',
             capabilities: ['vulnerability_scan', 'dependency_check', 'basic_code_analysis', 'secrets_detection'],
             ...config

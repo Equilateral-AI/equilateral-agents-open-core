@@ -170,23 +170,45 @@ class BackendAuditorAgent {
      * Audit Lambda handler compliance
      */
     async auditHandlerCompliance(targetDir, results) {
-        const handlersDir = path.join(targetDir, 'src/backend/src/handlers');
-        
+        // Try multiple common handler locations
+        const possiblePaths = [
+            path.join(targetDir, 'src/backend/src/handlers'),
+            path.join(targetDir, 'backend/src/handlers'),
+            path.join(targetDir, 'src/handlers'),
+            path.join(targetDir, 'handlers'),
+            path.join(targetDir, 'lambda'),
+            path.join(targetDir, 'functions')
+        ];
+
+        let handlersDir = null;
+        for (const possiblePath of possiblePaths) {
+            try {
+                await fs.access(possiblePath);
+                handlersDir = possiblePath;
+                break;
+            } catch {
+                continue;
+            }
+        }
+
+        if (!handlersDir) {
+            console.log('📁 No handlers directory found in common locations');
+            this.passed.push({
+                category: 'handler_compliance',
+                message: 'No handlers to audit - acceptable for frontend-only projects or different structure',
+                searchedPaths: possiblePaths.length
+            });
+            return;
+        }
+
         try {
             const handlerFiles = await this.findHandlerFiles(handlersDir);
-            
+
             for (const handlerFile of handlerFiles) {
                 await this.auditSingleHandler(handlerFile, results);
             }
         } catch (error) {
-            if (error.code === 'ENOENT') {
-                console.log(`📁 No handlers directory found at ${handlersDir}`);
-                this.passed.push({
-                    category: 'handler_compliance',
-                    message: 'No handlers to audit - acceptable for frontend-only projects',
-                    path: handlersDir
-                });
-            } else {
+            if (error.code !== 'ENOENT') {
                 throw error;
             }
         }
@@ -196,7 +218,31 @@ class BackendAuditorAgent {
      * Audit API standards compliance
      */
     async auditAPIStandards(targetDir, results) {
-        const apiDir = path.join(targetDir, 'src/frontend/src/api');
+        // Try multiple common API locations
+        const possiblePaths = [
+            path.join(targetDir, 'src/frontend/src/api'),
+            path.join(targetDir, 'frontend/src/api'),
+            path.join(targetDir, 'src/api'),
+            path.join(targetDir, 'api'),
+            path.join(targetDir, 'src/services'),
+            path.join(targetDir, 'services')
+        ];
+
+        let apiDir = null;
+        for (const possiblePath of possiblePaths) {
+            try {
+                await fs.access(possiblePath);
+                apiDir = possiblePath;
+                break;
+            } catch {
+                continue;
+            }
+        }
+
+        if (!apiDir) {
+            console.log('📁 No API directory found in common locations');
+            return;
+        }
         
         try {
             const apiFiles = await this.findFilesRecursive(apiDir, /\.ts$/);

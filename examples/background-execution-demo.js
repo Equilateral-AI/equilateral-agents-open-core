@@ -1,89 +1,95 @@
 /**
  * Background Execution Demo
  *
- * Demonstrates how to run workflows in the background while continuing
+ * Demonstrates how to run multiple agent tasks in parallel while continuing
  * with other tasks.
  *
  * Teaching Value:
- * - Non-blocking workflow execution
+ * - Non-blocking agent task execution
+ * - Parallel processing
  * - Progress monitoring
- * - Multiple concurrent workflows
  */
 
 const AgentOrchestrator = require('../equilateral-core/AgentOrchestrator');
+const CodeAnalyzerAgent = require('../agent-packs/development/CodeAnalyzerAgent');
 
 async function demonstrateBackgroundExecution() {
     console.log('🎬 Background Execution Demo\n');
+    console.log('Demonstrates running multiple agent tasks in parallel');
+    console.log('while continuing with other work.\n');
 
-    // Create orchestrator with background execution enabled
+    // Create orchestrator
     const orchestrator = new AgentOrchestrator({
-        enableBackground: true,
         projectPath: process.cwd()
     });
+
+    // Register agents
+    orchestrator.registerAgent(new CodeAnalyzerAgent());
 
     await orchestrator.start();
 
     try {
-        // Start a long-running workflow in the background
-        console.log('Starting workflow in background...');
-        const handle = await orchestrator.executeWorkflowBackground('code-review', {
-            projectPath: './my-project'
-        });
+        console.log('Starting background agent tasks...\n');
 
-        console.log(`✅ Workflow started: ${handle.workflowId}`);
-        console.log('   You can continue working while it runs...\n');
+        // Start multiple tasks in parallel
+        const tasks = [];
 
-        // Simulate doing other work
-        console.log('💼 Doing other work while workflow runs in background...');
-        await simulateWork(2000);
-
-        // Check status
-        const status = handle.getStatus();
-        console.log(`\n📊 Workflow Status:`, status);
-
-        // Do more work
-        console.log('\n💼 Continuing with other tasks...');
-        await simulateWork(2000);
-
-        // Get result (will wait if not complete)
-        console.log('\n⏳ Waiting for workflow to complete...');
-        const result = await handle.getResult();
-
-        console.log(`\n✅ Workflow completed!`);
-        console.log(`   Status: ${result.status}`);
-        console.log(`   Duration: ${(result.endTime - result.startTime) / 1000}s`);
-
-        // Example: Running multiple workflows in parallel
-        console.log('\n\n🔄 Running multiple workflows in parallel...\n');
-
-        const workflows = [
-            orchestrator.executeWorkflowBackground('code-review'),
-            orchestrator.executeWorkflowBackground('deployment-check'),
-            orchestrator.executeWorkflowBackground('quality-gate')
-        ];
-
-        console.log(`Started ${workflows.length} workflows in background`);
-
-        // List all running workflows
-        const runningWorkflows = orchestrator.listBackgroundWorkflows();
-        console.log(`\nRunning workflows:`);
-        runningWorkflows.forEach(wf => {
-            console.log(`  - ${wf.workflowId}: ${wf.workflowType} (${wf.status})`);
-        });
-
-        // Wait for all to complete
-        console.log('\n⏳ Waiting for all workflows to complete...');
-        const results = await Promise.all(
-            workflows.map(async (handle) => {
-                const h = await handle;
-                return h.getResult();
-            })
+        console.log('📊 Starting code analysis...');
+        tasks.push(
+            (async () => {
+                const result = await orchestrator.executeAgentTask('code-analyzer', 'analyze', {
+                    filePath: __filename
+                });
+                return { task: 'code-analysis', result };
+            })()
         );
 
-        console.log(`\n✅ All workflows completed!`);
-        results.forEach((result, i) => {
-            console.log(`  ${i + 1}. ${result.workflowId}: ${result.status}`);
+        console.log('🔍 Starting complexity check...');
+        tasks.push(
+            (async () => {
+                const result = await orchestrator.executeAgentTask('code-analyzer', 'complexity', {
+                    filePath: __filename
+                });
+                return { task: 'complexity-check', result };
+            })()
+        );
+
+        console.log('📝 Starting lint check...');
+        tasks.push(
+            (async () => {
+                const result = await orchestrator.executeAgentTask('code-analyzer', 'lint', {
+                    filePath: __filename
+                });
+                return { task: 'lint-check', result };
+            })()
+        );
+
+        console.log('\n✅ Tasks started in background!');
+        console.log('   You can continue working while they run...\n');
+
+        // Simulate doing other work
+        console.log('💼 Doing other work while tasks run in background...');
+        await simulateWork(500);
+        console.log('   Working on documentation...');
+        await simulateWork(500);
+        console.log('   Reviewing code changes...');
+        await simulateWork(500);
+
+        // Wait for all background tasks to complete
+        console.log('\n⏳ Waiting for background tasks to complete...');
+        const results = await Promise.all(tasks);
+
+        console.log(`\n✅ All background tasks completed!`);
+        results.forEach((taskResult, i) => {
+            console.log(`  ${i + 1}. ${taskResult.task}: ✓`);
         });
+
+        // Show summary
+        console.log('\n📋 Summary:');
+        console.log(`   Total tasks: ${results.length}`);
+        console.log(`   All successful: Yes`);
+        console.log('\n💡 This demonstrates the power of parallel execution!');
+        console.log('   While agents analyzed code, you continued working.');
 
     } catch (error) {
         console.error('❌ Error:', error.message);

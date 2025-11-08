@@ -427,7 +427,17 @@ class UIUXSpecialistAgent {
         const searchPaths = [
             path.join(targetDir, 'src/frontend/src/components'),
             path.join(targetDir, 'src/frontend/src/features'),
-            path.join(targetDir, 'src/frontend/src/pages')
+            path.join(targetDir, 'src/frontend/src/pages'),
+            path.join(targetDir, 'frontend/src/components'),
+            path.join(targetDir, 'frontend/src/features'),
+            path.join(targetDir, 'frontend/src/pages'),
+            path.join(targetDir, 'src/components'),
+            path.join(targetDir, 'src/features'),
+            path.join(targetDir, 'src/pages'),
+            path.join(targetDir, 'components'),
+            path.join(targetDir, 'features'),
+            path.join(targetDir, 'pages'),
+            path.join(targetDir, 'app')  // Next.js app directory
         ];
 
         for (const searchPath of searchPaths) {
