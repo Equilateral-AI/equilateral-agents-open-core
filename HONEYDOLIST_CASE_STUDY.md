@@ -1,5 +1,5 @@
 # Case Study: HoneyDoList.vip
-## From Vacation Prototype to Production SaaS in 35 Hours
+## From Vacation Prototype to Production SaaS in 38-40 Hours
 
 > **Built with EquilateralAgents Commercial Edition**
 > *Demonstrating the power of AI agents + standards enforcement for solo founders*
@@ -25,7 +25,7 @@ But then he saw what his EquilateralAgents framework with standards enforcement 
 
 ### HoneyDoList.vip with EquilateralAgents:
 - **Timeline:** 2.5 months calendar time (Aug 12 - late Oct 2024)
-- **Active work:** 25-35 hours of strategic oversight
+- **Active work:** 38-40 hours of strategic oversight (including Cognito self-serve registration troubleshooting)
 - **Cost:** ~$60 in AI costs (Claude Pro subscription)
 - **Result:** Production-ready SaaS platform with paying customers
 
@@ -74,7 +74,7 @@ EquilateralAgents' execution:
 - **Security:** AWS Well-Architected security best practices
 - **Testing:** Automated test generation and validation
 
-**Total: ~35 hours of human time to production SaaS**
+**Total: ~38-40 hours of human time to production SaaS** (including Cognito troubleshooting)
 
 ---
 
@@ -137,15 +137,15 @@ HoneyDoList.vip follows the same architectural standards as HappyHippo's other p
 
 **AI-Accelerated Path (HoneyDoList.vip):**
 - Claude Pro: 3 months × $20/month = **$60**
-- James's time: 35 hours @ consulting rate ≈ $3,500-7,000 opportunity cost
-- Total: **$60 in direct costs** (or $3,560-7,060 including opportunity cost)
+- James's time: 38-40 hours @ consulting rate ≈ $3,800-8,000 opportunity cost
+- Total: **$60 in direct costs** (or $3,860-8,060 including opportunity cost)
 
 **Savings: $46,440-$193,000**
 
 ### Value Creation
 
 If HoneyDoList.vip reaches $200K ARR potential:
-- Value per hour of founder time: **$5,700/hour** ($200K ÷ 35 hours)
+- Value per hour of founder time: **$5,000-5,300/hour** ($200K ÷ 38-40 hours)
 - Cost to value ratio: **3,333:1** ($60 cost to $200K value)
 
 ### Time to Market
@@ -174,7 +174,7 @@ Solo founders become 1-person product companies:
 - **Quality:** Standards enforcement ensures production-grade output
 - **Speed:** 30-50x faster than traditional development
 
-### James's Role (35 hours)
+### James's Role (38-40 hours)
 
 ✅ Made key strategic decisions (COPPA compliance, subscription model, weather features)
 ✅ Validated quality and user experience
@@ -236,7 +236,7 @@ HoneyDoList.vip isn't a toy:
 
 **Live Platform:** https://honeydolist.vip
 
-Sign up and explore the app - it's real, it's in production, and it was built in 35 hours of founder time with EquilateralAgents Commercial.
+Sign up and explore the app - it's real, it's in production, and it was built in 38-40 hours of founder time with EquilateralAgents Commercial.
 
 ---
 
@@ -276,7 +276,7 @@ Sign up and explore the app - it's real, it's in production, and it was built in
 
 HoneyDoList.vip proves that **solo founders with AI agents can build production SaaS platforms in days, not months.**
 
-- **35 hours** of strategic oversight
+- **38-40 hours** of strategic oversight (including Cognito troubleshooting)
 - **$60** in AI costs
 - **2.5 months** calendar time
 - **Production-ready** SaaS platform

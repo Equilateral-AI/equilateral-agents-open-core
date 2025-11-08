@@ -6,10 +6,10 @@
 
 What if your AI agents learned from every execution and created standards that prevent future mistakes?
 
-Real example: HoneyDoList.vip - Production SaaS built in 35 hours (not months) with standards enforcement.
+Real example: HoneyDoList.vip - Production SaaS built in 38-40 hours (not months) with standards enforcement.
 
 📊 The Results:
-• 35 hours of founder time (vs 6 months traditional)
+• 38-40 hours of founder time (vs 6 months traditional)
 • $60 in AI costs (vs $50K-200K)
 • Production-ready: COPPA compliance, Stripe, AWS Well-Architected
 • 400K+ lines of code generated following enforced standards
@@ -32,7 +32,7 @@ The difference between prototype and production isn't code - it's standards.
 
 ## Medium Version (Blog Post Intro)
 
-### From Vacation Prototype to Production SaaS in 35 Hours
+### From Vacation Prototype to Production SaaS in 38-40 Hours
 
 In June 2024, I built a simple prototype during vacation: an app to track all those "honey do" tasks we promise our spouse - and forget.
 
@@ -43,7 +43,7 @@ By August, that prototype became HoneyDoList.vip - a production multi-user SaaS 
 - Weather intelligence ("cut lawn before Friday's rain")
 - Real paying customers
 
-**My active time: 35 hours**
+**My active time: 38-40 hours** (including Cognito troubleshooting)
 **AI costs: $60**
 **Lines of code: 400K+**
 
@@ -57,7 +57,7 @@ This isn't about AI writing code. Every tool does that. This is about AI agents 
 Each project gets faster because your institutional knowledge grows.
 
 **Traditional development:** 6 months + $100K
-**With EquilateralAgents:** 35 hours + $60
+**With EquilateralAgents:** 38-40 hours + $60
 
 That's a 30-50x efficiency multiplier.
 
@@ -74,7 +74,7 @@ Today we're releasing v2.5.0 with the complete methodology that powered HoneyDoL
 **TL;DR:**
 - 22 production-ready AI agents (open-core)
 - Complete standards methodology (15,700+ words of documentation)
-- Real-world proof: Production SaaS built in 35 hours vs 6 months traditional
+- Real-world proof: Production SaaS built in 38-40 hours vs 6 months traditional
 - Knowledge harvest automation - learn from every execution
 - "Teach you to fish" approach - build standards, don't just use them
 
@@ -122,7 +122,7 @@ When he saw what EquilateralAgents with standards enforcement could do, he gave 
 **Timeline:**
 - Start: August 12, 2024
 - Calendar time: 2.5 months (working part-time)
-- Active founder time: 35 hours
+- Active founder time: 38-40 hours (including Cognito troubleshooting)
 - Result: Production-ready SaaS at honeydolist.vip
 
 **Tech Stack:**
@@ -370,7 +370,7 @@ Each standard represents a mistake you'll never make again.
 
 ### Try the Real Thing
 
-**HoneyDoList.vip** - Production SaaS built in 35 hours with EquilateralAgents Commercial
+**HoneyDoList.vip** - Production SaaS built in 38-40 hours with EquilateralAgents Commercial
 
 Sign up at https://honeydolist.vip and explore:
 - Multi-user task management
@@ -378,7 +378,7 @@ Sign up at https://honeydolist.vip and explore:
 - Weather intelligence ("cut lawn before Friday's rain")
 - COPPA-compliant, Stripe-integrated, AWS Well-Architected
 
-**This isn't a demo. This is production.** And it was built in 35 hours of strategic oversight + AI agents with standards enforcement.
+**This isn't a demo. This is production.** And it was built in 38-40 hours of strategic oversight + AI agents with standards enforcement.
 
 ---
 
@@ -404,7 +404,7 @@ Sign up at https://honeydolist.vip and explore:
 - Every standard prevents future mistakes
 - Every project gets faster because knowledge compounds
 
-HoneyDoList.vip proves it works: **35 hours from prototype to production SaaS.**
+HoneyDoList.vip proves it works: **38-40 hours from prototype to production SaaS.**
 
 This isn't the future of development. **This is happening now.**
 
