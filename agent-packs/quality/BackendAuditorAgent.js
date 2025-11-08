@@ -167,51 +167,82 @@ class BackendAuditorAgent {
     }
 
     /**
-     * Audit Lambda handler compliance
+     * Audit backend server logic (handlers, controllers, routes, etc.)
+     * Supports multiple architectural patterns
      */
     async auditHandlerCompliance(targetDir, results) {
-        // Try multiple common handler locations
-        const possiblePaths = [
-            path.join(targetDir, 'src/backend/src/handlers'),
-            path.join(targetDir, 'backend/src/handlers'),
-            path.join(targetDir, 'src/handlers'),
-            path.join(targetDir, 'handlers'),
-            path.join(targetDir, 'lambda'),
-            path.join(targetDir, 'functions')
+        // Support multiple backend patterns - not just Lambda handlers
+        const backendPatterns = [
+            // Lambda/Serverless patterns
+            { path: path.join(targetDir, 'src/backend/src/handlers'), pattern: 'handlers' },
+            { path: path.join(targetDir, 'backend/src/handlers'), pattern: 'handlers' },
+            { path: path.join(targetDir, 'src/handlers'), pattern: 'handlers' },
+            { path: path.join(targetDir, 'handlers'), pattern: 'handlers' },
+            { path: path.join(targetDir, 'lambda'), pattern: 'lambda' },
+            { path: path.join(targetDir, 'functions'), pattern: 'functions' },
+
+            // MVC/Express patterns
+            { path: path.join(targetDir, 'src/controllers'), pattern: 'controllers' },
+            { path: path.join(targetDir, 'controllers'), pattern: 'controllers' },
+            { path: path.join(targetDir, 'src/routes'), pattern: 'routes' },
+            { path: path.join(targetDir, 'routes'), pattern: 'routes' },
+            { path: path.join(targetDir, 'api/routes'), pattern: 'routes' },
+
+            // GraphQL patterns
+            { path: path.join(targetDir, 'src/resolvers'), pattern: 'resolvers' },
+            { path: path.join(targetDir, 'resolvers'), pattern: 'resolvers' },
+
+            // Django/Flask patterns
+            { path: path.join(targetDir, 'views'), pattern: 'views' },
+            { path: path.join(targetDir, 'endpoints'), pattern: 'endpoints' },
+
+            // Microservices patterns
+            { path: path.join(targetDir, 'src/services'), pattern: 'services' },
+            { path: path.join(targetDir, 'services'), pattern: 'services' }
         ];
 
-        let handlersDir = null;
-        for (const possiblePath of possiblePaths) {
+        let foundPattern = null;
+        for (const { path: dirPath, pattern } of backendPatterns) {
             try {
-                await fs.access(possiblePath);
-                handlersDir = possiblePath;
+                await fs.access(dirPath);
+                foundPattern = { path: dirPath, pattern };
                 break;
             } catch {
                 continue;
             }
         }
 
-        if (!handlersDir) {
-            console.log('📁 No handlers directory found in common locations');
+        if (!foundPattern) {
+            console.log('📁 No backend logic directory found (handlers/controllers/routes/etc.)');
             this.passed.push({
-                category: 'handler_compliance',
-                message: 'No handlers to audit - acceptable for frontend-only projects or different structure',
-                searchedPaths: possiblePaths.length
+                category: 'backend_logic_compliance',
+                message: 'No backend logic to audit - acceptable for frontend-only, static sites, or unsupported patterns',
+                patternsSearched: backendPatterns.length
             });
             return;
         }
 
-        try {
-            const handlerFiles = await this.findHandlerFiles(handlersDir);
+        console.log(`📁 Found backend pattern: ${foundPattern.pattern} at ${foundPattern.path}`);
 
-            for (const handlerFile of handlerFiles) {
-                await this.auditSingleHandler(handlerFile, results);
+        try {
+            const backendFiles = await this.findBackendFiles(foundPattern.path);
+
+            for (const file of backendFiles) {
+                await this.auditSingleHandler(file, results);
             }
         } catch (error) {
             if (error.code !== 'ENOENT') {
                 throw error;
             }
         }
+    }
+
+    /**
+     * Find backend logic files (works for any pattern)
+     */
+    async findBackendFiles(dir) {
+        // Reuse the existing findHandlerFiles method
+        return await this.findHandlerFiles(dir);
     }
 
     /**
