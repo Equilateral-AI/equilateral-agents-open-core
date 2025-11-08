@@ -69,7 +69,14 @@
     "workflow:infrastructure": "node -e \"require('./workflows/infrastructure-validation-workflow.js')\"",
     "demo:background": "node examples/background-execution-demo.js",
     "demo:memory": "node examples/agent-memory-example.js",
-    "memory:stats": "node -e \"const {SimpleAgentMemory} = require('./index.js'); const fs = require('fs'); const dirs = fs.readdirSync('.agent-memory'); dirs.forEach(d => { const m = new SimpleAgentMemory(d); console.log(m.getStats()); });\""
+    "memory:stats": "node -e \"const {SimpleAgentMemory} = require('./index.js'); const fs = require('fs'); const dirs = fs.readdirSync('.agent-memory'); dirs.forEach(d => { const m = new SimpleAgentMemory(d); console.log(m.getStats()); });\"",
+    "harvest": "node scripts/harvest-knowledge.js",
+    "harvest:weekly": "node scripts/harvest-knowledge.js --since=7d",
+    "harvest:monthly": "node scripts/harvest-knowledge.js --since=30d",
+    "librarian": "node scripts/librarian-agent.js",
+    "librarian:dry-run": "node scripts/librarian-agent.js --dry-run --verbose",
+    "standards:organize": "node scripts/librarian-agent.js",
+    "standards:index": "node scripts/librarian-agent.js && echo 'See .standards-local/INDEX.md'"
   },
   "dependencies": {
     "aws-sdk": "^2.1691.0",
