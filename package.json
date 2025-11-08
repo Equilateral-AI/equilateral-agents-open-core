@@ -1,7 +1,7 @@
 {
   "name": "equilateral-agents-open-core",
-  "version": "2.1.0",
-  "description": "22 Self-Learning AI Agents with Community Standards Contribution - Production-Ready Orchestration Framework",
+  "version": "2.5.0",
+  "description": "22 Self-Learning AI Agents - Build Institutional Knowledge That Compounds Over Time - Production-Ready Orchestration Framework",
   "main": "index.js",
   "exports": {
     ".": "./index.js",
