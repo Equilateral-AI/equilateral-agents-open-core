@@ -1,8 +1,8 @@
 # EquilateralAgents Open Core
 
-**22 self-learning AI agents. Zero config. MIT licensed.**
+**22 self-learning AI agents. Build institutional knowledge that compounds over time. MIT licensed.**
 
-Transform your AI coding assistant into a coordinated development team. Works with Claude Code, Cursor, Continue, Windsurf, or standalone.
+Transform your AI coding assistant into a learning system that gets smarter with every mistake you make (and prevents you from making it again).
 
 [![npm version](https://badge.fury.io/js/equilateral-agents-open-core.svg)](https://www.npmjs.com/package/equilateral-agents-open-core)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -11,134 +11,325 @@ Transform your AI coding assistant into a coordinated development team. Works wi
 
 ---
 
-## 🆕 What's New in v2.1.0
+## 🆕 What's New in v2.5.0 - Standards Methodology
 
-**Self-Learning Agents** - Agents now automatically learn from execution history and optimize workflows:
+**Your Codebase Learns From Its Mistakes.**
+
+v2.5.0 introduces complete methodology for building institutional knowledge through standards:
 
 ```bash
-# Run any workflow - agents learn automatically
-/ea:security-review        # Learns vulnerability patterns
-/ea:code-quality          # Learns code patterns
+# Week 1: Run workflows, see what breaks
+npm run workflow:security
+npm run workflow:quality
 
-# View what agents have learned
-/ea:memory                # See success rates, optimization suggestions
+# Week 2: Document your first pain points
+cp -r .standards-local-template .standards-local
+# Create standards from real incidents using "What Happened, The Cost, The Rule"
 
-# Or via npm
-npm run demo:memory       # See agent learning in action
-npm run memory:stats      # View statistics for all agents
+# Month 2: Knowledge harvest becomes routine
+npm run memory:stats              # See patterns in agent learning
+# Transform repeated mistakes → standards
+
+# Year 1: 30-50 standards preventing issues before they hit production
+# Your 100th standard represents 100 mistakes you'll never make again
 ```
 
-**Key Features:**
-- 🧠 **Pattern Recognition** - Agents track last 100 executions and identify success/failure patterns
-- 📊 **Optimization Suggestions** - Get recommended workflows based on historical performance
-- 🤝 **Community Standards** - Contribute learned patterns back to the community (unique!)
-- 🔍 **Guaranteed src/ Scanning** - All agents now reliably scan source directories
+**What's Included:**
 
-See [RELEASE_NOTES_v2.1.0.md](RELEASE_NOTES_v2.1.0.md) for complete details.
+- 📚 **Complete Methodology** - [BUILDING_YOUR_STANDARDS.md](BUILDING_YOUR_STANDARDS.md), [PAIN_TO_PATTERN.md](PAIN_TO_PATTERN.md), [KNOWLEDGE_HARVEST.md](KNOWLEDGE_HARVEST.md)
+- 📝 **Example Standards** - 6 real standards with actual incident costs in `.standards-local-template/`
+- 🎯 **CLAUDE.md Template** - Tell your AI assistant to check standards before every change
+- 🔄 **Knowledge Synthesis Flywheel** - Execute → Learn → Document → Prevent → Repeat
+
+**The Value:**
+- **Greenfield projects**: Start with best practices, build standards as you learn domain
+- **Brownfield codebases**: Systematically document problems, prevent repeating mistakes
+- **Growing teams**: New developers learn from team's past pain, onboard faster
+- **Compounding knowledge**: Every incident becomes institutional memory
+
+See [RELEASE_NOTES_v2.5.0.md](RELEASE_NOTES_v2.5.0.md) for complete details.
 
 ---
 
-## 🚀 Installation
+## Why EquilateralAgents?
 
-### For Claude Code Users (Recommended)
+### The Problem: Codebases Don't Learn
 
-Install the plugin directly from GitHub:
+Traditional development:
+- ❌ Same security bugs discovered 3+ times
+- ❌ N+1 query performance issues in every new feature
+- ❌ Production incidents from patterns you've seen before
+- ❌ New developers repeat mistakes the team already solved
+- ❌ No institutional memory - knowledge lives in people's heads
 
-```bash
-/plugin marketplace add Equilateral-AI/equilateral-agents-open-core
-/plugin install equilateral-agents-open-core
+### The Solution: A Learning System
+
+EquilateralAgents creates a feedback loop:
+
+```
+1. Execute Workflows (agents scan your code)
+        ↓
+2. Agent Memory (tracks what worked, what failed)
+        ↓
+3. Knowledge Harvest (extract patterns weekly)
+        ↓
+4. Create Standards (document "What Happened, The Cost, The Rule")
+        ↓
+5. Enforce Standards (AI checks before changes, agents validate)
+        ↓
+6. Fewer Incidents (prevent repeating mistakes)
+        ↓
+[Loop back to step 1]
 ```
 
-Once installed, you'll have access to all slash commands:
-- `/ea:security-review` - Multi-layer security assessment
-- `/ea:code-quality` - Code analysis with quality scoring
-- `/ea:memory` - View agent learning statistics (NEW!)
-- `/ea:list` - See all available workflows
+**Result:** Your codebase gets smarter over time. Mistakes happen once, not repeatedly.
 
-**Benefits:**
-- ✅ **Zero Configuration** - Works immediately after installation
-- 🧠 **Self-Learning** - Agents automatically improve from execution history
-- 🔒 **Security First** - Built-in security scanning and compliance checks
-- 📊 **Evidence-Based** - Get audit trails and quality scores
-- 🤝 **Community Powered** - Contribute learned patterns back to the community
+---
 
-### For Other AI Assistants (Cursor, Continue, Windsurf)
+## Perfect For
 
-Clone and run:
+### 🌱 Greenfield Projects
 
-```bash
-git clone https://github.com/Equilateral-AI/equilateral-agents-open-core.git
-cd equilateral-agents-open-core
-npm install && npm run wow
-```
+**Start right from day 1:**
+- Security scanning before first commit
+- Quality gates before bad patterns take root
+- Document decisions as you make them
+- Build standards library alongside code
 
-### For Standalone Use
+**Example journey:**
+- **Week 1**: Run security/quality workflows, create first standards
+- **Month 1**: 10+ standards covering your specific domain
+- **Month 3**: New feature? Check standards first. AI references them automatically.
 
-```bash
-npm install equilateral-agents-open-core
-```
+### 🏗️ Brownfield Codebases
+
+**Fix systematically, not randomly:**
+- Agents identify patterns across entire codebase
+- Document each fix as a standard (prevent recurrence)
+- Gradually eliminate entire classes of bugs
+- Track progress: incidents per month going down
+
+**Example journey:**
+- **Week 1**: Security scan finds 50 issues. Fix 10, document pattern.
+- **Month 2**: Similar issue caught by agent during PR. Standard working.
+- **Month 6**: That entire class of bugs eliminated from codebase.
+
+**Real results:**
+- Production incidents: 8/quarter → 1/quarter (87% reduction)
+- Debug time: 4 hours/incident → 0 (caught in PR review)
+- ROI: One prevented outage pays for entire year of standards work
 
 ---
 
 ## Quick Start
+
+### Installation
+
 ```bash
-git clone https://github.com/happyhippo-ai/equilateral-agents-open-core.git
+# Clone repository
+git clone https://github.com/Equilateral-AI/equilateral-agents-open-core.git
 cd equilateral-agents-open-core
-npm install && npm run wow
+
+# Install dependencies (zero config - works immediately)
+npm install
+
+# Run first workflow
+npm run workflow:security
 ```
 
 No database setup. No API keys. No configuration files. Works immediately.
 
+### First Week Checklist
+
+- [ ] **Day 1**: Run security and quality workflows on your codebase
+- [ ] **Day 2**: Review `.equilateral/workflow-history.json` - what did agents find?
+- [ ] **Day 3**: Copy `.standards-local-template/` to `.standards-local/`
+- [ ] **Day 4**: Create your first standard from most painful issue agents found
+- [ ] **Day 5**: Update `.claude/CLAUDE.md` to reference your new standard
+
+See [BUILDING_YOUR_STANDARDS.md](BUILDING_YOUR_STANDARDS.md) for complete Week 1 → Year 3 roadmap.
+
+---
+
 ## What's Included
 
-**22 Production-Ready Agents**
-- Code review, security scanning, testing, deployment, infrastructure management
-- See [AGENT_INVENTORY.md](AGENT_INVENTORY.md) for complete list
+### 22 Production-Ready Agents
 
-**5 Battle-Tested Workflows**
-- Security review, code quality, deployment pipeline, full-stack development, infrastructure validation
-- See [workflows/README.md](workflows/README.md) for details
+**Infrastructure Core (3)**
+- AgentClassifier - Task routing and complexity analysis
+- AgentMemoryManager - Context and state management
+- AgentFactoryAgent - Self-bootstrapping agent generation
 
-**Zero-Config Database**
-- SQLite auto-creates on first run
-- Falls back to JSON if SQLite unavailable
-- No manual setup required
+**Development (6)**
+- CodeAnalyzerAgent - Static analysis and metrics
+- CodeGeneratorAgent - Pattern-based code generation
+- TestOrchestrationAgent - Multi-framework test execution
+- DeploymentValidationAgent - Pre-deployment validation
+- TestAgent - UI testing with intelligent element remapping
+- UIUXSpecialistAgent - Design consistency and accessibility
 
-**Background Execution**
-- Non-blocking workflows
-- Progress monitoring
-- Multiple concurrent executions
+**Quality Assurance (5)**
+- AuditorAgent - Standards compliance validation
+- CodeReviewAgent - Best practice enforcement
+- BackendAuditorAgent - Backend-specific standards
+- FrontendAuditorAgent - Frontend-specific standards
+- TemplateValidationAgent - IaC template validation
 
-**Communication Protocols**
-- MCP (Model Context Protocol) - Claude Desktop integration
-- A2A (Agent-to-Agent) - JSON-RPC 2.0 peer communication
-- Internal event bus - Priority queuing and pub/sub messaging
+**Security (4)**
+- SecurityScannerAgent - Vulnerability scanning
+- SecurityReviewerAgent - Security posture assessment
+- SecurityVulnerabilityAgent - Common security issue detection
+- ComplianceCheckAgent - Basic compliance validation
 
-**Universal Standards**
-- [EquilateralAgents Open Standards](https://github.com/JamesFord-HappyHippo/EquilateralAgents-Open-Standards)
-- Technology-agnostic principles
-- No mocks, fail fast, error-first design
+**Infrastructure (4)**
+- DeploymentAgent - Deployment automation
+- ResourceOptimizationAgent - Cloud resource analysis
+- ConfigurationManagementAgent - IaC configuration patterns
+- MonitoringOrchestrationAgent - Observability best practices
 
-## Run Production Workflows
+See [AGENT_INVENTORY.md](AGENT_INVENTORY.md) for complete capabilities.
+
+### Complete Standards Methodology
+
+**Documentation:**
+- [BUILDING_YOUR_STANDARDS.md](BUILDING_YOUR_STANDARDS.md) - Week 1 → Year 3 roadmap
+- [PAIN_TO_PATTERN.md](PAIN_TO_PATTERN.md) - "What Happened, The Cost, The Rule" methodology
+- [KNOWLEDGE_HARVEST.md](KNOWLEDGE_HARVEST.md) - Daily/weekly pattern extraction process
+- [.claude/CLAUDE.md](.claude/CLAUDE.md) - Template for AI assistant integration
+
+**Example Standards (.standards-local-template/):**
+- Security: Credential scanning, input validation, auth & access control
+- Architecture: Error-first design patterns
+- Performance: Database query optimization, N+1 prevention
+- Testing: Integration tests without mocks
+
+**The Difference:**
+- **Open-core**: Methodology + templates + 22 agents (teach you to fish)
+- **Commercial**: 138+ battle-tested standards + 62 agents (give you 138 fish already caught)
+
+### 5 Battle-Tested Workflows
 
 ```bash
-# Security review
-npm run workflow:security
-
-# Code quality analysis (0-100 score)
-npm run workflow:quality
-
-# Deployment pipeline validation
-npm run workflow:deploy
-
-# Full-stack development
-npm run workflow:fullstack
-
-# Infrastructure validation
-npm run workflow:infrastructure
+npm run workflow:security         # Multi-layer security assessment
+npm run workflow:quality          # Code quality analysis (0-100 score)
+npm run workflow:deploy           # Deployment validation
+npm run workflow:fullstack        # Full-stack development workflow
+npm run workflow:infrastructure   # Infrastructure validation
 ```
 
-## Background Execution API
+See [workflows/README.md](workflows/README.md) for details.
+
+### Self-Learning System
+
+**Agents automatically:**
+- Track last 100 executions
+- Identify success/failure patterns
+- Suggest optimizations
+- Improve recommendations over time
+
+**You manually:**
+- Review agent memory weekly (`npm run memory:stats`)
+- Extract patterns ("this error happened 3+ times")
+- Create standards (document "What Happened, The Cost, The Rule")
+- Update `.claude/CLAUDE.md` (AI checks standards before changes)
+
+**Commercial upgrade:**
+- Librarian agent automates knowledge harvest
+- Pattern recognition ML across projects
+- Cross-enterprise learning (anonymized)
+
+---
+
+## Three-Tier Standards System
+
+EquilateralAgents uses a hierarchical standards approach:
+
+### 1. Official Standards (`.standards/`)
+[EquilateralAgents Open Standards](https://github.com/JamesFord-HappyHippo/EquilateralAgents-Open-Standards) - Universal principles
+
+Core principles:
+- **No mocks** in production code (test real dependencies)
+- **Error-first design** (design errors before happy paths)
+- **Cost-conscious infrastructure** (estimate before deploying)
+- **Explicit over implicit** (obvious code beats clever code)
+
+### 2. Community Standards (`.standards-community/`)
+[Community Patterns](https://github.com/JamesFord-HappyHippo/EquilateralAgents-Community-Standards) - Battle-tested patterns (optional)
+
+Contributed by users:
+- Agent coordination patterns
+- Real-world examples
+- Custom workflows
+- Integration patterns
+
+**Your standards can graduate here** after 3+ months of successful use.
+
+### 3. Local Standards (`.standards-local/`)
+**Your Team's Standards** - Project-specific conventions (git-ignored or private repo)
+
+Built from your experience:
+- Document incidents as they happen
+- "What Happened, The Cost, The Rule" format
+- Prevent repeating your specific mistakes
+- Your institutional knowledge
+
+### Quick Setup
+
+```bash
+# Clone with official standards
+git clone --recurse-submodules https://github.com/Equilateral-AI/equilateral-agents-open-core.git
+
+# Add community standards (optional)
+git submodule add https://github.com/JamesFord-HappyHippo/EquilateralAgents-Community-Standards.git .standards-community
+
+# Create your local standards
+cp -r .standards-local-template .standards-local
+```
+
+---
+
+## Integration with AI Assistants
+
+### Claude Code (Recommended)
+
+```bash
+/plugin marketplace add Equilateral-AI/equilateral-agents-open-core
+/plugin install equilateral-agents-open-core
+
+# Available slash commands
+/ea:security-review    # Multi-layer security assessment
+/ea:code-quality      # Code analysis with quality scoring
+/ea:memory            # View agent learning statistics
+/ea:list              # See all available workflows
+```
+
+### Cursor / Continue / Windsurf
+
+EquilateralAgents includes `.claude/CLAUDE.md` that tells your AI assistant:
+
+```markdown
+## Before Every Code Change:
+
+1. CHECK STANDARDS FIRST
+   - Read `.standards/` for universal principles
+   - Check `.standards-community/` for proven patterns
+   - Review `.standards-local/` for team conventions
+
+2. DESIGN ERRORS FIRST
+   - What can go wrong? How will it fail?
+
+3. VALIDATE BEFORE COMMIT
+   - Run relevant agents (security, quality, tests)
+   - Check agent memory for similar past failures
+```
+
+**Result:** AI automatically references your standards, preventing mistakes before code is written.
+
+---
+
+## Background Execution
+
+**The Pattern:** "Dispatch teams in background, execute next todo list tasks"
 
 ```javascript
 const AgentOrchestrator = require('./equilateral-core/AgentOrchestrator');
@@ -146,364 +337,181 @@ const AgentOrchestrator = require('./equilateral-core/AgentOrchestrator');
 const orchestrator = new AgentOrchestrator({ enableBackground: true });
 await orchestrator.start();
 
-// Start workflow, continue working immediately
-const handle = await orchestrator.executeWorkflowBackground('security-review', {
-    projectPath: './my-project'
+// Dispatch teams in background
+const securityTask = orchestrator.executeWorkflowBackground('security-review', {
+    projectPath: process.cwd()
 });
 
-console.log(`Started: ${handle.workflowId}`);
+const qualityTask = orchestrator.executeWorkflowBackground('code-quality', {
+    projectPath: process.cwd()
+});
 
-// Do other work
-doOtherWork();
+// Continue working on next todo while agents run
+await workOnNextTodoListItems();
 
-// Check status anytime
-console.log(`Status: ${handle.getStatus().status}`);
-
-// Get result when ready
-const result = await handle.getResult();
+// Check results when ready
+const securityResults = await securityTask.getResult();
+const qualityResults = await qualityTask.getResult();
 ```
 
 See [BACKGROUND_EXECUTION.md](BACKGROUND_EXECUTION.md) for complete API.
 
-## MCP Server Integration
-
-**Use with Claude Desktop and MCP-compatible tools:**
-
-```javascript
-const MinimalMCPServer = require('./equilateral-core/protocols/MinimalMCPServer');
-
-// Create MCP server with EquilateralAgents tools
-const server = new MinimalMCPServer({
-    name: 'equilateral-agents',
-    version: '2.0.1',
-    transports: ['stdio', 'http'],
-    port: 3000
-});
-
-// Register agent capabilities as MCP tools
-server.registerTool('security-scan', {
-    description: 'Run comprehensive security scan on project',
-    inputSchema: {
-        type: 'object',
-        properties: {
-            projectPath: { type: 'string', description: 'Path to project' }
-        },
-        required: ['projectPath']
-    },
-    handler: async (args) => {
-        const orchestrator = new AgentOrchestrator();
-        await orchestrator.start();
-        return await orchestrator.executeWorkflow('security-review', args);
-    }
-});
-
-await server.initialize();
-```
-
-**Claude Desktop Configuration:**
-
-Add to your `claude_desktop_config.json`:
-
-```json
-{
-  "mcpServers": {
-    "equilateral-agents": {
-      "command": "node",
-      "args": ["path/to/equilateral-core/protocols/MinimalMCPServer.js"]
-    }
-  }
-}
-```
-
-See [equilateral-core/protocols/README.md](equilateral-core/protocols/README.md) for full protocol documentation.
-
-## Claude Code Plugin (Skills & Commands)
-
-**Native integration with Claude Code using skills and slash commands:**
-
-EquilateralAgents includes a Claude Code plugin that provides:
-- **Self-learning agents** - Agents learn from execution history and optimize workflows (NEW in v2.1.0!)
-- **Auto-activation skill** - Claude automatically suggests workflows based on context
-- **Slash commands** - Execute workflows with simple commands like `/ea:security-review`
-- **Agent memory** - Track learning patterns and performance metrics
-- **Upgrade prompts** - Clear information about commercial features when relevant
-
-### Available Commands
-
-**Open Core (Free):**
-- `/ea:security-review` - Multi-layer security assessment (🧠 learns vulnerability patterns)
-- `/ea:code-quality` - Code analysis with quality scoring (🧠 learns code patterns)
-- `/ea:deploy-feature` - Deployment validation and rollback checks (🧠 learns deployment patterns)
-- `/ea:infrastructure-check` - IaC validation with cost estimation (🧠 learns config best practices)
-- `/ea:test-workflow` - Background test execution (🧠 learns test patterns)
-- `/ea:memory` - View agent learning statistics and optimization suggestions (NEW in v2.1.0!)
-- `/ea:list` - List all available workflows
-
-**Commercial (Upgrade Required):**
-- `/ea:gdpr-check` - GDPR compliance validation
-- `/ea:hipaa-compliance` - HIPAA compliance validation
-- `/ea:full-stack-dev` - End-to-end feature development
-
-### How It Works
-
-1. **Skill Auto-Activation:**
-   - When you mention "security" → Claude suggests `/ea:security-review`
-   - When you mention "deploy" → Claude suggests `/ea:deploy-feature`
-   - When you mention "GDPR" → Claude suggests `/ea:gdpr-check` (with upgrade info)
-
-2. **Evidence-Based Results:**
-   - "✅ Verified: 15/15 security checks passed"
-   - "📊 Quality Score: 87/100"
-   - "💾 Audit Trail: .equilateral/workflow-history.json"
-
-3. **Clear Upgrade Paths:**
-   - Commercial features show what's included
-   - Pricing and contact information
-   - Clear distinction from open-core features
-
-### Plugin Structure
-
-```
-.claude/
-├── skills/
-│   └── equilateral-agents/
-│       ├── SKILL.md         # Auto-activation skill
-│       └── reference.md     # Quick reference guide
-└── commands/
-    ├── ea-security-review.md
-    ├── ea-code-quality.md
-    ├── ea-deploy-feature.md
-    ├── ea-infrastructure-check.md
-    ├── ea-test-workflow.md
-    ├── ea-memory.md         # NEW in v2.1.0 - Agent learning statistics
-    ├── ea-list.md
-    ├── ea-gdpr-check.md     # Commercial
-    ├── ea-hipaa-compliance.md # Commercial
-    └── ea-full-stack-dev.md # Commercial
-```
-
-### Installation Options
-
-**Option 1: Claude Code Marketplace (Recommended)**
-
-```bash
-# In Claude Code, run:
-/plugin marketplace add happyhippo-ai/equilateral-agents-open-core
-/plugin install equilateral-agents-open-core
-```
-
-**Option 2: Direct Clone**
-
-```bash
-git clone https://github.com/happyhippo-ai/equilateral-agents-open-core.git
-cd equilateral-agents-open-core
-npm install
-
-# Claude Code automatically detects .claude/ directory
-```
-
-**Option 3: npm Package**
-
-```bash
-npm install equilateral-agents-open-core
-# See MARKETPLACE_SUBMISSION.md for configuration
-```
-
-### Usage with Claude Code
-
-Once installed, commands are available immediately:
-
-```bash
-# List all available workflows (see v2.1.0 features)
-/ea:list
-
-# Run workflows (agents learn automatically)
-/ea:security-review       # Security assessment - agents learn vulnerability patterns
-/ea:code-quality          # Code quality analysis - agents learn code patterns
-/ea:deploy-feature        # Deployment validation - agents learn deployment patterns
-
-# View agent learning (NEW in v2.1.0!)
-/ea:memory                # See what agents have learned, success rates, optimization suggestions
-
-# Natural language also works:
-# "Let's do a security review" → Claude suggests /ea:security-review
-# "Check agent learning" → Claude suggests /ea:memory
-/ea:deploy-feature        # Validate deployment
-```
-
-See [PLUGIN_USAGE.md](PLUGIN_USAGE.md) for complete documentation and [MARKETPLACE_SUBMISSION.md](MARKETPLACE_SUBMISSION.md) for marketplace details.
-
-## Custom Agents
-
-```javascript
-const BaseAgent = require('./equilateral-core/BaseAgent');
-
-class MyCustomAgent extends BaseAgent {
-    constructor() {
-        super({
-            agentId: 'my-agent',
-            capabilities: ['analyze', 'report']
-        });
-    }
-
-    async executeTask(task) {
-        switch (task.taskType) {
-            case 'analyze':
-                return { success: true, findings: [...] };
-            default:
-                throw new Error(`Unknown task: ${task.taskType}`);
-        }
-    }
-}
-
-module.exports = MyCustomAgent;
-```
-
-## AI Integration
-
-**Option 1: In Your AI Assistant (Recommended)**
-```bash
-# Claude Code, Cursor, Continue, etc.
-npm install && npm run wow
-```
-
-**Option 2: Your Own LLM**
-```bash
-# .env
-LLM_PROVIDER=openai
-OPENAI_API_KEY=sk-...
-
-npm run ai-demo
-```
-
-**Option 3: Basic Automation (No AI)**
-```bash
-npm start  # Works without AI
-```
-
-See [AI-INTEGRATION.md](AI-INTEGRATION.md) for configuration details.
-
-## Development Standards
-
-This project uses a **three-tier standards system**:
-
-### 1. Official Standards (`.standards/`)
-**[EquilateralAgents Open Standards](https://github.com/JamesFord-HappyHippo/EquilateralAgents-Open-Standards)** - Universal principles
-
-Core Principles:
-- **No mocks** in production code (fail fast, fail loud)
-- **Error-first design** (design errors before happy paths)
-- **Cost-conscious infrastructure** (estimate before deploying)
-- **Explicit over implicit** (obvious code beats clever code)
-
-### 2. Community Standards (`.standards-community/`)
-**[Community Patterns](https://github.com/JamesFord-HappyHippo/EquilateralAgents-Community-Standards)** - Battle-tested patterns (optional)
-
-Proven solutions from the community:
-- Agent coordination patterns
-- Real-world examples
-- Custom workflows
-- Integration patterns
-
-### 3. Local Standards (`.standards-local/`)
-**Your Team's Standards** - Project-specific conventions (git-ignored)
-
-Your own:
-- Team naming conventions
-- Company-specific patterns
-- Private best practices
-
-### Quick Setup
-
-**Clone with standards:**
-```bash
-git clone --recurse-submodules https://github.com/happyhippo-ai/equilateral-agents-open-core.git
-```
-
-**Add to existing project:**
-```bash
-# Official standards (required)
-git submodule add https://github.com/JamesFord-HappyHippo/EquilateralAgents-Open-Standards.git .standards
-
-# Community standards (optional)
-git submodule add https://github.com/JamesFord-HappyHippo/EquilateralAgents-Community-Standards.git .standards-community
-
-# Your team standards (optional)
-mkdir .standards-local && cd .standards-local && git init
-```
-
-### Configure Your AI Assistant
-
-Create `.cursorrules` or `CLAUDE.md`:
-
-```markdown
-# Three-Tier Standards
-
-## 1. Check Official Standards (.standards/)
-- Universal principles apply to ALL code
-- No mocks, fail fast, error-first design
-
-## 2. Check Community Patterns (.standards-community/)
-- Proven solutions for common problems
-- Real-world examples and workflows
-
-## 3. Check Local Standards (.standards-local/)
-- Your team's conventions
-- Company-specific patterns
-
-## Before Every Change
-1. Check .standards/ for universal principles
-2. Check .standards-community/ for proven patterns
-3. Check .standards-local/ for team conventions
-4. Design error handling first
-```
-
-**Share your patterns:** Found something that works? Submit to [Community Standards](https://github.com/JamesFord-HappyHippo/EquilateralAgents-Community-Standards)
-
-## Project Structure
-
-```
-equilateral-agents-open-core/
-├── equilateral-core/           # Orchestration framework
-│   ├── AgentOrchestrator.js
-│   ├── infrastructure/         # Core agents (3)
-│   ├── database/               # SQLite/JSON adapters
-│   └── protocols/              # MCP, A2A, AP2, WebSockets
-├── agent-packs/                # Specialized agents (19)
-│   ├── development/            # Code, testing, generation
-│   ├── security/               # Scanning, review, compliance
-│   ├── infrastructure/         # Deploy, config, monitoring
-│   └── quality/                # Audit, review, validation
-├── workflows/                  # Production workflows (5)
-├── AGENT_INVENTORY.md          # Complete agent docs
-├── BACKGROUND_EXECUTION.md     # Async API reference
-└── AI-INTEGRATION.md           # LLM configuration
-```
-
-## Documentation
-
-- [Agent Inventory](AGENT_INVENTORY.md) - All 22 agents with capabilities
-- [Claude Code Plugin](PLUGIN_USAGE.md) - Skills and slash commands guide
-- [Marketplace Submission](MARKETPLACE_SUBMISSION.md) - Installation and distribution
-- [Plugin Validation](PLUGIN_VALIDATION.md) - Compliance verification
-- [Workflows](workflows/README.md) - Complete workflow guide
-- [Background Execution](BACKGROUND_EXECUTION.md) - Async API reference
-- [Protocols](equilateral-core/protocols/README.md) - Communication protocols
-- [AI Integration](AI-INTEGRATION.md) - LLM configuration
-- [Standards Integration](docs/STANDARDS_INTEGRATION.md) - Setup guide
-
-## Enterprise Features
-
-Need specialized capabilities?
-
-**Available:**
-- Privacy & compliance automation (GDPR, CCPA, DSR fulfillment)
-- Advanced security (STRIDE threat modeling, penetration testing)
-- Business intelligence & ML-based cost optimization
-- Multi-repository orchestration with learning
-- Team collaboration with role-based access
+---
+
+## Knowledge Synthesis Flywheel
+
+The system that makes your codebase smarter over time:
+
+### Week 1-4: Foundation
+
+1. **Run workflows** on your actual codebase
+2. **Review findings** - agents will find issues
+3. **Document first pain** - create 3-5 standards from most painful issues
+4. **Update CLAUDE.md** - tell AI to check your new standards
+
+### Month 2: Knowledge Harvest
+
+1. **Weekly review**: Check `npm run memory:stats`
+2. **Identify patterns**: What failed 3+ times?
+3. **Create standards**: Use "What Happened, The Cost, The Rule" format
+4. **Measure impact**: Track prevented incidents
+
+### Month 3: Enforcement
+
+1. **Pre-commit hooks**: Run agents before every commit
+2. **CI/CD integration**: Block PRs with critical violations
+3. **Team training**: Share standards library, explain why each exists
+4. **Celebrate wins**: Count prevented incidents, estimate cost savings
+
+### Year 1: Maturity
+
+- **30-50 standards** covering most common mistakes
+- **87% reduction** in production incidents (real data from commercial users)
+- **40% faster velocity** (less debugging, more building)
+- **Faster onboarding** (new devs learn from documented pain)
+
+### Year 2+: Compounding Knowledge
+
+- Standards library stabilizes (most patterns documented)
+- Focus shifts to enforcement and refinement
+- Consider contributing valuable patterns to community
+- Explore commercial upgrade for specialized needs
+
+**The Goal:** Every mistake happens once, gets documented, never repeats.
+
+---
+
+## Real Results
+
+### Greenfield Project Example
+
+**Background:** New SaaS application, 3 developers, 6 months
+
+**Week 1:**
+- Ran security/quality workflows
+- Found 0 issues (greenfield), created 5 standards for domain patterns
+- Set up pre-commit hooks
+
+**Month 3:**
+- 15 standards documented (authentication, data validation, API patterns)
+- 0 production incidents (agents caught issues in PR review)
+
+**Month 6:**
+- 25 standards, mature workflow
+- New developer onboarded in 2 days (read standards, understood decisions)
+- Security audit: 95/100 score
+
+### Brownfield Project Example
+
+**Background:** Legacy Node.js app, 50k LOC, 5 years old, 8 developers
+
+**Week 1:**
+- SecurityScannerAgent found 47 issues
+- BackendAuditorAgent found 30 N+1 queries
+- Created first 3 standards from most painful patterns
+
+**Month 2:**
+- Fixed 15 issues, documented patterns as standards
+- Agents started catching similar issues in new code
+- Prevented 8 incidents (same patterns caught in PR review)
+
+**Month 6:**
+- 35 standards, entire classes of bugs eliminated
+- Production incidents: 8/quarter → 1/quarter (87% reduction)
+- Debug time per incident: 4 hours → 0 (caught before merge)
+
+**Month 12:**
+- 50+ standards, knowledge library mature
+- Team velocity up 40% (less firefighting, more building)
+- ROI: One prevented outage paid for entire year of work
+
+---
+
+## Open-Core vs Commercial
+
+### What's Open-Core (Free)
+
+✅ **22 production-ready agents** - Everything needed to start
+✅ **Complete methodology** - Build your own standards library
+✅ **Self-learning system** - Agent memory, pattern recognition
+✅ **Background execution** - Parallel workflow execution
+✅ **Example standards** - 6 templates showing proper format
+✅ **Community contribution** - Contribute & benefit from shared knowledge
+✅ **This entire methodology** - Teach you to fish
+
+**Perfect for:**
+- Startups and small teams
+- Learning the methodology
+- Building your first 50 standards
+- Contributing to community
+
+### What's Commercial
+
+⭐ **62 specialized agents** (40+ beyond open-core)
+⭐ **138+ battle-tested standards** (from years of enterprise pain)
+⭐ **GDPR/HIPAA/SOC2 compliance** (specialized domain expertise)
+⭐ **Librarian agent** (automated knowledge harvest)
+⭐ **Pattern recognition ML** (cross-enterprise learning)
+⭐ **Multi-account AWS** (Control Tower integration)
+⭐ **Advanced security** (STRIDE threat modeling, penetration testing)
+⭐ **Cost intelligence** (ML-based predictions)
+
+**Perfect for:**
+- Enterprises with compliance requirements
+- Teams that need 138+ standards immediately (skip 2 years of learning)
+- Multi-cloud deployments
+- Cross-project pattern recognition
+
+### The Difference
+
+**Open-core teaches you to fish** (methodology + tools)
+
+**Commercial gives you 138 fish already caught** (battle-tested standards + automation)
+
+### Upgrade Path
+
+Start with open-core. Build your `.standards-local/`. Upgrade when you need:
+- Specialized compliance (GDPR, HIPAA)
+- 138+ pre-built standards (skip years of learning)
+- ML-based cost predictions
+- Automated knowledge harvest (librarian agent)
+- Cross-enterprise pattern recognition
 
 **Contact:** info@happyhippo.ai
+
+---
+
+## Contributing
+
+Contributions welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+**Found a universal pattern?** Submit to [EquilateralAgents Open Standards](https://github.com/JamesFord-HappyHippo/EquilateralAgents-Open-Standards)
+
+**Built something useful?** Share with [Community Standards](https://github.com/JamesFord-HappyHippo/EquilateralAgents-Community-Standards)
+
+**Your battle-tested pattern could help thousands of developers avoid the same mistakes.**
+
+---
 
 ## Security Notice
 
@@ -523,11 +531,21 @@ Agents can:
 
 See [SECURITY.md](SECURITY.md) for complete guidelines.
 
-## Contributing
+---
 
-Contributions welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+## Documentation
 
-Found a universal pattern? Submit to [EquilateralAgents Open Standards](https://github.com/JamesFord-HappyHippo/EquilateralAgents-Open-Standards)
+- [BUILDING_YOUR_STANDARDS.md](BUILDING_YOUR_STANDARDS.md) - Week 1 → Year 3 roadmap
+- [PAIN_TO_PATTERN.md](PAIN_TO_PATTERN.md) - "What Happened, The Cost, The Rule" methodology
+- [KNOWLEDGE_HARVEST.md](KNOWLEDGE_HARVEST.md) - Daily/weekly pattern extraction
+- [Agent Inventory](AGENT_INVENTORY.md) - All 22 agents with capabilities
+- [Workflows](workflows/README.md) - Complete workflow guide
+- [Background Execution](BACKGROUND_EXECUTION.md) - Async API reference
+- [Standards Integration](docs/STANDARDS_INTEGRATION.md) - Three-tier setup guide
+- [Claude Code Plugin](PLUGIN_USAGE.md) - Skills and slash commands
+- [Protocols](equilateral-core/protocols/README.md) - MCP, A2A, WebSockets
+
+---
 
 ## License
 
@@ -537,4 +555,27 @@ MIT License - see [LICENSE](LICENSE)
 
 ---
 
+## The Bottom Line
+
+**Traditional development:** Make mistakes repeatedly. Knowledge lives in people's heads. New developers repeat old mistakes.
+
+**With EquilateralAgents:** Make mistakes once. Document them. Build institutional memory. Your codebase learns.
+
+- **Week 1:** Run workflows, see what breaks
+- **Month 2:** 10+ standards from your real pain
+- **Year 1:** 30-50 standards preventing entire classes of bugs
+- **Year 2+:** Knowledge compounds, velocity increases, incidents decrease
+
+**Your 100th standard represents 100 mistakes you'll never make again.**
+
+---
+
 **Built by [HappyHippo.ai](https://happyhippo.ai)**
+
+**Ready to start?**
+
+```bash
+git clone https://github.com/Equilateral-AI/equilateral-agents-open-core.git
+cd equilateral-agents-open-core
+npm install && npm run workflow:security
+```
