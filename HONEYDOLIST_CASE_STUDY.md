@@ -63,7 +63,7 @@ Following the battle-tested HappyHippo hosted platform pattern:
 - Open-Meteo weather API
 - Real-time WebSocket updates for family collaboration
 
-**Architecture Pattern ("Tim-Combo"):**
+**Architecture Pattern (Equilateral Standards-Enforced):**
 Enforcing a proven serverless pattern builds velocity and resilience. Key principles:
 - 7 sacred helpers copied to Lambda root (no connection pooling)
 - Single cached PostgreSQL client
@@ -194,7 +194,7 @@ During a TypeScript conversion project, mock data hid real integration failures.
 - **Prevention:** Explicit per-function authorization only
 - **Savings:** 2 days × future projects = compounding returns
 
-**2. "Tim-Combo Lambda Packaging" Standard**
+**2. "Equilateral Lambda Packaging" Standard**
 - **Challenge:** Connection pooling confusion across 51 Lambda functions
 - **Pattern:** 7 sacred helpers copied to Lambda root, single cached client, no pooling
 - **Enforcement:** Automated build script validates package structure
@@ -221,7 +221,7 @@ During a TypeScript conversion project, mock data hid real integration failures.
 
 **Key Agents Used:**
 1. **Explore Agent** - Multi-file consolidation, finding TypeScript errors across codebase
-2. **Standards Enforcer** - Prevented violations of Tim-Combo patterns, no-mocks rule, CORS configuration
+2. **Standards Enforcer** - Prevented violations of Equilateral Standards patterns, no-mocks rule, CORS configuration
 3. **Code Quality Scorer** - Target: ≥85 score maintained across all functions
 
 ### Standards Enforcement = Compounding Velocity
@@ -279,7 +279,7 @@ If HoneyDoList.vip reaches potential ARR:
   - Avoided by using deployment-time `{{resolve:ssm:}}` in SAM templates
 - **CloudFront Caching:** ~80% reduction in S3 requests
 - **Lambda Right-Sizing:** No over-provisioning, scales to zero when idle
-- **Connection Pooling Issues:** Zero connection exhaustion (Tim-Combo pattern)
+- **Connection Pooling Issues:** Zero connection exhaustion (standards-enforced pattern)
 
 **Estimated Annual Infrastructure Savings:** $500-1,000+ vs. poorly optimized serverless
 
@@ -385,7 +385,7 @@ James isn't a junior developer. He's a seasoned architect who knows:
 - Compliance requirements (COPPA, data privacy)
 - Production SaaS patterns (connection management, error handling, security)
 
-**Key insight:** AI agents don't replace expertise - they multiply it. James provided strategic direction (Tim-Combo patterns, fail-fast philosophy, COPPA compliance). Agents executed flawlessly at scale across 51 Lambda functions.
+**Key insight:** AI agents don't replace expertise - they multiply it. James provided strategic direction (Equilateral Standards patterns, fail-fast philosophy, COPPA compliance). Agents executed flawlessly at scale across 51 Lambda functions.
 
 ### 7. Prototype Fast, Scale with Standards
 
@@ -416,7 +416,7 @@ HoneyDoList.vip isn't a demo or prototype:
 - ✅ Serverless architecture (51 Lambdas, API Gateway, RDS, CloudFront)
 - ✅ Development timeline (3 months calendar, 38-40 hours active)
 - ✅ Tech stack (React 19, Node.js 22, TypeScript, AWS SAM)
-- ✅ Tim-Combo patterns and lessons learned
+- ✅ Equilateral Standards patterns and lessons learned
 - ✅ Standards enforcement preventing expensive mistakes
 - ✅ Agent-first development approach with quantified ROI
 
@@ -492,7 +492,7 @@ James Ford is available to demonstrate:
 
 **Built with EquilateralAgents Commercial Edition**
 
-*"The combination of Claude Code with enforced standards transformed how we build serverless applications. The 'No Mocks' rule alone - born from a 5-billion-token debugging session - saved us from repeating catastrophic failures. Tim-Combo patterns eliminated connection pooling debates, the Explore agent turned 3-hour consolidations into 30-minute sprints, and strict standards prevented CORS disasters we'd debugged for days previously. We went from freelancing solutions to executing proven patterns at scale - 51 Lambda functions with zero inconsistencies. The knowledge harvest isn't just documentation; it's encoded lessons that prevent expensive re-learning. When you've burned 5 billion tokens debugging mock data hiding real failures, you encode 'fail fast, fail loud' into your DNA. That's the power of AI-assisted development with institutional memory."*
+*"The combination of Claude Code with enforced standards transformed how we build serverless applications. The 'No Mocks' rule alone - born from a 5-billion-token debugging session - saved us from repeating catastrophic failures. Equilateral Standards patterns eliminated connection pooling debates, the Explore agent turned 3-hour consolidations into 30-minute sprints, and strict standards prevented CORS disasters we'd debugged for days previously. We went from freelancing solutions to executing proven patterns at scale - 51 Lambda functions with zero inconsistencies. The knowledge harvest isn't just documentation; it's encoded lessons that prevent expensive re-learning. When you've burned 5 billion tokens debugging mock data hiding real failures, you encode 'fail fast, fail loud' into your DNA. That's the power of AI-assisted development with institutional memory."*
 
 — James Ford, Founder, HappyHippo.ai & Pareidolia, LLC
 

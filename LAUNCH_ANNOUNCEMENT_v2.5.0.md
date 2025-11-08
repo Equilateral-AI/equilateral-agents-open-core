@@ -165,7 +165,7 @@ When he saw what EquilateralAgents with standards enforcement could do, he gave 
 - Infrastructure as Code (AWS SAM)
 - Complete documentation
 
-**Tim-Combo Architecture:**
+**Equilateral Standards-Enforced Architecture:**
 - 7 sacred helpers copied to Lambda root
 - Single cached PostgreSQL client (no connection pooling)
 - Method-specific handlers (taskCreatePost.js, familyGet.js)
@@ -202,7 +202,7 @@ This single standard saved repeating the catastrophic mistake on HoneyDoList.vip
 HoneyDoList.vip development created 93 standards files. Each represents a lesson - often an expensive one:
 
 1. **"DefaultAuthorizer Breaks CORS"** - 2 days debugging → never repeat
-2. **"Tim-Combo Lambda Packaging"** - 51 functions, zero inconsistencies
+2. **"Equilateral Lambda Packaging"** - 51 functions, zero inconsistencies
 3. **"No Runtime SSM Fetching"** - $300+/year savings per project
 4. **"Fail-Fast Error Messages"** - Hours → minutes debugging time
 
