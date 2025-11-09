@@ -167,23 +167,23 @@ The killer feature isn't AI writing code. **It's AI that learns from every mista
 
 HoneyDoList.vip development created **93 standards files** in `.equilateral-standards/`. Each standard represents a lesson learned - often an expensive one.
 
-### The 5 Billion Token Debugging Session
+### The 5 Billion Token Debugging Session (Previous Project)
 
 **The most valuable standard: "No Mocks."**
 
-During a TypeScript conversion project, mock data hid real integration failures. By the time the issues surfaced, James had burned through **5 billion tokens** debugging problems that mocks made invisible.
+During a previous project (HappyHippo/Flux development), mock data hid real integration failures. By the time issues surfaced, **5 billion tokens** had been burned debugging problems that mocks made invisible.
 
-**The lesson encoded as standard:**
+That painful lesson from earlier projects became a standard:
 ```markdown
 ## Rule: Never Use Mock Data
 
 **Problem:** Mocks hide real integration failures until production
-**Cost:** 5 billion tokens debugging, 2+ days wasted
+**Cost:** 5 billion tokens debugging (previous project), 2+ days wasted
 **Rule:** All development uses real endpoints. Fail fast, fail loud.
 **Exception:** None. If an endpoint doesn't exist yet, build it.
 ```
 
-**Impact:** This single standard saved repeating the same catastrophic mistake. Every subsequent integration failure surfaces immediately during development.
+**Impact on HoneyDoList.vip:** This standard, learned from previous projects, prevented repeating the same catastrophic mistake. Every integration failure surfaced immediately during HoneyDoList development (Claude Code era - no token tracking, but same fail-fast philosophy).
 
 ### Standards That Prevent Repeat Disasters
 
@@ -359,14 +359,14 @@ Solo founders become 1-person product companies:
 **Standard created:** All Lambda handlers must validate event structure before accessing properties
 **Impact:** Converted 500 errors to clear error messages
 
-### 4. The 5 Billion Token "No Mocks" Lesson
+### 4. The 5 Billion Token "No Mocks" Lesson (Previous Project)
 
-**Original incident:** TypeScript conversion project
+**Original incident:** HappyHippo/Flux development (previous projects)
 **Problem:** Mock data hid real integration failures
 **Cost:** 5 billion tokens debugging, 2+ days wasted
 **Lesson:** Mocks hide failures until production - fail fast in dev, fail loud
 **Standard:** Zero mocks, zero fallbacks - all development uses real endpoints
-**Savings:** Never repeated this catastrophic mistake on HoneyDoList.vip
+**Applied to HoneyDoList:** Standard prevented repeating this catastrophic mistake on new project
 
 ### 5. Standards Enforcement = Compounding Returns
 
@@ -492,7 +492,7 @@ James Ford is available to demonstrate:
 
 **Built with EquilateralAgents Commercial Edition**
 
-*"The combination of Claude Code with enforced standards transformed how we build serverless applications. The 'No Mocks' rule alone - born from a 5-billion-token debugging session - saved us from repeating catastrophic failures. Equilateral Standards patterns eliminated connection pooling debates, the Explore agent turned 3-hour consolidations into 30-minute sprints, and strict standards prevented CORS disasters we'd debugged for days previously. We went from freelancing solutions to executing proven patterns at scale - 51 Lambda functions with zero inconsistencies. The knowledge harvest isn't just documentation; it's encoded lessons that prevent expensive re-learning. When you've burned 5 billion tokens debugging mock data hiding real failures, you encode 'fail fast, fail loud' into your DNA. That's the power of AI-assisted development with institutional memory."*
+*"The combination of Claude Code with enforced standards transformed how we build serverless applications. The 'No Mocks' rule alone - born from a 5-billion-token debugging session on previous projects - saved us from repeating catastrophic failures on HoneyDoList. Equilateral Standards patterns eliminated connection pooling debates, the Explore agent turned 3-hour consolidations into 30-minute sprints, and strict standards prevented CORS disasters we'd debugged for days previously. We went from freelancing solutions to executing proven patterns at scale - 51 Lambda functions with zero inconsistencies. The knowledge harvest isn't just documentation; it's encoded lessons that prevent expensive re-learning. When you've burned 5 billion tokens debugging mock data hiding real failures on one project, you encode 'fail fast, fail loud' into your DNA for the next. That's the power of AI-assisted development with institutional memory that compounds across projects."*
 
 — James Ford, Founder, HappyHippo.ai & Pareidolia, LLC
 

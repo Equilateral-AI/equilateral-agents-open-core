@@ -55,11 +55,11 @@ The secret? **EquilateralAgents with standards enforcement.**
 
 **The most valuable standard:** "No Mocks"
 
-During a previous TypeScript conversion, mock data hid real integration failures. By the time issues surfaced, I'd burned through **5 billion tokens** debugging problems that mocks made invisible.
+During previous projects (HappyHippo/Flux development), mock data hid real integration failures. By the time issues surfaced, **5 billion tokens** had been burned debugging problems that mocks made invisible.
 
-That painful lesson became a standard: "All development uses real endpoints. Fail fast, fail loud."
+That painful lesson from earlier projects became a standard: "All development uses real endpoints. Fail fast, fail loud."
 
-This single standard saved repeating the same catastrophic mistake on HoneyDoList.vip. Every integration failure surfaced immediately during development.
+This single standard, applied to HoneyDoList.vip, prevented repeating the same catastrophic mistake. Every integration failure surfaced immediately during development - no token waste, just fail-fast clarity.
 
 This isn't about AI writing code. Every tool does that. This is about AI agents that:
 1. Learn from every execution (even expensive mistakes)
@@ -180,22 +180,22 @@ When he saw what EquilateralAgents with standards enforcement could do, he gave 
 
 **The Game-Changer: Standards Enforcement & Institutional Memory**
 
-**The 5 Billion Token Lesson:**
+**The 5 Billion Token Lesson (From Previous Projects):**
 
 The most valuable standard created: **"No Mocks"**
 
-During a previous TypeScript conversion project, mock data hid real integration failures. By the time issues surfaced, 5 billion tokens had been burned debugging problems that mocks made invisible.
+During previous projects (HappyHippo/Flux development), mock data hid real integration failures. By the time issues surfaced, 5 billion tokens had been burned debugging problems that mocks made invisible.
 
-That painful lesson became a standard:
+That painful lesson from earlier projects became a standard:
 ```markdown
 ## Rule: Never Use Mock Data
 **Problem:** Mocks hide real integration failures until production
-**Cost:** 5 billion tokens debugging, 2+ days wasted
+**Cost:** 5 billion tokens debugging (previous projects), 2+ days wasted
 **Rule:** All development uses real endpoints. Fail fast, fail loud.
 **Exception:** None. If an endpoint doesn't exist yet, build it.
 ```
 
-This single standard saved repeating the catastrophic mistake on HoneyDoList.vip. Every integration failure surfaced immediately during development.
+This single standard, applied to HoneyDoList.vip, prevented repeating the catastrophic mistake. Every integration failure surfaced immediately during development - showing how standards compound across projects.
 
 **93 Standards Created = 93 Lessons Learned:**
 
