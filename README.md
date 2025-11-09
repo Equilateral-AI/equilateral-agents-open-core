@@ -36,10 +36,11 @@ npm run memory:stats              # See patterns in agent learning
 
 **What's Included:**
 
-- 📚 **Complete Methodology** - [BUILDING_YOUR_STANDARDS.md](BUILDING_YOUR_STANDARDS.md), [PAIN_TO_PATTERN.md](PAIN_TO_PATTERN.md), [KNOWLEDGE_HARVEST.md](KNOWLEDGE_HARVEST.md)
+- 📚 **Complete Methodology** - [BUILDING_YOUR_STANDARDS.md](docs/guides/BUILDING_YOUR_STANDARDS.md), [PAIN_TO_PATTERN.md](docs/guides/PAIN_TO_PATTERN.md), [KNOWLEDGE_HARVEST.md](docs/guides/KNOWLEDGE_HARVEST.md)
 - 📝 **Example Standards** - 6 real standards with actual incident costs in `.standards-local-template/`
 - 🎯 **CLAUDE.md Template** - Tell your AI assistant to check standards before every change
 - 🔄 **Knowledge Synthesis Flywheel** - Execute → Learn → Document → Prevent → Repeat
+- 📖 **Case Studies** - [HoneyDoList.vip: 38-40 hours to production SaaS](case-studies/HONEYDOLIST_CASE_STUDY.md), [Agent Orchestration Framework](case-studies/AGENT_ORCHESTRATION_GUARDRAILS.md)
 
 **The Value:**
 - **Greenfield projects**: Start with best practices, build standards as you learn domain
@@ -47,7 +48,7 @@ npm run memory:stats              # See patterns in agent learning
 - **Growing teams**: New developers learn from team's past pain, onboard faster
 - **Compounding knowledge**: Every incident becomes institutional memory
 
-See [RELEASE_NOTES_v2.5.0.md](RELEASE_NOTES_v2.5.0.md) for complete details.
+See [RELEASE_NOTES_v2.5.0.md](docs/releases/RELEASE_NOTES_v2.5.0.md) for complete details.
 
 ---
 
@@ -147,7 +148,7 @@ No database setup. No API keys. No configuration files. Works immediately.
 - [ ] **Day 4**: Create your first standard from most painful issue agents found
 - [ ] **Day 5**: Update `.claude/CLAUDE.md` to reference your new standard
 
-See [BUILDING_YOUR_STANDARDS.md](BUILDING_YOUR_STANDARDS.md) for complete Week 1 → Year 3 roadmap.
+See [BUILDING_YOUR_STANDARDS.md](docs/guides/BUILDING_YOUR_STANDARDS.md) for complete Week 1 → Year 3 roadmap.
 
 ---
 
@@ -187,14 +188,14 @@ See [BUILDING_YOUR_STANDARDS.md](BUILDING_YOUR_STANDARDS.md) for complete Week 1
 - ConfigurationManagementAgent - IaC configuration patterns
 - MonitoringOrchestrationAgent - Observability best practices
 
-See [AGENT_INVENTORY.md](AGENT_INVENTORY.md) for complete capabilities.
+See [AGENT_INVENTORY.md](docs/AGENT_INVENTORY.md) for complete capabilities.
 
 ### Complete Standards Methodology
 
 **Documentation:**
-- [BUILDING_YOUR_STANDARDS.md](BUILDING_YOUR_STANDARDS.md) - Week 1 → Year 3 roadmap
-- [PAIN_TO_PATTERN.md](PAIN_TO_PATTERN.md) - "What Happened, The Cost, The Rule" methodology
-- [KNOWLEDGE_HARVEST.md](KNOWLEDGE_HARVEST.md) - Daily/weekly pattern extraction process
+- [BUILDING_YOUR_STANDARDS.md](docs/guides/BUILDING_YOUR_STANDARDS.md) - Week 1 → Year 3 roadmap
+- [PAIN_TO_PATTERN.md](docs/guides/PAIN_TO_PATTERN.md) - "What Happened, The Cost, The Rule" methodology
+- [KNOWLEDGE_HARVEST.md](docs/guides/KNOWLEDGE_HARVEST.md) - Daily/weekly pattern extraction process
 - [.claude/CLAUDE.md](.claude/CLAUDE.md) - Template for AI assistant integration
 
 **Example Standards (.standards-local-template/):**
@@ -354,7 +355,7 @@ const securityResults = await securityTask.getResult();
 const qualityResults = await qualityTask.getResult();
 ```
 
-See [BACKGROUND_EXECUTION.md](BACKGROUND_EXECUTION.md) for complete API.
+See [BACKGROUND_EXECUTION.md](docs/BACKGROUND_EXECUTION.md) for complete API.
 
 ---
 
@@ -535,15 +536,25 @@ See [SECURITY.md](SECURITY.md) for complete guidelines.
 
 ## Documentation
 
-- [BUILDING_YOUR_STANDARDS.md](BUILDING_YOUR_STANDARDS.md) - Week 1 → Year 3 roadmap
-- [PAIN_TO_PATTERN.md](PAIN_TO_PATTERN.md) - "What Happened, The Cost, The Rule" methodology
-- [KNOWLEDGE_HARVEST.md](KNOWLEDGE_HARVEST.md) - Daily/weekly pattern extraction
-- [Agent Inventory](AGENT_INVENTORY.md) - All 22 agents with capabilities
+**Case Studies:**
+- [HoneyDoList.vip: Production SaaS in 38-40 Hours](case-studies/HONEYDOLIST_CASE_STUDY.md) - Real-world validation
+- [Agent Orchestration Framework](case-studies/AGENT_ORCHESTRATION_GUARDRAILS.md) - FI/FDI decision framework
+
+**Methodology Guides:**
+- [BUILDING_YOUR_STANDARDS.md](docs/guides/BUILDING_YOUR_STANDARDS.md) - Week 1 → Year 3 roadmap
+- [PAIN_TO_PATTERN.md](docs/guides/PAIN_TO_PATTERN.md) - "What Happened, The Cost, The Rule" methodology
+- [KNOWLEDGE_HARVEST.md](docs/guides/KNOWLEDGE_HARVEST.md) - Daily/weekly pattern extraction
+
+**Reference:**
+- [Agent Inventory](docs/AGENT_INVENTORY.md) - All 22 agents with capabilities
 - [Workflows](workflows/README.md) - Complete workflow guide
-- [Background Execution](BACKGROUND_EXECUTION.md) - Async API reference
-- [Standards Integration](docs/STANDARDS_INTEGRATION.md) - Three-tier setup guide
-- [Claude Code Plugin](PLUGIN_USAGE.md) - Skills and slash commands
+- [Background Execution](docs/BACKGROUND_EXECUTION.md) - Async API reference
+- [Plugin Usage](docs/PLUGIN_USAGE.md) - Skills and slash commands
 - [Protocols](equilateral-core/protocols/README.md) - MCP, A2A, WebSockets
+
+**Release Notes:**
+- [v2.5.0 Release Notes](docs/releases/RELEASE_NOTES_v2.5.0.md) - Standards methodology
+- [All Releases](docs/releases/) - Version history
 
 ---
 
