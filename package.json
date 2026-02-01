@@ -19,7 +19,8 @@
     "CHANGELOG.md",
     "AGENT_INVENTORY.md",
     "AI-INTEGRATION.md",
-    "BYOL-SETUP.md"
+    "BYOL-SETUP.md",
+    ".standards-local-template/**/*"
   ],
   "keywords": [
     "ai-agents",

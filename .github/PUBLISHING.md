@@ -73,7 +73,7 @@ You can also trigger NPM publishing manually:
 After publishing, verify:
 
 1. **NPM Package**: https://www.npmjs.com/package/equilateral-agents-open-core
-2. **GitHub Release**: https://github.com/happyhippo-ai/equilateral-agents-open-core/releases
+2. **GitHub Release**: https://github.com/Equilateral-AI/equilateral-agents-open-core/releases
 3. **Installation Test**:
    ```bash
    npm install equilateral-agents-open-core

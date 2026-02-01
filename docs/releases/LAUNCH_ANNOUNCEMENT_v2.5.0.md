@@ -447,7 +447,7 @@ Sign up at https://honeydolist.vip and explore:
   - [BUILDING_YOUR_STANDARDS.md](BUILDING_YOUR_STANDARDS.md)
   - [PAIN_TO_PATTERN.md](PAIN_TO_PATTERN.md)
   - [KNOWLEDGE_HARVEST.md](KNOWLEDGE_HARVEST.md)
-- **Community Standards:** [Contribute patterns](https://github.com/JamesFord-HappyHippo/EquilateralAgents-Community-Standards)
+- **Community Standards:** [Contribute patterns](https://github.com/Equilateral-AI/EquilateralAgents-Community-Standards)
 - **Commercial Edition:** info@happyhippo.ai
 
 ---

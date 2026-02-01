@@ -3,13 +3,13 @@
 # To use EquilateralAgents Open Standards as a submodule in your project:
 #
 # 1. Add the submodule:
-#    git submodule add https://github.com/JamesFord-HappyHippo/EquilateralAgents-Open-Standards.git .standards
+#    git submodule add https://github.com/Equilateral-AI/EquilateralAgents-Open-Standards.git .standards
 #
 # 2. This will create a .gitmodules file like this:
 
 [submodule ".standards"]
 	path = .standards
-	url = https://github.com/JamesFord-HappyHippo/EquilateralAgents-Open-Standards.git
+	url = https://github.com/Equilateral-AI/EquilateralAgents-Open-Standards.git
 	branch = main
 
 # 3. Update submodule when standards evolve:

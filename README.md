@@ -246,7 +246,7 @@ See [workflows/README.md](workflows/README.md) for details.
 EquilateralAgents uses a hierarchical standards approach:
 
 ### 1. Official Standards (`.standards/`)
-[EquilateralAgents Open Standards](https://github.com/JamesFord-HappyHippo/EquilateralAgents-Open-Standards) - Universal principles
+[EquilateralAgents Open Standards](https://github.com/Equilateral-AI/EquilateralAgents-Open-Standards) - Universal principles
 
 Core principles:
 - **No mocks** in production code (test real dependencies)
@@ -255,7 +255,7 @@ Core principles:
 - **Explicit over implicit** (obvious code beats clever code)
 
 ### 2. Community Standards (`.standards-community/`)
-[Community Patterns](https://github.com/JamesFord-HappyHippo/EquilateralAgents-Community-Standards) - Battle-tested patterns (optional)
+[Community Patterns](https://github.com/Equilateral-AI/EquilateralAgents-Community-Standards) - Battle-tested patterns (optional)
 
 Contributed by users:
 - Agent coordination patterns
@@ -281,7 +281,7 @@ Built from your experience:
 git clone --recurse-submodules https://github.com/Equilateral-AI/equilateral-agents-open-core.git
 
 # Add community standards (optional)
-git submodule add https://github.com/JamesFord-HappyHippo/EquilateralAgents-Community-Standards.git .standards-community
+git submodule add https://github.com/Equilateral-AI/EquilateralAgents-Community-Standards.git .standards-community
 
 # Create your local standards
 cp -r .standards-local-template .standards-local
@@ -506,9 +506,9 @@ Start with open-core. Build your `.standards-local/`. Upgrade when you need:
 
 Contributions welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
-**Found a universal pattern?** Submit to [EquilateralAgents Open Standards](https://github.com/JamesFord-HappyHippo/EquilateralAgents-Open-Standards)
+**Found a universal pattern?** Submit to [EquilateralAgents Open Standards](https://github.com/Equilateral-AI/EquilateralAgents-Open-Standards)
 
-**Built something useful?** Share with [Community Standards](https://github.com/JamesFord-HappyHippo/EquilateralAgents-Community-Standards)
+**Built something useful?** Share with [Community Standards](https://github.com/Equilateral-AI/EquilateralAgents-Community-Standards)
 
 **Your battle-tested pattern could help thousands of developers avoid the same mistakes.**
 

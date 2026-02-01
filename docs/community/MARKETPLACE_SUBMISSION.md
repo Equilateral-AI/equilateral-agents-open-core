@@ -212,7 +212,7 @@ Team members get the marketplace automatically when they clone the repository.
 Each team member runs:
 
 ```bash
-/plugin marketplace add happyhippo-ai/equilateral-agents-open-core
+/plugin marketplace add Equilateral-AI/equilateral-agents-open-core
 /plugin install equilateral-agents-open-core
 ```
 
@@ -253,7 +253,7 @@ After submitting to community marketplaces:
 Add marketplace badges:
 
 ```markdown
-[![Claude Code Plugin](https://img.shields.io/badge/Claude_Code-Plugin-blue)](https://github.com/happyhippo-ai/equilateral-agents-open-core)
+[![Claude Code Plugin](https://img.shields.io/badge/Claude_Code-Plugin-blue)](https://github.com/Equilateral-AI/equilateral-agents-open-core)
 ```
 
 ### Social Media
@@ -277,7 +277,7 @@ Create a short video showing:
 ## Support Channels
 
 Users can get help through:
-- **GitHub Issues:** https://github.com/happyhippo-ai/equilateral-agents-open-core/issues
+- **GitHub Issues:** https://github.com/Equilateral-AI/equilateral-agents-open-core/issues
 - **Documentation:** README.md, PLUGIN_USAGE.md
 - **Email:** info@happyhippo.ai (for enterprise features)
 
@@ -334,7 +334,7 @@ When you update the plugin:
 ✅ **Our plugin is marketplace-ready!**
 
 Users can install via:
-- `/plugin marketplace add happyhippo-ai/equilateral-agents-open-core`
+- `/plugin marketplace add Equilateral-AI/equilateral-agents-open-core`
 - Direct GitHub clone
 - npm package
 

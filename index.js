@@ -70,7 +70,7 @@ Quick Start:
   node examples/simple-workflow.js
 
 Documentation:
-  https://github.com/happyhippo-ai/equilateral-agents-open-core
+  https://github.com/Equilateral-AI/equilateral-agents-open-core
 
 Commercial Features:
   https://equilateral.ai/commercial

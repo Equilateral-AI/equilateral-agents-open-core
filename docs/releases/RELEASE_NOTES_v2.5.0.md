@@ -352,7 +352,7 @@ v2.5.0 clarifies graduation path:
 1. **Local → Community** (after 3+ months successful use)
    - Sanitize (remove company-specific details)
    - Generalize (make framework-agnostic)
-   - Submit PR to [Community Standards](https://github.com/JamesFord-HappyHippo/EquilateralAgents-Community-Standards)
+   - Submit PR to [Community Standards](https://github.com/Equilateral-AI/EquilateralAgents-Community-Standards)
 
 2. **Community → Universal** (most valuable patterns)
    - Graduate to core `.standards/`
@@ -483,7 +483,7 @@ cp -r .standards-local-template .standards-local
 ## Support
 
 - **Issues:** [GitHub Issues](https://github.com/Equilateral-AI/equilateral-agents-open-core/issues)
-- **Community Standards:** [Submit PR](https://github.com/JamesFord-HappyHippo/EquilateralAgents-Community-Standards)
+- **Community Standards:** [Submit PR](https://github.com/Equilateral-AI/EquilateralAgents-Community-Standards)
 - **Commercial:** info@happyhippo.ai
 
 ---

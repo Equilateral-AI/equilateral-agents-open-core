@@ -18,7 +18,7 @@ The plugin consists of:
 
 ```bash
 # Clone repository (plugin files included in .claude/)
-git clone https://github.com/happyhippo-ai/equilateral-agents-open-core.git
+git clone https://github.com/Equilateral-AI/equilateral-agents-open-core.git
 cd equilateral-agents-open-core
 npm install
 
@@ -446,14 +446,14 @@ Edit command files in `.claude/commands/` to customize:
 ## Contributing
 
 Found a useful workflow pattern? Consider contributing to:
-- [EquilateralAgents Open Standards](https://github.com/JamesFord-HappyHippo/EquilateralAgents-Open-Standards)
-- [Community Standards](https://github.com/JamesFord-HappyHippo/EquilateralAgents-Community-Standards)
+- [EquilateralAgents Open Standards](https://github.com/Equilateral-AI/EquilateralAgents-Open-Standards)
+- [Community Standards](https://github.com/Equilateral-AI/EquilateralAgents-Community-Standards)
 
 ## Support
 
 - **Documentation:** [equilateral.ai](https://equilateral.ai)
 - **Enterprise Features:** info@happyhippo.ai
-- **Bug Reports:** [GitHub Issues](https://github.com/happyhippo-ai/equilateral-agents-open-core/issues)
+- **Bug Reports:** [GitHub Issues](https://github.com/Equilateral-AI/equilateral-agents-open-core/issues)
 
 ---
 

@@ -8,7 +8,7 @@
 **Founder Active Time:** 50-60 hours (strategic + debugging)
 **GitHub Commits:** 30+ commits showing iterative refinement
 **Status:** Live at https://app.honeydolist.vip
-**Public Repo:** https://github.com/JamesFord-HappyHippo/HoneyDo-Platform
+**Public Repo:** https://github.com/Equilateral-AI/HoneyDo-Platform
 
 ---
 
@@ -511,7 +511,7 @@ James Ford is available to demonstrate:
 
 - **EquilateralAgents Open-Core:** [GitHub Repository](https://github.com/Equilateral-AI/equilateral-agents-open-core)
 - **v2.5.0 Release Notes:** Complete standards methodology, knowledge harvest automation
-- **Community Standards:** [Contribute patterns](https://github.com/JamesFord-HappyHippo/EquilateralAgents-Community-Standards)
+- **Community Standards:** [Contribute patterns](https://github.com/Equilateral-AI/EquilateralAgents-Community-Standards)
 - **Enterprise Features:** info@happyhippo.ai
 
 ---
