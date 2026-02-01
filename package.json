@@ -1,6 +1,6 @@
 {
   "name": "equilateral-agents-open-core",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "22 Self-Learning AI Agents - Build Institutional Knowledge That Compounds Over Time - Production-Ready Orchestration Framework",
   "main": "index.js",
   "exports": {
