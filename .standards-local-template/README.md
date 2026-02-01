@@ -9,7 +9,7 @@ This directory contains example standards you can copy to your `.standards-local
 cp -r .standards-local-template .standards-local
 
 # Or copy individual examples
-cp .standards-local-template/security/credential-scanning.md .standards-local/security/
+cp .standards-local-template/security/credential-scanning.yaml .standards-local/security/
 ```
 
 ## What to Put Here
@@ -30,76 +30,71 @@ cp .standards-local-template/security/credential-scanning.md .standards-local/se
 
 ```
 .standards-local/
-├── README.md                    # Overview of your team's standards
-├── security/                    # Security patterns and rules
-│   ├── credential-scanning.md
-│   ├── auth-patterns.md
-│   └── api-security.md
-├── architecture/                # System design patterns
-│   ├── error-handling.md
-│   ├── service-boundaries.md
-│   └── database-patterns.md
-├── performance/                 # Performance standards
-│   ├── query-optimization.md
-│   ├── caching-strategy.md
-│   └── bundle-size.md
-├── testing/                     # Testing patterns
-│   ├── integration-tests.md
-│   ├── test-coverage.md
-│   └── test-data-management.md
-└── deployment/                  # Deployment procedures
-    ├── rollback-procedures.md
-    ├── health-checks.md
-    └── deployment-checklist.md
+├── README.md                              # Overview of your team's standards
+├── security/                              # Security patterns and rules
+│   ├── credential-scanning.yaml
+│   ├── auth-and-access-control.yaml
+│   └── input-validation-security.yaml
+├── architecture/                          # System design patterns
+│   ├── error-first-design.yaml
+│   ├── service-boundaries.yaml
+│   └── database-patterns.yaml
+├── performance/                           # Performance standards
+│   ├── database-query-patterns.yaml
+│   ├── caching-strategy.yaml
+│   └── bundle-size.yaml
+├── testing/                               # Testing patterns
+│   ├── integration-tests-no-mocks.yaml
+│   ├── test-coverage.yaml
+│   └── test-data-management.yaml
+└── deployment/                            # Deployment procedures
+    ├── rollback-procedures.yaml
+    ├── health-checks.yaml
+    └── deployment-checklist.yaml
 ```
 
-## Standard Format
+## Standard Format (YAML Schema)
 
-Every standard should follow this format:
+Every standard should follow this YAML schema:
 
-```markdown
-# [Standard Name]
-
-## Problem
-[What problem does this solve? What mistake does it prevent?]
-
-## Cost of Violation
-[What happens when ignored? Quantify if possible.]
-
-## Rule
-[Clear, actionable, testable rule]
-
-## Examples
-
-### ❌ Wrong
-\`\`\`[language]
-// Bad example with explanation
-\`\`\`
-
-### ✅ Correct
-\`\`\`[language]
-// Good example with explanation
-\`\`\`
-
-## Detection
-[How to detect violations - agents, linters, code review]
-
-## Related Standards
-- [Links to related standards]
-
-## History
-[Optional: When learned, what incident drove creation]
+```yaml
+id: standard-id
+category: category-name
+priority: 10|20|30
+updated: 2026-02-01
+rules:
+  - action: ALWAYS|NEVER|USE|PREFER|AVOID
+    rule: "Description"
+anti_patterns:
+  - "Anti-pattern description"
+examples:
+  example_name: |
+    // code example
+context: |
+  Why this standard exists
+tags:
+  - tag1
 ```
+
+### Field Reference
+
+- **id** - Unique identifier for the standard (kebab-case)
+- **category** - Grouping category (security, architecture, performance, testing, deployment)
+- **priority** - Severity level: `10` (critical), `20` (high), `30` (medium)
+- **updated** - Date of last update (YYYY-MM-DD)
+- **rules** - List of rules with action keywords (ALWAYS, NEVER, USE, PREFER, AVOID)
+- **anti_patterns** - Common mistakes this standard prevents
+- **examples** - Named code examples showing wrong and correct patterns
+- **context** - Paragraph explaining why this standard exists and its origin
+- **tags** - List of tags for searchability and cross-referencing
 
 ## Severity Levels
 
-Use these severity levels consistently:
+Use these priority levels consistently:
 
-- **CRITICAL** - Security vulnerability, data loss risk, production outage potential
-- **HIGH** - Significant cost impact, major technical debt, compliance violation
-- **MEDIUM** - Performance issues, maintainability problems, anti-patterns
-- **LOW** - Style inconsistencies, minor optimizations, documentation gaps
-- **INFO** - Suggestions, best practices, learning opportunities
+- **10 (CRITICAL)** - Security vulnerability, data loss risk, production outage potential
+- **20 (HIGH)** - Significant cost impact, major technical debt, compliance violation
+- **30 (MEDIUM)** - Performance issues, maintainability problems, anti-patterns
 
 ## Version Control
 
@@ -120,7 +115,7 @@ Standards come from real pain. Build them by:
 1. **Execute workflows** - Run agents, build features, deploy code
 2. **Track patterns** - Review `.equilateral/agent-memory/` weekly
 3. **Identify lessons** - What failed 3+ times? What worked consistently?
-4. **Document** - Use "What Happened, The Cost, The Rule" format
+4. **Document** - Use the YAML schema with context explaining origin
 5. **Enforce** - Reference in `.claude/CLAUDE.md`, agent configs
 6. **Iterate** - Update standards as you learn more
 
@@ -128,11 +123,10 @@ Standards come from real pain. Build them by:
 
 This template includes examples for:
 
-- **Security**: Credential scanning (because everyone makes this mistake)
-- **Architecture**: Error-first design (fail fast, fail loud)
-- **Performance**: Database query patterns (N+1 queries are common)
-- **Testing**: Integration test patterns (no mocks in production code)
-- **Deployment**: Health check validation (prevent bad deploys)
+- **Security**: Credential scanning (`credential-scanning.yaml`), auth and access control (`auth-and-access-control.yaml`), input validation (`input-validation-security.yaml`)
+- **Architecture**: Error-first design (`error-first-design.yaml`)
+- **Performance**: Database query patterns (`database-query-patterns.yaml`)
+- **Testing**: Integration test patterns (`integration-tests-no-mocks.yaml`)
 
 These are examples only. Your actual standards should come from your real experiences.
 
@@ -142,7 +136,7 @@ After 3+ months of successful use:
 
 1. Sanitize (remove company-specific details)
 2. Generalize (make framework-agnostic if possible)
-3. Submit PR to [EquilateralAgents Community Standards](https://github.com/JamesFord-HappyHippo/EquilateralAgents-Community-Standards)
+3. Submit PR to [EquilateralAgents Community Standards](https://github.com/Equilateral-AI/EquilateralAgents-Community-Standards)
 
 Your battle-tested patterns can help thousands of developers avoid the same mistakes.
 

@@ -1,0 +1,93 @@
+id: input-validation-security
+category: security
+priority: 10
+updated: 2026-02-01
+rules:
+  - action: ALWAYS
+    rule: "Validate and sanitize ALL input before use"
+  - action: ALWAYS
+    rule: "Use parameterized queries, never string concatenation"
+  - action: ALWAYS
+    rule: "Whitelist acceptable values instead of blacklisting bad ones"
+  - action: ALWAYS
+    rule: "Fail closed - reject invalid input, don't try to fix it"
+  - action: NEVER
+    rule: "Trust user input without validation, even from authenticated users"
+  - action: NEVER
+    rule: "Use string concatenation in SQL queries"
+anti_patterns:
+  - "Direct SQL concatenation - building queries with string interpolation or concatenation, enabling SQL injection"
+  - "Trusting admin input - skipping validation because the user is authenticated or has admin role"
+  - "Blacklist-only validation - blocking known bad patterns instead of whitelisting known good ones, which is easy to bypass"
+examples:
+  wrong_trusting_input: |
+    // Bad: Direct use of user input in SQL
+    app.get('/api/users/:userId', async (req, res) => {
+        const { userId } = req.params;
+        const query = `SELECT * FROM users WHERE id = '${userId}'`;
+        const user = await db.query(query);
+        res.json(user);
+    });
+
+    // Bad: Blacklist approach - easy to bypass
+    app.get('/api/search', async (req, res) => {
+        const { query } = req.query;
+        if (query.includes('DROP') || query.includes('DELETE')) {
+            return res.status(400).json({ error: 'Invalid query' });
+        }
+        const results = await db.query(
+            `SELECT * FROM items WHERE name LIKE '%${query}%'`
+        );
+        res.json(results);
+    });
+  correct_validate_everything: |
+    const { z } = require('zod');
+
+    const UserIdSchema = z.string().uuid();
+    const SearchQuerySchema = z.string().min(1).max(100).regex(/^[a-zA-Z0-9\s\-_]+$/);
+
+    // Good: Validate and use parameterized queries
+    app.get('/api/users/:userId', async (req, res) => {
+        const validation = UserIdSchema.safeParse(req.params.userId);
+        if (!validation.success) {
+            return res.status(400).json({ error: 'Invalid userId format' });
+        }
+        const result = await db.query(
+            'SELECT id, name, email FROM users WHERE id = ?',
+            [validation.data]
+        );
+        if (result.length === 0) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        res.json(result[0]);
+    });
+
+    // Good: Whitelist approach for search
+    app.get('/api/search', async (req, res) => {
+        const validation = SearchQuerySchema.safeParse(req.query.query);
+        if (!validation.success) {
+            return res.status(400).json({ error: 'Invalid search query' });
+        }
+        const results = await db.query(
+            'SELECT id, name FROM items WHERE name LIKE ? LIMIT 100',
+            [`%${validation.data}%`]
+        );
+        res.json(results);
+    });
+context: |
+  Trusting user input without validation leads to injection attacks, data corruption, and
+  unexpected application behavior. Even internal APIs or admin endpoints need validation
+  because attackers often exploit trust boundaries. This standard was created after an admin
+  API endpoint trusted input from authenticated admin users without validation. A parameter
+  assumed to be a UUID received a SQL fragment instead, and because the application used
+  string concatenation rather than parameterized queries, the result was a complete database
+  compromise, 48 hours restoring from backups, regulatory notification requirements, and
+  over $25,000 in incident response costs. Injection vulnerabilities consistently rank in
+  the top two of the OWASP Top 10 most critical web security risks. The rule is absolute:
+  validate and sanitize all input before use, with no exceptions.
+tags:
+  - security
+  - input-validation
+  - sql-injection
+  - xss
+  - sanitization

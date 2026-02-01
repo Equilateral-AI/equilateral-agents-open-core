@@ -5,6 +5,62 @@ All notable changes to EquilateralAgents Open Core will be documented in this fi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - 2026-02-01
+
+### Breaking Changes
+- **YAML Standards Format** - All standards now use YAML format instead of markdown
+  - `.standards-local-template/` contains `.yaml` files instead of `.md`
+  - StandardsContributor generates `.yaml` output instead of `.md`
+  - Knowledge harvest reports output `.yaml` instead of `.md`
+  - Standards follow the equilateral-standards-yaml schema: `id`, `category`, `priority`, `rules`, `anti_patterns`, `examples`, `context`, `tags`
+
+### Added
+- **StandardsLoader** - New core utility for loading YAML standards from disk (MAJOR NEW FEATURE)
+  - Three-layer directory hierarchy: `.standards/yaml/` → `.standards-community/` → `.standards-local/`
+  - Later directories override earlier ones when standard IDs collide
+  - Methods: `loadAll()`, `loadStandard(id)`, `loadByCategory()`, `loadByTags()`, `loadByAction()`, `getRulesForAgent()`
+  - Lazy caching for performance
+  - Graceful degradation when directories don't exist
+  - Agent-type to tag mapping for automatic relevant standard loading
+  - See `equilateral-core/StandardsLoader.js`
+
+- **Agent Standards Integration** - Agents now consume YAML standards from disk
+  - `BaseAgent` gains `loadRelevantStandards()` method and `standardsLoader` instance
+  - `SecurityReviewerAgent` augments hardcoded security patterns with YAML standards
+  - `SecurityScannerAgent` augments vulnerability patterns from YAML anti-patterns
+  - `AuditorAgent` augments audit categories with YAML-sourced rules
+  - `CodeReviewAgent` augments review categories and anti-pattern lists
+  - All agents fall back to hardcoded defaults if no standards files are found
+
+- **js-yaml dependency** - Added `js-yaml@^4.1.0` for YAML parsing/serialization
+
+### Changed
+- **StandardsContributor** rewritten for YAML output
+  - `_generateStandard()` builds YAML objects and serializes with `yaml.dump()`
+  - `_mergeStandards()` performs YAML-aware merge (combines rules, anti_patterns, examples, tags)
+  - Output files use `.yaml` extension
+  - Community PR URL updated to Equilateral-AI organization
+
+- **Knowledge Harvest Script** updated for YAML output
+  - `generateReport()` outputs structured YAML report instead of markdown
+  - Report saved as `.equilateral/knowledge-harvest-report.yaml`
+  - `suggestFileName()` generates `.yaml` extensions
+
+- **Template files migrated to YAML**
+  - 6 template standards converted from markdown to YAML format
+  - Template README updated with YAML schema documentation
+  - All templates follow equilateral-standards-yaml schema
+
+- **Documentation updated** for YAML format
+  - CLAUDE.md references YAML standards format
+  - Guide docs updated with YAML examples and file paths
+  - Community contribution URLs point to Equilateral-AI organization
+
+- **index.js** now exports `StandardsLoader`
+
+### Removed
+- Markdown template files (replaced by YAML equivalents)
+
 ## [2.1.0] - 2025-10-25
 
 ### Added
@@ -152,6 +208,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - SQLite persistence layer
 - MIT License
 
+[3.0.0]: https://github.com/Equilateral-AI/equilateral-agents-open-core/compare/v2.1.0...v3.0.0
 [2.1.0]: https://github.com/Equilateral-AI/equilateral-agents-open-core/compare/v2.0.2...v2.1.0
 [2.0.2]: https://github.com/Equilateral-AI/equilateral-agents-open-core/compare/v2.0.1...v2.0.2
 [2.0.1]: https://github.com/Equilateral-AI/equilateral-agents-open-core/compare/v2.0.0...v2.0.1

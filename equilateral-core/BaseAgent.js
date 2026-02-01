@@ -33,6 +33,7 @@
 const EventEmitter = require('events');
 const { getSharedProvider } = require('./LLMProvider');
 const SimpleAgentMemory = require('./SimpleAgentMemory');
+const StandardsLoader = require('./StandardsLoader');
 
 class BaseAgent extends EventEmitter {
     constructor(config = {}) {
@@ -51,6 +52,13 @@ class BaseAgent extends EventEmitter {
         // Memory system configuration (opt-in)
         this.memoryEnabled = config.enableMemory !== false; // Default: true
         this.memory = this.memoryEnabled ? new SimpleAgentMemory(this.agentId, config.memory || {}) : null;
+
+        // Standards loader (opt-in, loads from .standards/, .standards-community/, .standards-local/)
+        this.standardsEnabled = config.enableStandards !== false; // Default: true
+        this.standardsLoader = this.standardsEnabled
+            ? new StandardsLoader({ projectRoot: config.projectRoot })
+            : null;
+        this._standardsLoaded = false;
     }
 
     /**
@@ -328,6 +336,43 @@ class BaseAgent extends EventEmitter {
      */
     hasMemory() {
         return this.memoryEnabled && this.memory !== null;
+    }
+
+    /**
+     * Load standards relevant to this agent type.
+     * Uses the StandardsLoader tag mapping to find matching YAML standards.
+     * Results are cached after first call.
+     *
+     * @param {string[]} [tags] - Override tags (defaults to agent-type mapping)
+     * @returns {Promise<Object[]>} Array of parsed standard objects
+     */
+    async loadRelevantStandards(tags) {
+        if (!this.standardsEnabled || !this.standardsLoader) {
+            return [];
+        }
+
+        if (this._standardsLoaded && !tags) {
+            return this._loadedStandards || [];
+        }
+
+        try {
+            if (tags) {
+                return await this.standardsLoader.loadByTags(tags);
+            }
+            this._loadedStandards = await this.standardsLoader.getRulesForAgent(this.constructor.name);
+            this._standardsLoaded = true;
+            return this._loadedStandards;
+        } catch (err) {
+            this.log('warn', `Failed to load standards: ${err.message}`);
+            return [];
+        }
+    }
+
+    /**
+     * Check if standards loading is enabled
+     */
+    hasStandards() {
+        return this.standardsEnabled && this.standardsLoader !== null;
     }
 }
 

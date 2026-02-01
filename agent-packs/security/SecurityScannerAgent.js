@@ -34,6 +34,7 @@ const PathScanningHelper = require('../../equilateral-core/PathScanningHelper');
 const fs = require('fs').promises;
 const path = require('path');
 const crypto = require('crypto');
+const StandardsLoader = require('../../equilateral-core/StandardsLoader');
 
 class SecurityScannerAgent extends BaseAgent {
     constructor(config = {}) {
@@ -63,6 +64,10 @@ class SecurityScannerAgent extends BaseAgent {
         this.vulnerabilityPatterns = new Map();
         this.secretsPatterns = new Map();
         this.loadSecurityPatterns();
+
+        // YAML Standards integration
+        this.standardsLoader = new StandardsLoader();
+        this._standardsAugmented = false;
     }
 
     /**
@@ -511,6 +516,43 @@ class SecurityScannerAgent extends BaseAgent {
         }
 
         return report;
+    }
+
+    /**
+     * Augment hardcoded security patterns with YAML standards from disk.
+     * Loads security-tagged standards and adds NEVER rules as additional
+     * vulnerability descriptions to watch for.
+     */
+    async augmentPatternsFromStandards() {
+        if (this._standardsAugmented) return;
+
+        try {
+            const standards = await this.standardsLoader.loadByTags([
+                'security', 'credential-scanning', 'vulnerability',
+                'input-validation', 'sql-injection', 'xss'
+            ]);
+
+            for (const standard of standards) {
+                // Add anti_patterns as additional vulnerability descriptions
+                if (Array.isArray(standard.anti_patterns)) {
+                    for (const ap of standard.anti_patterns) {
+                        const key = standard.id + '_' + ap.substring(0, 30).replace(/[^a-z0-9]/gi, '_').toLowerCase();
+                        if (!this.vulnerabilityPatterns.has(key)) {
+                            this.vulnerabilityPatterns.set(key, {
+                                patterns: [], // No regex - advisory only from YAML
+                                severity: standard.priority <= 10 ? 'HIGH' : standard.priority <= 20 ? 'MEDIUM' : 'LOW',
+                                description: ap,
+                                source: 'yaml-standard:' + standard.id
+                            });
+                        }
+                    }
+                }
+            }
+
+            this._standardsAugmented = true;
+        } catch (err) {
+            console.warn('[SecurityScannerAgent] Standards augmentation failed (using defaults):', err.message);
+        }
     }
 }
 

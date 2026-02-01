@@ -9,6 +9,7 @@ const fs = require('fs').promises;
 const path = require('path');
 const AgentConfiguration = require('../config/AgentConfiguration');
 const PathScanningHelper = require('../../equilateral-core/PathScanningHelper');
+const StandardsLoader = require('../../equilateral-core/StandardsLoader');
 
 // Simple response utilities to avoid environment dependencies
 const createSuccessResponse = (data, message, metadata) => ({
@@ -80,6 +81,10 @@ class AuditorAgent {
             },
             maxDepth: configOverrides.maxDepth || 10
         });
+
+        // YAML Standards integration
+        this.standardsLoader = new StandardsLoader();
+        this._standardsAugmented = false;
     }
 
     /**
@@ -677,6 +682,44 @@ class AuditorAgent {
             }
         } catch (error) {
             // File not readable
+        }
+    }
+
+    /**
+     * Augment audit categories with rules loaded from YAML standards.
+     * Loads core, quality, and error-handling tagged standards and
+     * creates additional audit rules from their ALWAYS/NEVER rules.
+     */
+    async augmentFromStandards() {
+        if (this._standardsAugmented) return;
+
+        try {
+            const standards = await this.standardsLoader.loadByTags([
+                'core', 'code-quality', 'error-handling',
+                'maintainability', 'architecture'
+            ]);
+
+            // Add a standards_compliance category for YAML-sourced rules
+            if (!this.auditCategories['yaml_standards_compliance']) {
+                this.auditCategories['yaml_standards_compliance'] = {
+                    description: 'Standards loaded from YAML standards files',
+                    standards: []
+                };
+            }
+
+            for (const standard of standards) {
+                if (Array.isArray(standard.rules)) {
+                    for (const rule of standard.rules) {
+                        const ruleId = standard.id + ':' + rule.action.toLowerCase() + ':' +
+                            rule.rule.substring(0, 40).replace(/[^a-z0-9]/gi, '_').toLowerCase();
+                        this.auditCategories['yaml_standards_compliance'].standards.push(ruleId);
+                    }
+                }
+            }
+
+            this._standardsAugmented = true;
+        } catch (err) {
+            console.warn('[AuditorAgent] Standards augmentation failed (using defaults):', err.message);
         }
     }
 }

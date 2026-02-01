@@ -2,7 +2,7 @@
  * EquilateralAgents™ Standards Contributor - Open Core Edition
  *
  * MIT License
- * Copyright (c) 2025 HappyHippo.ai
+ * Copyright (c) 2025-2026 HappyHippo.ai
  *
  * Prompts users to contribute learned patterns back to .equilateral-standards
  * Simple post-execution prompt system for community standards evolution
@@ -11,6 +11,7 @@
 const fs = require('fs');
 const path = require('path');
 const readline = require('readline');
+const yaml = require('js-yaml');
 
 class StandardsContributor {
   constructor(config = {}) {
@@ -120,53 +121,25 @@ class StandardsContributor {
   }
 
   /**
-   * Generate standard markdown content
+   * Generate standard as a YAML document
    */
   async _generateStandard(workflowName, patternType, findings, result) {
     const category = this._categorizePattern(workflowName, patternType);
-    const filename = `${this._sanitizeFilename(patternType)}_pattern.md`;
+    const filename = `${this._sanitizeFilename(patternType)}_pattern.yaml`;
 
-    const content = `# ${this._formatTitle(patternType)} Pattern
+    const standardObj = {
+      id: this._sanitizeFilename(patternType) + '-pattern',
+      category: category,
+      priority: this._calculatePriority(findings),
+      updated: new Date().toISOString().split('T')[0],
+      rules: this._generateRules(patternType, findings),
+      anti_patterns: this._generateAntiPatterns(findings),
+      examples: this._generateExamples(patternType, findings),
+      context: `Discovered from ${workflowName} workflow. ${findings.length} occurrences. Success rate: ${result.successRate ? (result.successRate * 100).toFixed(1) : 'N/A'}%. Impact: ${this._calculateImpact(findings)}.`,
+      tags: this._generateTags(category, patternType)
+    };
 
-**Category**: ${category}
-**Discovered**: ${new Date().toISOString()}
-**Based on**: ${findings.length} occurrences in production usage
-**Workflow**: ${workflowName}
-
-## Problem
-
-${this._describeProblem(patternType, findings)}
-
-## Pattern
-
-${this._describePattern(findings)}
-
-## Solution
-
-${this._describeSolution(patternType, findings)}
-
-## Example
-
-\`\`\`javascript
-${this._generateExample(patternType, findings)}
-\`\`\`
-
-## Rationale
-
-This pattern was identified through community usage:
-- Occurrences: ${findings.length}
-- Success rate: ${result.successRate ? (result.successRate * 100).toFixed(1) : 'N/A'}%
-- Average impact: ${this._calculateImpact(findings)}
-
-## Related Standards
-
-- See \`${category}/\` for related patterns
-- Cross-reference with cost optimization standards
-
-## Contributed By
-
-Community contribution from EquilateralAgents Open Core
-`;
+    const content = yaml.dump(standardObj, { lineWidth: 120, noRefs: true });
 
     return {
       category,
@@ -195,7 +168,137 @@ Community contribution from EquilateralAgents Open Core
   }
 
   /**
-   * Write standard to appropriate directory
+   * Generate rules array from pattern type and findings
+   */
+  _generateRules(patternType, findings) {
+    const solutionsMap = {
+      'hardcoded-secrets': [
+        { action: 'NEVER', rule: 'Hardcode secrets, API keys, or credentials in source code' },
+        { action: 'ALWAYS', rule: 'Use environment variables or parameter store (SSM) for secrets' }
+      ],
+      'sql-injection': [
+        { action: 'NEVER', rule: 'Concatenate or interpolate user input directly into SQL queries' },
+        { action: 'ALWAYS', rule: 'Use parameterized queries or ORM for all database operations' }
+      ],
+      'xss': [
+        { action: 'NEVER', rule: 'Render unsanitized user input in HTML output' },
+        { action: 'ALWAYS', rule: 'Sanitize user input and use templating engines with auto-escaping' }
+      ],
+      'weak-crypto': [
+        { action: 'NEVER', rule: 'Use deprecated or weak cryptographic algorithms (MD5, SHA1 for security, DES)' },
+        { action: 'ALWAYS', rule: 'Use modern crypto libraries (crypto.subtle, bcrypt, argon2)' }
+      ]
+    };
+
+    if (solutionsMap[patternType]) {
+      return solutionsMap[patternType];
+    }
+
+    // Generate generic rules from findings
+    const rules = [];
+    const description = findings[0] ? (findings[0].description || findings[0].message || patternType) : patternType;
+    rules.push({ action: 'NEVER', rule: `Allow ${description} in production code` });
+    rules.push({ action: 'ALWAYS', rule: 'Apply best practices from community standards' });
+    return rules;
+  }
+
+  /**
+   * Extract anti-pattern descriptions from findings
+   */
+  _generateAntiPatterns(findings) {
+    const antiPatterns = [];
+    const seen = new Set();
+
+    for (const finding of findings) {
+      const description = finding.description || finding.message || null;
+      if (description && !seen.has(description)) {
+        seen.add(description);
+        antiPatterns.push(description);
+      }
+    }
+
+    // If no descriptions were found, generate a generic entry
+    if (antiPatterns.length === 0) {
+      antiPatterns.push('Common anti-pattern detected across multiple occurrences');
+    }
+
+    return antiPatterns;
+  }
+
+  /**
+   * Generate examples as an object (keys are example names, values are code strings)
+   */
+  _generateExamples(patternType, findings) {
+    const examplesMap = {
+      'hardcoded-secrets': {
+        'bad-hardcoded-key': "// Bad\nconst apiKey = 'sk-1234567890';",
+        'good-env-variable': '// Good\nconst apiKey = process.env.API_KEY;'
+      },
+      'sql-injection': {
+        'bad-string-interpolation': '// Bad\nconst query = `SELECT * FROM users WHERE id = ${userId}`;',
+        'good-parameterized-query': "// Good\nconst query = 'SELECT * FROM users WHERE id = ?';\ndb.query(query, [userId]);"
+      },
+      'xss': {
+        'bad-unsanitized-output': '// Bad\nelement.innerHTML = userInput;',
+        'good-sanitized-output': '// Good\nelement.textContent = userInput;'
+      },
+      'weak-crypto': {
+        'bad-weak-hash': "// Bad\nconst hash = crypto.createHash('md5').update(password).digest('hex');",
+        'good-modern-hash': "// Good\nconst hash = await bcrypt.hash(password, 12);"
+      }
+    };
+
+    if (examplesMap[patternType]) {
+      return examplesMap[patternType];
+    }
+
+    return {
+      'default-example': '// Example code here'
+    };
+  }
+
+  /**
+   * Generate tags array from category and pattern type
+   */
+  _generateTags(category, patternType) {
+    const tags = [category];
+
+    // Add pattern-type-specific tags
+    const tagMap = {
+      'hardcoded-secrets': ['secrets', 'credentials', 'environment-variables'],
+      'sql-injection': ['sql', 'injection', 'database', 'parameterized-queries'],
+      'xss': ['xss', 'sanitization', 'html', 'input-validation'],
+      'weak-crypto': ['cryptography', 'hashing', 'encryption'],
+      'deployment-optimization': ['deployment', 'ci-cd', 'optimization'],
+      'cost-reduction': ['cost', 'savings', 'aws'],
+      'performance': ['performance', 'latency', 'throughput']
+    };
+
+    if (tagMap[patternType]) {
+      tags.push(...tagMap[patternType]);
+    } else {
+      tags.push(patternType);
+    }
+
+    tags.push('community-contributed');
+    return tags;
+  }
+
+  /**
+   * Calculate priority from findings severity. HIGH impact -> 10, MEDIUM -> 20, LOW -> 30.
+   */
+  _calculatePriority(findings) {
+    const severities = findings.map(f => f.severity || 'low');
+    const high = severities.filter(s => s === 'high').length;
+    const medium = severities.filter(s => s === 'medium').length;
+
+    if (high > 0) return 10;
+    if (medium > 0) return 20;
+    return 30;
+  }
+
+  /**
+   * Write standard to appropriate directory (YAML format)
    */
   async _writeStandard(standard) {
     const categoryDir = path.join(this.standardsDir, standard.category);
@@ -217,7 +320,7 @@ Community contribution from EquilateralAgents Open Core
         return null;
       }
 
-      // Append to existing
+      // Merge with existing YAML
       const existing = fs.readFileSync(filePath, 'utf8');
       standard.content = this._mergeStandards(existing, standard.content);
     }
@@ -281,7 +384,7 @@ Co-Authored-By: Community <community@equilateral.ai>"`);
     // This would integrate with GitHub API or gh CLI
     console.log(`\n⚠️  Community PR creation requires GitHub token`);
     console.log(`For now, manually:`);
-    console.log(`  1. Fork: https://github.com/equilateral/equilateral-standards`);
+    console.log(`  1. Fork: https://github.com/Equilateral-AI/EquilateralAgents-Community-Standards`);
     console.log(`  2. Copy files to fork`);
     console.log(`  3. Create PR with title: "Community contribution: [pattern name]"`);
     console.log(`\nFiles to contribute:`);
@@ -367,11 +470,89 @@ db.query(query, [userId]);`
   }
 
   /**
-   * Helper: Merge standards
+   * Helper: YAML-aware merge of two standards
+   * Parse both as YAML objects, merge rules (deduplicate by rule text),
+   * merge anti_patterns, update the updated date, then dump back to YAML.
    */
   _mergeStandards(existing, newContent) {
-    // Simple merge: append new examples
-    return `${existing}\n\n---\n## Updated: ${new Date().toISOString()}\n\n${newContent}`;
+    let existingObj;
+    let newObj;
+
+    try {
+      existingObj = yaml.load(existing);
+    } catch (e) {
+      // If existing file is not valid YAML (e.g., old markdown format), replace entirely
+      return newContent;
+    }
+
+    try {
+      newObj = yaml.load(newContent);
+    } catch (e) {
+      // If new content is not valid YAML, return existing unchanged
+      return existing;
+    }
+
+    // Merge rules arrays, deduplicating by rule text
+    if (newObj.rules && Array.isArray(newObj.rules)) {
+      const existingRules = existingObj.rules || [];
+      const existingRuleTexts = new Set(existingRules.map(r => r.rule));
+
+      for (const rule of newObj.rules) {
+        if (!existingRuleTexts.has(rule.rule)) {
+          existingRules.push(rule);
+          existingRuleTexts.add(rule.rule);
+        }
+      }
+      existingObj.rules = existingRules;
+    }
+
+    // Merge anti_patterns arrays, deduplicating
+    if (newObj.anti_patterns && Array.isArray(newObj.anti_patterns)) {
+      const existingAntiPatterns = existingObj.anti_patterns || [];
+      const existingSet = new Set(existingAntiPatterns);
+
+      for (const ap of newObj.anti_patterns) {
+        if (!existingSet.has(ap)) {
+          existingAntiPatterns.push(ap);
+          existingSet.add(ap);
+        }
+      }
+      existingObj.anti_patterns = existingAntiPatterns;
+    }
+
+    // Merge examples objects
+    if (newObj.examples && typeof newObj.examples === 'object') {
+      existingObj.examples = Object.assign({}, existingObj.examples || {}, newObj.examples);
+    }
+
+    // Merge tags arrays, deduplicating
+    if (newObj.tags && Array.isArray(newObj.tags)) {
+      const existingTags = existingObj.tags || [];
+      const tagSet = new Set(existingTags);
+
+      for (const tag of newObj.tags) {
+        if (!tagSet.has(tag)) {
+          existingTags.push(tag);
+          tagSet.add(tag);
+        }
+      }
+      existingObj.tags = existingTags;
+    }
+
+    // Update the updated date
+    existingObj.updated = new Date().toISOString().split('T')[0];
+
+    // Update context if new context is available
+    if (newObj.context) {
+      existingObj.context = newObj.context;
+    }
+
+    // Use the higher priority (lower number = higher priority)
+    if (newObj.priority && (!existingObj.priority || newObj.priority < existingObj.priority)) {
+      existingObj.priority = newObj.priority;
+    }
+
+    return yaml.dump(existingObj, { lineWidth: 120, noRefs: true });
   }
 
   /**

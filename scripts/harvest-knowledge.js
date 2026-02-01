@@ -12,6 +12,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const yaml = require('js-yaml');
 
 // Configuration
 const config = {
@@ -307,12 +308,12 @@ function generateRecommendations(errorPatterns, successPatterns, knowledgeGaps) 
             title: `Improve ${gap.agent} Success Rate`,
             reason: `Only ${(gap.successRate * 100).toFixed(1)}% success rate (${gap.failureCount} failures)`,
             suggestedCategory: 'architecture',
-            suggestedFile: `${gap.agent}-patterns.md`,
+            suggestedFile: `${gap.agent}-patterns.yaml`,
             gap,
             actionItems: [
                 'Review failure patterns for this agent',
                 'Identify common root causes',
-                'Document what works vs what doesn't',
+                "Document what works vs what doesn't",
                 'Create checklist for this agent type',
                 'Update agent configuration if needed'
             ]
@@ -356,107 +357,64 @@ function suggestFileName(patternName) {
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, '-')
         .replace(/^-|-$/g, '')
-        + '.md';
+        + '.yaml';
 }
 
 /**
- * Generate markdown report
+ * Generate YAML report
  */
 function generateReport(errorPatterns, successPatterns, successRates, recommendations) {
-    const report = [];
-
-    report.push('# Knowledge Harvest Report');
-    report.push('');
-    report.push(`**Generated:** ${new Date().toISOString()}`);
-    report.push(`**Period:** Last ${config.sinceDays} days`);
-    report.push(`**Min Occurrences:** ${config.minOccurrences}`);
-    report.push('');
-
-    // Executive Summary
-    report.push('## Executive Summary');
-    report.push('');
-    report.push(`- **Recurring Errors:** ${errorPatterns.filter(p => p.count >= config.minOccurrences).length}`);
-    report.push(`- **Successful Patterns:** ${successPatterns.filter(p => p.count >= config.minOccurrences).length}`);
-    report.push(`- **Recommended Standards:** ${recommendations.length}`);
-    report.push('');
-
-    // Recommendations
-    report.push('## Recommended Standards to Create');
-    report.push('');
-
-    if (recommendations.length === 0) {
-        report.push('*No new standards recommended at this time.*');
-        report.push('');
-        report.push('Continue executing workflows and check back in a week.');
-    } else {
-        for (const rec of recommendations) {
-            report.push(`### ${rec.priority === 'HIGH' ? '🔴' : rec.priority === 'MEDIUM' ? '🟡' : '🟢'} ${rec.title}`);
-            report.push('');
-            report.push(`**Priority:** ${rec.priority}`);
-            report.push(`**Type:** ${rec.type}`);
-            report.push(`**Reason:** ${rec.reason}`);
-            report.push('');
-            report.push(`**Suggested Location:** \`.standards-local/${rec.suggestedCategory}/${rec.suggestedFile}\``);
-            report.push('');
-            report.push('**Action Items:**');
-            for (const item of rec.actionItems) {
-                report.push(`- [ ] ${item}`);
-            }
-            report.push('');
-        }
-    }
-
-    // Detailed Patterns
-    report.push('## Detailed Analysis');
-    report.push('');
-
-    report.push('### Recurring Errors (3+ occurrences)');
-    report.push('');
-
     const significantErrors = errorPatterns.filter(p => p.count >= config.minOccurrences);
-    if (significantErrors.length === 0) {
-        report.push('*No recurring errors found.*');
-    } else {
-        for (const pattern of significantErrors) {
-            report.push(`#### ${pattern.type}`);
-            report.push(`- **Count:** ${pattern.count} occurrences`);
-            report.push(`- **Agents:** ${Array.from(pattern.agents).join(', ')}`);
-            report.push(`- **Message:** ${pattern.message.substring(0, 100)}`);
-            report.push('');
-        }
-    }
-    report.push('');
-
-    report.push('### Successful Patterns (3+ occurrences)');
-    report.push('');
-
     const significantSuccesses = successPatterns.filter(p => p.count >= config.minOccurrences);
-    if (significantSuccesses.length === 0) {
-        report.push('*No recurring success patterns found.*');
-    } else {
-        for (const pattern of significantSuccesses) {
-            report.push(`#### ${pattern.optimization}`);
-            report.push(`- **Count:** ${pattern.count} times`);
-            report.push(`- **Agents:** ${pattern.agents.join(', ')}`);
-            if (pattern.avgTimeSaved > 0) {
-                report.push(`- **Avg Time Saved:** ${(pattern.avgTimeSaved / 1000).toFixed(1)}s`);
-            }
-            report.push('');
-        }
-    }
-    report.push('');
 
-    report.push('### Agent Success Rates');
-    report.push('');
-    for (const [agent, rate] of Object.entries(successRates).sort((a, b) => a[1].successRate - b[1].successRate)) {
-        const emoji = rate.successRate >= 0.85 ? '✅' : rate.successRate >= 0.5 ? '⚠️' : '❌';
-        const trend = rate.trend === 'improving' ? '📈' : rate.trend === 'declining' ? '📉' : '➡️';
+    const report = {
+        id: 'knowledge-harvest-report',
+        generated: new Date().toISOString(),
+        period_days: config.sinceDays,
+        min_occurrences: config.minOccurrences,
 
-        report.push(`${emoji} **${agent}**: ${(rate.successRate * 100).toFixed(1)}% (${rate.successful}/${rate.total}) ${trend}`);
-    }
-    report.push('');
+        summary: {
+            recurring_errors: significantErrors.length,
+            successful_patterns: significantSuccesses.length,
+            recommended_standards: recommendations.length
+        },
 
-    return report.join('\n');
+        recommendations: recommendations.map(rec => ({
+            priority: rec.priority,
+            type: rec.type,
+            title: rec.title,
+            reason: rec.reason,
+            suggested_location: `.standards-local/${rec.suggestedCategory}/${rec.suggestedFile}`,
+            action_items: rec.actionItems
+        })),
+
+        recurring_errors: significantErrors.map(pattern => ({
+            type: pattern.type,
+            count: pattern.count,
+            agents: Array.from(pattern.agents),
+            message: pattern.message.substring(0, 200)
+        })),
+
+        successful_patterns: significantSuccesses.map(pattern => ({
+            optimization: pattern.optimization,
+            count: pattern.count,
+            agents: pattern.agents,
+            avg_time_saved_ms: pattern.avgTimeSaved > 0 ? Math.round(pattern.avgTimeSaved) : null
+        })),
+
+        agent_success_rates: Object.fromEntries(
+            Object.entries(successRates)
+                .sort(([, a], [, b]) => a.successRate - b.successRate)
+                .map(([agent, rate]) => [agent, {
+                    success_rate: parseFloat((rate.successRate * 100).toFixed(1)),
+                    successful: rate.successful,
+                    total: rate.total,
+                    trend: rate.trend
+                }])
+        )
+    };
+
+    return yaml.dump(report, { lineWidth: 120, noRefs: true });
 }
 
 /**
@@ -496,7 +454,7 @@ async function main() {
     const report = generateReport(errorPatterns, successPatterns, successRates, recommendations);
 
     // Save report
-    const reportPath = '.equilateral/knowledge-harvest-report.md';
+    const reportPath = '.equilateral/knowledge-harvest-report.yaml';
     fs.writeFileSync(reportPath, report);
 
     console.log(`✅ Report saved to ${reportPath}\n`);
@@ -515,7 +473,7 @@ async function main() {
             const emoji = rec.priority === 'HIGH' ? '🔴' : rec.priority === 'MEDIUM' ? '🟡' : '🟢';
             console.log(`   ${emoji} ${rec.title}`);
             console.log(`      → ${rec.reason}`);
-            console.log(`      → Create: .standards-local/${rec.suggestedCategory}/${rec.suggestedFile}\n`);
+            console.log(`      Create: .standards-local/${rec.suggestedCategory}/${rec.suggestedFile}\n`);
         }
 
         console.log(`📄 See full report: ${reportPath}\n`);

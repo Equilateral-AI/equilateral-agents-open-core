@@ -1,0 +1,111 @@
+id: error-first-design
+category: architecture
+priority: 10
+updated: 2026-02-01
+rules:
+  - action: ALWAYS
+    rule: "Design error handling before implementing happy path"
+  - action: ALWAYS
+    rule: "List what can go wrong before writing code"
+  - action: ALWAYS
+    rule: "Write error handling code first, then happy path"
+  - action: ALWAYS
+    rule: "Test error cases first"
+  - action: NEVER
+    rule: "Write happy-path-only code without error handling"
+anti_patterns:
+  - "Silent failures - errors swallowed or ignored, leaving no trace in logs or user feedback"
+  - "Cascading errors - one unhandled failure triggers a chain of downstream failures that are hard to debug"
+  - "Generic error messages - returning 'Internal Server Error' with no context, making root cause analysis impossible"
+  - "No recovery mechanisms - no retries, no fallbacks, no graceful degradation when dependencies fail"
+examples:
+  wrong_happy_path_first: |
+    // Bad: Only considers success case
+    async function getUserData(userId) {
+        const user = await db.query('SELECT * FROM users WHERE id = ?', [userId]);
+        return {
+            id: user.id,
+            name: user.name,
+            email: user.email
+        };
+    }
+    // What if database is down? User doesn't exist? userId is null?
+  correct_error_first: |
+    // Good: Errors designed first, happy path last
+    async function getUserData(userId) {
+        // Error case 1: Invalid input
+        if (!userId || typeof userId !== 'string') {
+            throw new InvalidInputError('userId must be a non-empty string', {
+                received: userId
+            });
+        }
+
+        // Error case 2: Database connection
+        let connection;
+        try {
+            connection = await db.getConnection();
+        } catch (err) {
+            throw new DatabaseConnectionError('Failed to connect to database', {
+                cause: err,
+                retryable: true
+            });
+        }
+
+        // Error case 3: Query execution
+        let result;
+        try {
+            result = await connection.query(
+                'SELECT * FROM users WHERE id = ? LIMIT 1',
+                [userId]
+            );
+        } catch (err) {
+            throw new DatabaseQueryError('User query failed', {
+                cause: err, query: 'getUserData', userId
+            });
+        } finally {
+            if (connection) connection.release();
+        }
+
+        // Error case 4: User not found
+        if (!result || result.length === 0) {
+            throw new UserNotFoundError('User does not exist', { userId });
+        }
+
+        // Happy path (only after all error cases handled)
+        const user = result[0];
+        return { id: user.id, name: user.name, email: user.email };
+    }
+  error_test_first: |
+    describe('getUserData', () => {
+        // Test error cases FIRST
+        it('should throw InvalidInputError for null userId', async () => {
+            await expect(getUserData(null))
+                .rejects.toThrow(InvalidInputError);
+        });
+
+        it('should throw DatabaseConnectionError when DB is down', async () => {
+            mockDb.getConnection.mockRejectedValue(new Error('Connection refused'));
+            await expect(getUserData('user123'))
+                .rejects.toThrow(DatabaseConnectionError);
+        });
+
+        // Test happy path LAST
+        it('should return user data for valid userId', async () => {
+            const result = await getUserData('user123');
+            expect(result.id).toBe('user123');
+        });
+    });
+context: |
+  Developers often write happy-path code first, adding error handling as an afterthought
+  or not at all. This standard was created after a production incident where an API endpoint
+  did not validate its database connection before querying. When the database went down during
+  deployment, the application hung for 30 seconds per request, producing generic "Internal
+  Server Error" messages with no context. The result was 45 minutes of degraded service,
+  1,200+ failed requests, and 6 hours of debugging. Most production issues stem from unhandled
+  error cases, not bugs in happy-path logic. Designing for failure first ensures every function
+  addresses what can go wrong before implementing the success scenario.
+tags:
+  - architecture
+  - error-handling
+  - fail-fast
+  - error-first-design

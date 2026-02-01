@@ -1,0 +1,100 @@
+id: database-query-patterns
+category: performance
+priority: 10
+updated: 2026-02-01
+rules:
+  - action: ALWAYS
+    rule: "Use eager loading (JOIN/includes) instead of N+1 queries"
+  - action: ALWAYS
+    rule: "Add indexes for all WHERE/ORDER BY columns"
+  - action: ALWAYS
+    rule: "Use LIMIT for list queries"
+  - action: PREFER
+    rule: "SELECT only needed columns instead of SELECT *"
+  - action: PREFER
+    rule: "Cursor-based pagination for large offsets"
+  - action: NEVER
+    rule: "Put database queries inside loops (N+1 pattern)"
+anti_patterns:
+  - "N+1 queries - fetching a list then querying each item individually in a loop, turning 1 query into hundreds"
+  - "SELECT * - fetching all columns when only a few are needed, wasting bandwidth and memory"
+  - "Unbounded queries - fetching all rows without LIMIT, risking memory exhaustion on large tables"
+  - "Missing indexes - running WHERE or ORDER BY on unindexed columns, causing full table scans"
+  - "New connection per request - creating a fresh database connection for every query instead of using a connection pool"
+examples:
+  wrong_n_plus_one: |
+    // Bad: N+1 queries (1 for users + N for each user's posts)
+    async function getUsersWithPosts() {
+        const users = await db.query('SELECT * FROM users LIMIT 100');
+
+        for (const user of users) {
+            user.posts = await db.query(
+                'SELECT * FROM posts WHERE user_id = ?',
+                [user.id]
+            );
+            for (const post of user.posts) {
+                post.comments = await db.query(
+                    'SELECT * FROM comments WHERE post_id = ?',
+                    [post.id]
+                );
+            }
+        }
+        return users;
+    }
+    // 100 users x 10 posts x 5 comments = 5,101 queries
+  correct_single_join: |
+    // Good: Single query with JOINs
+    async function getUsersWithPosts() {
+        const query = `
+            SELECT
+                u.id as user_id, u.name as user_name,
+                p.id as post_id, p.title as post_title,
+                c.id as comment_id, c.content as comment_content
+            FROM users u
+            LEFT JOIN posts p ON u.id = p.user_id
+            LEFT JOIN comments c ON p.id = c.post_id
+            WHERE u.active = true
+            ORDER BY u.created_at DESC
+            LIMIT 100
+        `;
+        const rows = await db.query(query);
+
+        // Transform flat results into nested structure
+        const usersMap = new Map();
+        for (const row of rows) {
+            if (!usersMap.has(row.user_id)) {
+                usersMap.set(row.user_id, {
+                    id: row.user_id, name: row.user_name, posts: []
+                });
+            }
+            // ... nest posts and comments
+        }
+        return Array.from(usersMap.values());
+    }
+    // 1 query instead of 5,101
+  correct_cursor_pagination: |
+    // Good: Cursor-based pagination (efficient for large offsets)
+    const posts = await db.query(`
+        SELECT id, title, excerpt, created_at
+        FROM posts
+        WHERE published = true AND created_at < ?
+        ORDER BY created_at DESC
+        LIMIT ?
+    `, [cursorDate, pageSize]);
+context: |
+  Poorly optimized database queries cause slow API responses, timeouts, and scaling issues.
+  The N+1 query problem is the most common performance killer in web applications. This
+  standard was created after an API endpoint that loaded users with their posts and comments
+  used three separate queries in nested loops. One user with 50 posts and 200 comments
+  produced 251 database queries at roughly 10ms each, taking 2.5 seconds per request. The
+  result was API timeouts affecting all users, database connection pool exhaustion, a
+  3-hour emergency hotfix, and customer complaints about a slow application. The fix was
+  straightforward: use JOINs or eager loading, add proper indexes, always use LIMIT, and
+  select only the columns you need. After applying these patterns across the codebase,
+  average response times dropped from 2.5 seconds to 200 milliseconds.
+tags:
+  - performance
+  - database
+  - sql
+  - query-optimization
+  - n-plus-one

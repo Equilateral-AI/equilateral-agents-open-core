@@ -242,7 +242,7 @@ const logLevel = process.env.LOG_LEVEL || 'info';
 
 ### Use the Template
 
-Copy `.standards-local-template/standard-template.md`:
+Copy `.standards-local-template/`:
 
 ```markdown
 # No Default Values for Secrets
@@ -343,8 +343,8 @@ Fails build if critical security violations found.
 
 ## Related Standards
 
-- `.standards-local/security/credential-scanning.md` - Comprehensive credential detection
-- `.standards-local/architecture/error-first-design.md` - Fail fast principle
+- `.standards-local/security/credential-scanning.yaml` - Comprehensive credential detection
+- `.standards-local/architecture/error-first-design.yaml` - Fail fast principle
 
 ## History
 
@@ -374,7 +374,7 @@ Discovered by weekly security scan. 6 hours emergency response.
 **The Rule**: Never use `|| "default"` pattern for sensitive env vars.
 Fail fast if missing.
 
-**See**: `.standards-local/security/no-default-values-for-secrets.md`
+**See**: `.standards-local/security/no-default-values-for-secrets.yaml`
 
 ## Trigger Words
 
@@ -393,7 +393,7 @@ module.exports = {
     localStandards: [
         {
             id: 'no-default-secrets',
-            path: '.standards-local/security/no-default-values-for-secrets.md',
+            path: '.standards-local/security/no-default-values-for-secrets.yaml',
             severity: 'CRITICAL',
             autoCheck: true, // Agents automatically reference this
             pattern: /process\.env\.\w+\s*\|\|\s*["']/g

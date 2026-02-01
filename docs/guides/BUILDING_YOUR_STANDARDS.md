@@ -98,12 +98,43 @@ Example: If SecurityScannerAgent found hardcoded API keys in 3+ places:
 
 ```bash
 # Create standard
-touch .standards-local/security/no-hardcoded-credentials.md
+touch .standards-local/security/no-hardcoded-credentials.yaml
 ```
 
-Use the "What Happened, The Cost, The Rule" format:
+Use the YAML format ("What Happened, The Cost, The Rule" goes in context field):
 
-```markdown
+```yaml
+id: no-hardcoded-credentials
+category: security
+priority: 10
+updated: 2026-02-01
+rules:
+  - action: NEVER
+    rule: "Hardcode credentials in source code"
+  - action: ALWAYS
+    rule: "Use environment variables for all secrets"
+  - action: ALWAYS
+    rule: "Fail fast if required env var is missing"
+anti_patterns:
+  - "Hardcoded API keys as string literals"
+  - "Default values for secrets in env var access"
+examples:
+  wrong_fallback: |
+    const apiKey = process.env.API_KEY || "sk-live-abc123";
+  correct_failfast: |
+    const apiKey = process.env.API_KEY;
+    if (!apiKey) throw new Error("API_KEY required");
+context: |
+  Found API keys hardcoded in 5 different files during security scan.
+  Three were "development" keys that worked in production.
+  Cost: 2 hours hunting down all hardcoded keys, 1 hour rotating exposed keys,
+  risk of key exposure in git history. SecurityScannerAgent checks for this pattern.
+tags:
+  - security
+  - credential-scanning
+  - secrets
+
+# The old markdown equivalent of this (for reference):
 # No Hardcoded Credentials
 
 ## What Happened
@@ -139,7 +170,7 @@ Next common pain point: error handling
 2. **Document the pattern**
 
 ```bash
-touch .standards-local/architecture/error-first-design.md
+touch .standards-local/architecture/error-first-design.yaml
 ```
 
 Use real examples from YOUR codebase.
@@ -158,7 +189,7 @@ Use real examples from YOUR codebase.
 3. **Document the fix**
 
 ```bash
-touch .standards-local/performance/no-n-plus-one-queries.md
+touch .standards-local/performance/no-n-plus-one-queries.yaml
 ```
 
 Include:
@@ -234,10 +265,10 @@ Before making changes:
 ## Critical Alerts
 
 ### [CRITICAL] No Hardcoded Credentials
-See: `.standards-local/security/no-hardcoded-credentials.md`
+See: `.standards-local/security/no-hardcoded-credentials.yaml`
 
 ### [HIGH] Error-First Design
-See: `.standards-local/architecture/error-first-design.md`
+See: `.standards-local/architecture/error-first-design.yaml`
 ```
 
 ### Pre-Commit Hooks
@@ -333,7 +364,7 @@ After 3+ months of successful use:
 
 1. **Sanitize** (remove company-specific details)
 2. **Generalize** (make framework-agnostic)
-3. **Contribute** to [Community Standards](https://github.com/JamesFord-HappyHippo/EquilateralAgents-Community-Standards)
+3. **Contribute** to [Community Standards](https://github.com/Equilateral-AI/EquilateralAgents-Community-Standards)
 
 Help others avoid the mistakes you made.
 
@@ -401,7 +432,7 @@ Fixed in PR #235. Pattern emerging?
 ## 2025-01-25: Third Occurrence
 Fixed in PR #240. TIME FOR A STANDARD.
 
-[Created `.standards-local/security/auth-on-all-endpoints.md`]
+[Created `.standards-local/security/auth-on-all-endpoints.yaml`]
 ```
 
 ---
@@ -419,7 +450,7 @@ When using Claude Code / Cursor / Continue:
 
 ### ✅ Code Reviews Get Shorter
 
-"This violates our error-first design standard. See `.standards-local/architecture/error-first-design.md`"
+"This violates our error-first design standard. See `.standards-local/architecture/error-first-design.yaml`"
 
 One line → entire architectural pattern referenced.
 
@@ -598,7 +629,7 @@ Commercial has 62 total agents vs 22 open-core:
 
 - **Templates**: `.standards-local-template/` (copy to start)
 - **Examples**: See template standards for format
-- **Community**: [Submit standards](https://github.com/JamesFord-HappyHippo/EquilateralAgents-Community-Standards)
+- **Community**: [Submit standards](https://github.com/Equilateral-AI/EquilateralAgents-Community-Standards)
 - **Commercial**: info@happyhippo.ai
 
 ---

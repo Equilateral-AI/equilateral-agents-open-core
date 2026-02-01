@@ -73,13 +73,13 @@ Add to `.standards-local/` based on pattern type:
 ```
 .standards-local/
 ├── architecture/
-│   └── learned-from-project-x.md
+│   └── learned-from-project-x.yaml
 ├── security/
-│   └── auth-patterns-that-work.md
+│   └── auth-patterns-that-work.yaml
 ├── testing/
-│   └── test-coverage-minimums.md
+│   └── test-coverage-minimums.yaml
 └── performance/
-    └── optimization-wins.md
+    └── optimization-wins.yaml
 ```
 
 ### Step 5: Classify and Organize
@@ -119,7 +119,7 @@ Security scanning must check:
 4. Comments containing credentials
 
 **The Rule Created**:
-`.standards-local/security/credential-scanning.md`:
+`.standards-local/security/credential-scanning.yaml`:
 ```markdown
 # Credential Scanning Standards
 
@@ -280,7 +280,7 @@ node scripts/harvest-knowledge.js --since=14d --min-occurrences=5
 - Finds successful optimizations that worked consistently (85%+ success rate)
 - Calculates agent success rates and trends
 - Generates prioritized recommendations for new standards
-- Creates detailed report in `.equilateral/knowledge-harvest-report.md`
+- Creates detailed report in `.equilateral/knowledge-harvest-report.yaml`
 
 **Output example:**
 ```
@@ -288,11 +288,11 @@ node scripts/harvest-knowledge.js --since=14d --min-occurrences=5
 
    🔴 Prevent ValidationError
       → Occurred 5 times across 2 agent(s)
-      → Create: .standards-local/architecture/validation-error.md
+      → Create: .standards-local/architecture/validation-error.yaml
 
    🟡 Codify eager-loading-optimization
       → Worked 4 times, avg 2.3h saved
-      → Create: .standards-local/performance/eager-loading-optimization.md
+      → Create: .standards-local/performance/eager-loading-optimization.yaml
 ```
 
 ### Pattern Recognition Algorithms
@@ -366,8 +366,8 @@ const gaps = Object.entries(successRates)
 **DIY Approach:**
 
 You can build your own librarian agent to maintain your standards library. It should:
-- Scan all `.md` files in `.standards-local/`
-- Parse content to extract title, sections, keywords
+- Scan all `.yaml` files in `.standards-local/`
+- Parse YAML to extract id, category, rules, tags
 - Auto-classify into categories (security, architecture, performance, etc.)
 - Validate standard format (check for required sections)
 - Generate category READMEs and master INDEX
@@ -438,7 +438,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: knowledge-harvest-report
-          path: .equilateral/knowledge-harvest-report.md
+          path: .equilateral/knowledge-harvest-report.yaml
 ```
 
 ### Slack/Teams Integration
@@ -450,7 +450,7 @@ Send harvest reports to team channels:
 const fs = require('fs');
 const https = require('https');
 
-const report = fs.readFileSync('.equilateral/knowledge-harvest-report.md', 'utf8');
+const report = fs.readFileSync('.equilateral/knowledge-harvest-report.yaml', 'utf8');
 const webhookUrl = process.env.SLACK_WEBHOOK_URL;
 
 // Extract summary
@@ -477,7 +477,7 @@ const payload = {
                         type: 'plain_text',
                         text: 'View Full Report'
                     },
-                    url: 'https://github.com/yourorg/project/blob/main/.equilateral/knowledge-harvest-report.md'
+                    url: 'https://github.com/yourorg/project/blob/main/.equilateral/knowledge-harvest-report.yaml'
                 }
             ]
         }

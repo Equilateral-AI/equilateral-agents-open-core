@@ -1,0 +1,122 @@
+id: integration-tests-no-mocks
+category: testing
+priority: 10
+updated: 2026-02-01
+rules:
+  - action: ALWAYS
+    rule: "Test against real dependencies (database, APIs)"
+  - action: NEVER
+    rule: "Use mocks in production code"
+  - action: ALWAYS
+    rule: "Use real database with test data for integration tests"
+  - action: PREFER
+    rule: "Docker containers for test dependencies"
+  - action: AVOID
+    rule: "Dependency injection patterns that exist solely for mocking"
+anti_patterns:
+  - "Mocking database in production code - injecting mock database clients into production classes, hiding real integration failures"
+  - "Dependency injection for mock purposes - designing constructors with optional dependencies solely to enable test mocking"
+  - "100% coverage with mocks - achieving full test coverage using mocks that do not reflect real dependency behavior, creating false confidence"
+examples:
+  wrong_mocks_hide_failures: |
+    // Bad: Mocking database in production code
+    class UserService {
+        constructor(db = null) {
+            // Allows injecting mock in production
+            this.db = db || require('./database');
+        }
+        async getUser(userId) {
+            const result = await this.db.query(
+                'SELECT * FROM users WHERE id = ?', [userId]
+            );
+            return result[0];
+        }
+    }
+
+    // Test with mock
+    test('getUser returns user', async () => {
+        const mockDb = {
+            query: jest.fn().mockResolvedValue([{ id: '123', name: 'Test' }])
+        };
+        const service = new UserService(mockDb);
+        const user = await service.getUser('123');
+        expect(user.name).toBe('Test');
+        // Test passes but doesn't test real DB behavior
+    });
+  correct_real_dependencies: |
+    // Good: No dependency injection for mocking
+    class UserService {
+        constructor() {
+            this.db = require('./database');
+        }
+        async getUser(userId) {
+            if (!userId) throw new Error('userId is required');
+            const result = await this.db.query(
+                'SELECT id, name, email FROM users WHERE id = ?',
+                [userId]
+            );
+            if (result.length === 0) throw new Error('User not found');
+            return result[0];
+        }
+    }
+
+    // Test with real database
+    beforeAll(async () => {
+        await db.connect(process.env.TEST_DATABASE_URL);
+        await db.migrate();
+    });
+
+    beforeEach(async () => {
+        await db.query('DELETE FROM users');
+    });
+
+    test('getUser returns user from database', async () => {
+        await db.query(
+            'INSERT INTO users (id, name, email) VALUES (?, ?, ?)',
+            ['123', 'Test User', 'test@example.com']
+        );
+        const service = new UserService();
+        const user = await service.getUser('123');
+        expect(user.id).toBe('123');
+        expect(user.name).toBe('Test User');
+    });
+  docker_postgres_setup: |
+    // Good: Production-like test environment
+    const { GenericContainer } = require('testcontainers');
+
+    let pgContainer;
+    beforeAll(async () => {
+        pgContainer = await new GenericContainer('postgres:15')
+            .withEnvironment({
+                POSTGRES_DB: 'testdb',
+                POSTGRES_USER: 'testuser',
+                POSTGRES_PASSWORD: 'testpass'
+            })
+            .withExposedPorts(5432)
+            .start();
+
+        const connectionString = `postgresql://testuser:testpass@localhost:${pgContainer.getMappedPort(5432)}/testdb`;
+        await connectAndMigrate(connectionString);
+    }, 60000);
+
+    afterAll(async () => {
+        await pgContainer.stop();
+    });
+context: |
+  Mocking external dependencies like databases and APIs hides real integration failures
+  until production. Mocks create false confidence where tests pass but production breaks.
+  This standard was created after backend tests that used mocked database responses achieved
+  100% coverage and all passed, but in production the real database returned different field
+  names than the mocked version. The result was 2 hours of complete service outage, data
+  corruption affecting 50+ user accounts, 12 hours fixing data inconsistencies, and
+  customer escalations. The pattern is classic "works on my machine" syndrome: mocks
+  guarantee that tests and production behave differently. The rule is to test against real
+  dependencies using real databases with test data, real API sandbox environments, and
+  Docker containers when needed. Mocks are acceptable only in test files for things like
+  email sending, never in production code paths.
+tags:
+  - testing
+  - integration-tests
+  - no-mocks
+  - database
+  - real-dependencies

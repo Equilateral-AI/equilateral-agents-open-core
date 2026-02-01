@@ -8,6 +8,7 @@
 const fs = require('fs').promises;
 const path = require('path');
 const PathScanningHelper = require('../../equilateral-core/PathScanningHelper');
+const StandardsLoader = require('../../equilateral-core/StandardsLoader');
 const AgentConfiguration = require('../config/AgentConfiguration');
 const ModelConfiguration = require('../config/ModelConfiguration');
 const { ModelAwareAgent } = require('../config/ModelIntegrationExample');
@@ -136,6 +137,10 @@ class CodeReviewAgent extends ModelAwareAgent {
         this.reviewResults = [];
         this.issues = [];
         this.recommendations = [];
+
+        // YAML Standards integration
+        this.standardsLoader = new StandardsLoader();
+        this._standardsAugmented = false;
     }
 
     // Code-Specialized Model Selection Methods
@@ -2333,6 +2338,48 @@ Focus on actionable insights that will meaningfully improve code quality, securi
         }
         
         return Math.round(score);
+    }
+
+    /**
+     * Augment review categories and security patterns with YAML standards.
+     * Loads code-quality, security, and performance tagged standards.
+     */
+    async augmentFromStandards() {
+        if (this._standardsAugmented) return;
+
+        try {
+            const standards = await this.standardsLoader.loadByTags([
+                'core', 'code-quality', 'error-handling',
+                'security', 'performance', 'api-design'
+            ]);
+
+            // Enrich standards_compliance criteria with YAML standard ids
+            if (this.reviewCategories['standards_compliance']) {
+                for (const standard of standards) {
+                    if (!this.reviewCategories['standards_compliance'].criteria.includes(standard.id)) {
+                        this.reviewCategories['standards_compliance'].criteria.push(standard.id);
+                    }
+                }
+            }
+
+            // Add anti_patterns from security standards to advisory list
+            this._yamlAntiPatterns = [];
+            for (const standard of standards) {
+                if (Array.isArray(standard.anti_patterns)) {
+                    for (const ap of standard.anti_patterns) {
+                        this._yamlAntiPatterns.push({
+                            source: standard.id,
+                            priority: standard.priority,
+                            description: ap
+                        });
+                    }
+                }
+            }
+
+            this._standardsAugmented = true;
+        } catch (err) {
+            console.warn('[CodeReviewAgent] Standards augmentation failed (using defaults):', err.message);
+        }
     }
 }
 

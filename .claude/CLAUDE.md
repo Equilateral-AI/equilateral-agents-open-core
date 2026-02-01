@@ -144,7 +144,7 @@ SecurityScannerAgent now checks 5 locations:
 4. Comments containing credentials
 5. Configuration files with key-like values
 
-**See:** `.standards-local/security/credential-scanning.md` (create this!)
+**See:** `.standards-local/security/credential-scanning.yaml` (create this!)
 
 ---
 
@@ -165,11 +165,11 @@ Use real dependencies with proper error handling. Test against actual services.
 **Exception:**
 External APIs in tests only (never production code).
 
-**See:** `.standards/no-mocks.md`
+**See:** `.standards/yaml/no-mocks.yaml`
 ```
 
 ### Your Banned Patterns
-Add entries to `.standards-local/banned-patterns.md` as you discover them through agent executions and workflow history.
+Add entries to `.standards-local/banned-patterns.yaml` as you discover them through agent executions and workflow history.
 
 ---
 
@@ -288,11 +288,11 @@ Agents learn from execution history. You should too.
    ```
    .standards-local/
    ├── security/
-   │   └── credential-scanning.md
+   │   └── credential-scanning.yaml
    ├── architecture/
    │   └── error-handling-patterns.md
    ├── performance/
-   │   └── database-query-optimization.md
+   │   └── database-query-optimization.yaml
    └── testing/
        └── integration-test-patterns.md
    ```
@@ -341,7 +341,7 @@ Found a pattern that works? Share it!
 1. **Local → Community**
    - Battle-test in `.standards-local/` first
    - Sanitize to remove company-specific details
-   - Submit PR to [EquilateralAgents Community Standards](https://github.com/JamesFord-HappyHippo/EquilateralAgents-Community-Standards)
+   - Submit PR to [EquilateralAgents Community Standards](https://github.com/Equilateral-AI/EquilateralAgents-Community-Standards)
 
 2. **Community → Universal**
    - Most valuable community patterns graduate
@@ -367,30 +367,56 @@ Create `.standards-local/` with this structure:
 .standards-local/
 ├── README.md                    # Your team's standards overview
 ├── security/
-│   ├── credential-scanning.md
-│   ├── auth-patterns.md
-│   └── api-security.md
+│   ├── credential-scanning.yaml
+│   ├── auth-patterns.yaml
+│   └── api-security.yaml
 ├── architecture/
-│   ├── error-handling.md
-│   ├── service-boundaries.md
-│   └── database-patterns.md
+│   ├── error-handling.yaml
+│   ├── service-boundaries.yaml
+│   └── database-patterns.yaml
 ├── performance/
-│   ├── query-optimization.md
-│   ├── caching-strategy.md
-│   └── bundle-size.md
+│   ├── query-optimization.yaml
+│   ├── caching-strategy.yaml
+│   └── bundle-size.yaml
 ├── testing/
-│   ├── integration-tests.md
-│   ├── test-coverage.md
-│   └── test-data-management.md
+│   ├── integration-tests.yaml
+│   ├── test-coverage.yaml
+│   └── test-data-management.yaml
 └── deployment/
-    ├── rollback-procedures.md
-    ├── health-checks.md
-    └── deployment-checklist.md
+    ├── rollback-procedures.yaml
+    ├── health-checks.yaml
+    └── deployment-checklist.yaml
 ```
 
 ### Standard Template
 
-Use this template for new standards:
+Use this template for new standards (YAML format):
+
+```yaml
+id: standard-name
+category: security  # or architecture, performance, testing, deployment
+priority: 10  # 10=critical, 20=high, 30=medium
+updated: 2026-02-01
+rules:
+  - action: ALWAYS
+    rule: "Clear, actionable rule"
+  - action: NEVER
+    rule: "Anti-pattern to prevent"
+anti_patterns:
+  - "Description of what not to do"
+examples:
+  wrong_example: |
+    // Bad example
+  correct_example: |
+    // Good example
+context: |
+  Why this standard exists. What incident drove its creation.
+  Include cost: time, money, trust impact.
+tags:
+  - relevant-tag
+```
+
+For reference, the markdown equivalent structure:
 
 ```markdown
 # [Standard Name]
@@ -513,7 +539,7 @@ A: No. Only document patterns that:
 A: Start local. After 3+ months of successful use, sanitize and contribute to community.
 
 **Q: Can I automate the knowledge harvest?**
-A: Yes! Create a librarian agent that scans agent memory, classifies patterns, and suggests standards. See `.equilateral/KNOWLEDGE_HARVEST.md` for methodology.
+A: Yes! Create a librarian agent that scans agent memory, classifies patterns, and suggests standards. See `docs/guides/KNOWLEDGE_HARVEST.md` for methodology.
 
 **Q: What if standards conflict?**
 A: Hierarchy: `.standards-local/` (most specific) > `.standards-community/` > `.standards/` (most general). Local always wins.
@@ -528,7 +554,7 @@ A:
 ### Getting Help
 
 - **Framework Issues**: [GitHub Issues](https://github.com/Equilateral-AI/equilateral-agents-open-core/issues)
-- **Community Standards**: [Submit PR](https://github.com/JamesFord-HappyHippo/EquilateralAgents-Community-Standards)
+- **Community Standards**: [Submit PR](https://github.com/Equilateral-AI/EquilateralAgents-Community-Standards)
 - **Enterprise Features**: info@happyhippo.ai
 - **Slack Community**: [Join here](https://happyhippo.ai/community)
 

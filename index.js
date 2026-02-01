@@ -31,6 +31,7 @@
 const AgentOrchestrator = require('./equilateral-core/AgentOrchestrator');
 const BaseAgent = require('./equilateral-core/BaseAgent');
 const SimpleAgentMemory = require('./equilateral-core/SimpleAgentMemory');
+const StandardsLoader = require('./equilateral-core/StandardsLoader');
 
 // Example agents
 const CodeAnalyzerAgent = require('./agent-packs/development/CodeAnalyzerAgent');
@@ -40,6 +41,7 @@ module.exports = {
     AgentOrchestrator,
     BaseAgent,
     SimpleAgentMemory,
+    StandardsLoader,
 
     // Example agents
     agents: {

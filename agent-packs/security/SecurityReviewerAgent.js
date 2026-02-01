@@ -7,6 +7,7 @@ const AgentConfiguration = require('../config/AgentConfiguration');
 const ModelConfiguration = require('../config/ModelConfiguration');
 const { ModelAwareAgent } = require('../config/ModelIntegrationExample');
 const PathScanningHelper = require('../../equilateral-core/PathScanningHelper');
+const StandardsLoader = require('../../equilateral-core/StandardsLoader');
 
 class SecurityReviewerAgent extends ModelAwareAgent {
     constructor(config = {}) {
@@ -56,6 +57,10 @@ class SecurityReviewerAgent extends ModelAwareAgent {
         };
         
         this.securityPatterns = this.initializeSecurityPatterns();
+
+        // YAML Standards integration
+        this.standardsLoader = new StandardsLoader({ projectRoot: this.config.projectRoot });
+        this._standardsAugmented = false;
         this.vulnerabilityDatabase = this.initializeVulnerabilityDatabase();
         this.productionControls = this.initializeProductionControls();
         
@@ -2139,6 +2144,91 @@ Prioritize findings that could lead to data breaches or system compromise.
         
         return findings;
     }
+
+    /**
+     * Augment hardcoded security patterns with YAML standards from disk.
+     * Call this after construction to merge community/local standards.
+     * Safe to call multiple times (idempotent after first load).
+     */
+    async augmentPatternsFromStandards() {
+        if (this._standardsAugmented) return;
+
+        try {
+            const standards = await this.standardsLoader.loadByTags([
+                'security', 'authentication', 'authorization',
+                'input-validation', 'credential-scanning'
+            ]);
+
+            for (const standard of standards) {
+                // Merge anti_patterns into matching securityPatterns category
+                if (Array.isArray(standard.anti_patterns)) {
+                    const category = this._mapStandardToCategory(standard);
+                    if (category && this.securityPatterns[category]) {
+                        const existing = new Set(this.securityPatterns[category].antiPatterns);
+                        for (const ap of standard.anti_patterns) {
+                            if (!existing.has(ap)) {
+                                this.securityPatterns[category].antiPatterns.push(ap);
+                            }
+                        }
+                    }
+                }
+
+                // Merge ALWAYS/USE rules into patterns arrays
+                if (Array.isArray(standard.rules)) {
+                    const category = this._mapStandardToCategory(standard);
+                    if (category && this.securityPatterns[category]) {
+                        const existing = new Set(this.securityPatterns[category].patterns);
+                        for (const rule of standard.rules) {
+                            if ((rule.action === 'ALWAYS' || rule.action === 'USE') && !existing.has(rule.rule)) {
+                                this.securityPatterns[category].patterns.push(rule.rule);
+                            }
+                        }
+                    }
+                }
+            }
+
+            this._standardsAugmented = true;
+        } catch (err) {
+            console.warn('[SecurityReviewerAgent] Standards augmentation failed (using defaults):', err.message);
+        }
+    }
+
+    /**
+     * Map a YAML standard to a securityPatterns category key.
+     * @private
+     */
+    _mapStandardToCategory(standard) {
+        const tagMap = {
+            'authentication': 'authentication',
+            'authorization': 'authorization',
+            'input-validation': 'inputValidation',
+            'credential-scanning': 'dataProtection',
+            'error-handling': 'errorHandling'
+        };
+
+        if (Array.isArray(standard.tags)) {
+            for (const tag of standard.tags) {
+                if (tagMap[tag]) return tagMap[tag];
+            }
+        }
+
+        // Fallback: match by category
+        const catMap = {
+            'security': 'dataProtection',
+            'authentication': 'authentication',
+            'authorization': 'authorization'
+        };
+        return catMap[standard.category] || null;
+    }
+
+    /**
+     * Convenience method: initialize standards augmentation.
+     * Call after construction when async init is possible.
+     */
+    async initializeWithStandards() {
+        await this.augmentPatternsFromStandards();
+    }
+
 }
 
 module.exports = SecurityReviewerAgent;

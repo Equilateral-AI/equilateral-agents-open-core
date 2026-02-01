@@ -1,0 +1,104 @@
+id: auth-and-access-control
+category: security
+priority: 10
+updated: 2026-02-01
+rules:
+  - action: ALWAYS
+    rule: "Check authorization on every endpoint, not just authentication"
+  - action: ALWAYS
+    rule: "Use proven libraries for crypto (never roll your own)"
+  - action: ALWAYS
+    rule: "Default deny - explicitly allow, don't explicitly deny"
+  - action: ALWAYS
+    rule: "Validate on server, never trust client-side checks"
+  - action: NEVER
+    rule: "Confuse authentication with authorization"
+  - action: NEVER
+    rule: "Trust JWT claims without server-side verification"
+anti_patterns:
+  - "Auth without authz - checking that a user is logged in but not that they can access the specific resource"
+  - "Custom crypto - implementing your own hashing or encryption instead of using bcrypt, argon2, or similar proven libraries"
+  - "Trusting client-side role checks - reading role from JWT or session without re-verifying against the database on the server"
+examples:
+  wrong_auth_without_authz: |
+    // Bad: Checks if user is logged in, not if they can access this resource
+    app.get('/api/orders/:orderId', requireAuth, async (req, res) => {
+        const order = await db.query(
+            'SELECT * FROM orders WHERE id = ?',
+            [req.params.orderId]
+        );
+        res.json(order); // Anyone logged in can see any order!
+    });
+
+    // Bad: Custom crypto
+    function hashPassword(password) {
+        return crypto.createHash('md5').update(password).digest('hex');
+    }
+
+    // Bad: Trusting role from JWT without server-side verification
+    app.get('/api/admin/users', requireAuth, async (req, res) => {
+        if (req.user.role === 'admin') {
+            const users = await db.query('SELECT * FROM users');
+            return res.json(users);
+        }
+        res.status(403).json({ error: 'Forbidden' });
+    });
+  correct_auth_and_authz: |
+    const bcrypt = require('bcrypt');
+
+    // Good: Proper password hashing with proven library
+    async function hashPassword(password) {
+        return await bcrypt.hash(password, 12);
+    }
+
+    // Good: Resource-level authorization
+    app.get('/api/orders/:orderId', requireAuth, async (req, res) => {
+        const order = await db.query(
+            'SELECT * FROM orders WHERE id = ? AND user_id = ?',
+            [req.params.orderId, req.user.id]
+        );
+        if (!order || order.length === 0) {
+            return res.status(404).json({ error: 'Order not found' });
+        }
+        res.json(order[0]);
+    });
+
+    // Good: Role-based access control verified server-side
+    function requireRole(allowedRoles) {
+        return async (req, res, next) => {
+            const user = await db.query(
+                'SELECT role FROM users WHERE id = ?',
+                [req.user.id]
+            );
+            if (!user || !allowedRoles.includes(user[0].role)) {
+                return res.status(403).json({ error: 'Insufficient permissions' });
+            }
+            next();
+        };
+    }
+
+    app.get('/api/admin/users',
+        requireAuth,
+        requireRole(['admin', 'superadmin']),
+        async (req, res) => {
+            const users = await db.query('SELECT id, email, role FROM users');
+            res.json(users);
+        }
+    );
+context: |
+  Broken authentication and authorization are consistently in the OWASP Top 10. The most
+  common mistake is confusing authentication (who you are) with authorization (what you can
+  do). This standard was created after an incident where an API checked for a valid JWT but
+  not whether the requesting user had permission to access the specific resource. Any
+  logged-in user could access any other user's data, which was discovered when a user
+  accidentally saw someone else's payment information. The result was a privacy breach
+  affecting 15,000 users, GDPR notification requirements, $50,000 in legal and compliance
+  costs, and 3 months of security audits. Industry statistics show that 94% of applications
+  tested have at least one broken access control vulnerability. The rule is simple:
+  authenticate who they are, authorize what they can do, and do both every time.
+tags:
+  - security
+  - authentication
+  - authorization
+  - access-control
+  - jwt
