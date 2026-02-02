@@ -63,7 +63,8 @@
         "./.claude/commands/ea-full-stack-dev.md"
       ],
       "skills": [
-        "./.claude/skills/equilateral-agents"
+        "./.claude/skills/equilateral-agents",
+        "./.claude/skills/project-object"
       ]
     }
   ]

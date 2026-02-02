@@ -208,6 +208,20 @@ See [AGENT_INVENTORY.md](docs/AGENT_INVENTORY.md) for complete capabilities.
 - **Open-core**: Methodology + templates + 22 agents (teach you to fish)
 - **Commercial**: 138+ battle-tested standards + 62 agents (give you 138 fish already caught)
 
+### Session Memory & Standards Injection (Bundled Skill)
+
+The **project-object** skill is included by default, giving every agent:
+
+- **Session memory**: Decisions, patterns, corrections, and notes persist between sessions
+- **Standards injection**: YAML standards from `.standards/yaml/` are loaded and enforced automatically
+- **Cross-platform sync**: Context syncs to Cursor, Codex, Windsurf, and other AI tools
+
+Installed at `.claude/skills/project-object/` and `.agents/skills/project-object/`.
+
+Also available standalone: `npx skills add Equilateral-AI/project-object-skill`
+
+For adaptive learning (automatic correction detection, invariant promotion), see [MindMeld](https://mindmeld.dev).
+
 ### 5 Battle-Tested Workflows
 
 ```bash
