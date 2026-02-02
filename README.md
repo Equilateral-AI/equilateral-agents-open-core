@@ -210,15 +210,34 @@ See [AGENT_INVENTORY.md](docs/AGENT_INVENTORY.md) for complete capabilities.
 
 ### Session Memory & Standards Injection (Bundled Skill)
 
-The **project-object** skill is included by default, giving every agent:
+The **project-object** skill is included by default, closing the loop between standards and enforcement. Without it, YAML standards sit in a directory. With it, they're actively injected into every AI session.
+
+**How it works:**
+
+1. **On session start**: The skill reads `~/.project-object/{project}/context.md` and injects prior session context (decisions, patterns, corrections) into the agent's system prompt
+2. **Standards loading**: The `standards-loader.js` scans `.standards/yaml/*.yaml`, extracts rules by action type, and injects them as `[REQUIRE]`/`[AVOID]`/`[PREFER]` enforcement directives
+3. **During session**: Agent follows established context and enforces standards automatically
+4. **On session end**: Agent harvests new decisions, patterns, and corrections from the conversation transcript
+
+**What agents get:**
 
 - **Session memory**: Decisions, patterns, corrections, and notes persist between sessions
-- **Standards injection**: YAML standards from `.standards/yaml/` are loaded and enforced automatically
-- **Cross-platform sync**: Context syncs to Cursor, Codex, Windsurf, and other AI tools
+- **Standards injection**: YAML standards from `.standards/yaml/` loaded and enforced automatically
+- **Cross-platform sync**: Context syncs to Cursor, Codex, Windsurf, and other AI tools via `project-object sync`
 
-Installed at `.claude/skills/project-object/` and `.agents/skills/project-object/`.
+**Example injected standards** (from your `.standards/yaml/` files):
+```
+[REQUIRE] Fail fast and loud -- make failures obvious and immediate
+[REQUIRE] Use environment variables with {{resolve:ssm:param}} in SAM templates
+[AVOID] Return mock data or fallback values from production code on failure
+[AVOID] Use connection pools in Lambda -- Lambda handles one request at a time
+[PREFER] ARM64 architecture for Lambda functions (20% cost savings)
+```
 
-Also available standalone: `npx skills add Equilateral-AI/project-object-skill`
+**Files:**
+- `.agents/skills/project-object/` - Full skill (SKILL.md, scripts, references)
+- `.claude/skills/project-object` - Symlink for Claude Code auto-discovery
+- Also available standalone: `npx skills add Equilateral-AI/project-object-skill`
 
 For adaptive learning (automatic correction detection, invariant promotion), see [MindMeld](https://mindmeld.dev).
 

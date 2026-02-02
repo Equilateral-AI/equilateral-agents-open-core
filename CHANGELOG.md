@@ -5,6 +5,19 @@ All notable changes to EquilateralAgents Open Core will be documented in this fi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.1.0] - 2026-02-02
+
+### Added
+- **Bundled Project/Object Skill** - Session memory and standards injection included by default
+  - `.agents/skills/project-object/SKILL.md` - 7-section skill teaching agents session memory protocol, context harvesting, and YAML standards enforcement
+  - `scripts/standards-loader.js` - Parses `.standards/yaml/*.yaml` files, outputs `[REQUIRE]`/`[AVOID]`/`[PREFER]` enforcement directives
+  - `scripts/context-reader.sh` - Zero-dependency bash context file reader
+  - `references/` - Context format, YAML standards schema, and MindMeld learning loop docs
+  - Symlinked at `.claude/skills/project-object` for Claude Code auto-discovery
+  - Registered in `.claude-plugin/marketplace.json`
+  - Also available standalone: `npx skills add Equilateral-AI/project-object-skill`
+- **npm package now includes** `.standards/yaml/`, `.agents/skills/`, `.claude/skills/`, `.claude/commands/`, `.claude-plugin/`, and `.standards-community/` directories
+
 ## [3.0.0] - 2026-02-01
 
 ### Breaking Changes
