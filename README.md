@@ -668,6 +668,16 @@ MIT License - see [LICENSE](LICENSE)
 
 ---
 
+## GlideCoding Methodology
+
+EquilateralAgents is the open-core engine behind the [GlideCoding](https://glidecoding.com) methodology — AI-assisted development with architectural governance.
+
+- **[glidecoding.com](https://glidecoding.com)** — The methodology
+- **[glidecoding.org](https://glidecoding.org)** — Open standards library (131 YAML standards, 11 categories)
+- **[glidecoding.ai](https://glidecoding.ai)** — The platform
+
+---
+
 **Built by [Equilateral AI](https://equilateral.ai)**
 
 **Ready to start?**
