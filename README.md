@@ -11,44 +11,59 @@ Transform your AI coding assistant into a learning system that gets smarter with
 
 ---
 
-## 🆕 What's New in v2.5.0 - Standards Methodology
+## What's New in v3.1.0
 
-**Your Codebase Learns From Its Mistakes.**
+### YAML Standards Format (v3.0.0 - Breaking Change)
 
-v2.5.0 introduces complete methodology for building institutional knowledge through standards:
+All standards now use YAML format instead of markdown. This enables machine-readable standards that agents consume directly:
 
-```bash
-# Week 1: Run workflows, see what breaks
-npm run workflow:security
-npm run workflow:quality
-
-# Week 2: Document your first pain points
-cp -r .standards-local-template .standards-local
-# Create standards from real incidents using "What Happened, The Cost, The Rule"
-
-# Month 2: Knowledge harvest becomes routine
-npm run memory:stats              # See patterns in agent learning
-# Transform repeated mistakes → standards
-
-# Year 1: 30-50 standards preventing issues before they hit production
-# Your 100th standard represents 100 mistakes you'll never make again
+```yaml
+id: lambda-database-standards
+category: serverless
+priority: 10
+rules:
+  - action: ALWAYS
+    rule: "Cache single database client at module scope for warm start reuse"
+  - action: NEVER
+    rule: "Use connection pools in Lambda - Lambda handles one request at a time"
+anti_patterns:
+  - "Creating new Pool() per invocation"
+tags: [lambda, database, cost-optimization]
 ```
 
-**What's Included:**
+### StandardsLoader (v3.0.0)
 
-- 📚 **Complete Methodology** - [BUILDING_YOUR_STANDARDS.md](docs/guides/BUILDING_YOUR_STANDARDS.md), [PAIN_TO_PATTERN.md](docs/guides/PAIN_TO_PATTERN.md), [KNOWLEDGE_HARVEST.md](docs/guides/KNOWLEDGE_HARVEST.md)
-- 📝 **Example Standards** - 6 real standards with actual incident costs in `.standards-local-template/`
-- 🎯 **CLAUDE.md Template** - Tell your AI assistant to check standards before every change
-- 🔄 **Knowledge Synthesis Flywheel** - Execute → Learn → Document → Prevent → Repeat
-- 📖 **Case Studies** - [HoneyDoList.vip: 38-40 hours to production SaaS](case-studies/HONEYDOLIST_CASE_STUDY.md), [Agent Orchestration Framework](case-studies/AGENT_ORCHESTRATION_GUARDRAILS.md)
+New core utility that loads YAML standards from a three-layer directory hierarchy:
 
-**The Value:**
-- **Greenfield projects**: Start with best practices, build standards as you learn domain
-- **Brownfield codebases**: Systematically document problems, prevent repeating mistakes
-- **Growing teams**: New developers learn from team's past pain, onboard faster
-- **Compounding knowledge**: Every incident becomes institutional memory
+```javascript
+const { StandardsLoader } = require('equilateral-agents-open-core');
+const loader = new StandardsLoader({ projectRoot: process.cwd() });
 
-See [RELEASE_NOTES_v2.5.0.md](docs/releases/RELEASE_NOTES_v2.5.0.md) for complete details.
+const all = await loader.loadAll();           // All standards from all layers
+const security = await loader.loadByTags(['security']); // Filter by tag
+const rules = await loader.getRulesForAgent('SecurityReviewerAgent'); // Agent-specific
+```
+
+**Three layers (later overrides earlier):**
+1. `.standards/yaml/` - Official open standards (submodule)
+2. `.standards-community/` - Community-contributed patterns (submodule)
+3. `.standards-local/` - Your team's conventions (git-ignored)
+
+### Bundled Project/Object Skill (v3.1.0)
+
+Session memory and standards injection included by default. Closes the loop between YAML standards on disk and enforcement in every AI session:
+
+1. **On session start**: Reads `~/.project-object/{project}/context.md` and injects prior session context
+2. **Standards loading**: Scans `.standards/yaml/*.yaml`, extracts rules, injects as `[REQUIRE]`/`[AVOID]`/`[PREFER]` directives
+3. **On session end**: Harvests new decisions, patterns, and corrections from the transcript
+4. **Cross-platform sync**: Context syncs to Claude Code, Cursor, Codex, Windsurf via `project-object sync`
+
+### Migration from v2.x
+
+- Rename `.standards-local/*.md` files to `.yaml` and convert to YAML schema
+- `StandardsContributor` now generates `.yaml` output
+- Knowledge harvest reports output `.yaml` instead of `.md`
+- See [CHANGELOG.md](CHANGELOG.md) for complete migration details
 
 ---
 
@@ -190,6 +205,21 @@ See [BUILDING_YOUR_STANDARDS.md](docs/guides/BUILDING_YOUR_STANDARDS.md) for com
 
 See [AGENT_INVENTORY.md](docs/AGENT_INVENTORY.md) for complete capabilities.
 
+### StandardsLoader (Core Utility)
+
+The engine that makes YAML standards actionable. Loads standards from a three-layer hierarchy, filters by category/tags/action, and integrates directly with `BaseAgent`:
+
+```javascript
+// Every agent automatically loads relevant standards
+const agent = new SecurityScannerAgent({
+  enableStandards: true,  // Standards loaded automatically via tags
+  projectRoot: process.cwd()
+});
+// SecurityScannerAgent gets standards tagged: security, credential-scanning, vulnerability
+```
+
+**Methods:** `loadAll()`, `loadStandard(id)`, `loadByCategory()`, `loadByTags()`, `loadByAction()`, `getRulesForAgent(agentType)`
+
 ### Complete Standards Methodology
 
 **Documentation:**
@@ -204,25 +234,35 @@ See [AGENT_INVENTORY.md](docs/AGENT_INVENTORY.md) for complete capabilities.
 - Performance: Database query optimization, N+1 prevention
 - Testing: Integration tests without mocks
 
+**YAML Schema** (all standards follow this format):
+```yaml
+id: unique-identifier
+category: string
+priority: 10 | 20 | 30    # 10=critical, 20=important, 30=advisory
+rules:
+  - action: ALWAYS | NEVER | USE | PREFER | AVOID
+    rule: "descriptive text"
+anti_patterns:
+  - "pattern description"
+tags: [tag1, tag2]
+context: "explanation of why this matters"
+examples:
+  example_name: |
+    code example here
+```
+
 **The Difference:**
-- **Open-core**: Methodology + templates + 22 agents (teach you to fish)
-- **Commercial**: 138+ battle-tested standards + 62 agents (give you 138 fish already caught)
+- **Open-core**: Methodology + templates + 22 agents + StandardsLoader (teach you to fish)
+- **Commercial**: 131+ curated standards + 62 agents + intelligent injection (give you 131 fish already caught, served exactly when needed)
 
 ### Session Memory & Standards Injection (Bundled Skill)
 
 The **project-object** skill is included by default, closing the loop between standards and enforcement. Without it, YAML standards sit in a directory. With it, they're actively injected into every AI session.
 
-**How it works:**
-
-1. **On session start**: The skill reads `~/.project-object/{project}/context.md` and injects prior session context (decisions, patterns, corrections) into the agent's system prompt
-2. **Standards loading**: The `standards-loader.js` scans `.standards/yaml/*.yaml`, extracts rules by action type, and injects them as `[REQUIRE]`/`[AVOID]`/`[PREFER]` enforcement directives
-3. **During session**: Agent follows established context and enforces standards automatically
-4. **On session end**: Agent harvests new decisions, patterns, and corrections from the conversation transcript
-
 **What agents get:**
 
 - **Session memory**: Decisions, patterns, corrections, and notes persist between sessions
-- **Standards injection**: YAML standards from `.standards/yaml/` loaded and enforced automatically
+- **Standards injection**: YAML standards from `.standards/yaml/` loaded and enforced as `[REQUIRE]`/`[AVOID]`/`[PREFER]` directives
 - **Cross-platform sync**: Context syncs to Cursor, Codex, Windsurf, and other AI tools via `project-object sync`
 
 **Example injected standards** (from your `.standards/yaml/` files):
@@ -501,37 +541,51 @@ The system that makes your codebase smarter over time:
 
 ### What's Commercial
 
-⭐ **62 specialized agents** (40+ beyond open-core)
-⭐ **138+ battle-tested standards** (from years of enterprise pain)
-⭐ **GDPR/HIPAA/SOC2 compliance** (specialized domain expertise)
-⭐ **Librarian agent** (automated knowledge harvest)
-⭐ **Pattern recognition ML** (cross-enterprise learning)
-⭐ **Multi-account AWS** (Control Tower integration)
-⭐ **Advanced security** (STRIDE threat modeling, penetration testing)
-⭐ **Cost intelligence** (ML-based predictions)
+**[MindMeld](https://mindmeld.dev)** adds three intelligence layers on top of the open-core foundation:
+
+**Layer 1: Intelligent Injection**
+- Context-aware Standard Selector (injects 5-10 relevant rules per task, ~400 tokens)
+- vs StandardsLoader which dumps everything (~550K tokens) or nothing
+- Token budget management, priority weighting, conflict resolution
+
+**Layer 2: Automated Curation Pipeline**
+- Correction detection surfaces candidate patterns from every session
+- Auto-categorization, auto-enrichment, quality scoring
+- Continuous standards improvement without manual effort
+
+**Layer 3: Adaptive Learning Loop**
+- Correction detection, pattern aggregation, invariant promotion
+- Relationship geometry (per-user behavioral adaptation)
+- Two-layer invariant system (agent-level + relationship-level)
+
+**Also includes:**
+- 131+ curated YAML standards across 11 categories
+- 62 specialized agents (40+ beyond open-core)
+- GDPR/HIPAA/SOC2 compliance standards
+- Enterprise team memory and knowledge transfer
 
 **Perfect for:**
+- Teams that need 131+ standards immediately (skip 2 years of learning)
 - Enterprises with compliance requirements
-- Teams that need 138+ standards immediately (skip 2 years of learning)
-- Multi-cloud deployments
+- Teams wanting standards that get smarter over time
 - Cross-project pattern recognition
 
 ### The Difference
 
-**Open-core teaches you to fish** (methodology + tools)
+**Open-core teaches you to fish** (methodology + tools + StandardsLoader)
 
-**Commercial gives you 138 fish already caught** (battle-tested standards + automation)
+**MindMeld gives you 131 fish, serves the right one at the right time, and learns which fish you need next** (intelligent injection + automated curation + adaptive learning)
 
 ### Upgrade Path
 
 Start with open-core. Build your `.standards-local/`. Upgrade when you need:
-- Specialized compliance (GDPR, HIPAA)
-- 138+ pre-built standards (skip years of learning)
-- ML-based cost predictions
-- Automated knowledge harvest (librarian agent)
-- Cross-enterprise pattern recognition
+- Intelligent standards injection (right rules, right time, minimal tokens)
+- Automated curation (stop writing standards manually)
+- Adaptive learning (agent remembers your corrections)
+- 131+ pre-built standards (skip years of learning)
+- Enterprise team memory and knowledge transfer
 
-**Contact:** info@happyhippo.ai
+**Learn more:** [mindmeld.dev](https://mindmeld.dev)
 
 ---
 
@@ -586,8 +640,8 @@ See [SECURITY.md](SECURITY.md) for complete guidelines.
 - [Protocols](equilateral-core/protocols/README.md) - MCP, A2A, WebSockets
 
 **Release Notes:**
-- [v2.5.0 Release Notes](docs/releases/RELEASE_NOTES_v2.5.0.md) - Standards methodology
-- [All Releases](docs/releases/) - Version history
+- [CHANGELOG.md](CHANGELOG.md) - Complete version history (v1.0.2 → v3.1.0)
+- [All Releases](docs/releases/) - Detailed release notes
 
 ---
 
@@ -595,7 +649,7 @@ See [SECURITY.md](SECURITY.md) for complete guidelines.
 
 MIT License - see [LICENSE](LICENSE)
 
-**Trademarks:** EquilateralAgents™ and Equilateral AI™ are trademarks of HappyHippo.ai
+**Trademarks:** EquilateralAgents™ and Equilateral AI™ are trademarks of Pareidolia LLC (dba Equilateral AI)
 
 ---
 
@@ -614,7 +668,7 @@ MIT License - see [LICENSE](LICENSE)
 
 ---
 
-**Built by [HappyHippo.ai](https://happyhippo.ai)**
+**Built by [Equilateral AI](https://equilateral.ai)**
 
 **Ready to start?**
 

@@ -61,8 +61,8 @@ module.exports = {
 if (require.main === module) {
     console.log(`
 ╔═══════════════════════════════════════════╗
-║   EquilateralAgents™ Open Core v1.0.0    ║
-║   Simple Agent Orchestration Framework   ║
+║   EquilateralAgents™ Open Core v${require('./package.json').version}    ║
+║   Self-Learning Agent Orchestration      ║
 ╚═══════════════════════════════════════════╝
 
 Quick Start:
