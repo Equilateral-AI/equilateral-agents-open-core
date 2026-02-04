@@ -253,7 +253,7 @@ examples:
 
 **The Difference:**
 - **Open-core**: Methodology + templates + 22 agents + StandardsLoader (teach you to fish)
-- **Commercial**: 131+ curated standards + 62 agents + intelligent injection (give you 131 fish already caught, served exactly when needed)
+- **Commercial**: 174 curated standards + 62 agents + intelligent injection (give you 174 fish already caught, served exactly when needed)
 
 ### Session Memory & Standards Injection (Bundled Skill)
 
@@ -559,13 +559,13 @@ The system that makes your codebase smarter over time:
 - Two-layer invariant system (agent-level + relationship-level)
 
 **Also includes:**
-- 131+ curated YAML standards across 11 categories
+- 174 curated YAML standards across 11 categories
 - 62 specialized agents (40+ beyond open-core)
 - GDPR/HIPAA/SOC2 compliance standards
 - Enterprise team memory and knowledge transfer
 
 **Perfect for:**
-- Teams that need 131+ standards immediately (skip 2 years of learning)
+- Teams that need 174 standards immediately (skip 2 years of learning)
 - Enterprises with compliance requirements
 - Teams wanting standards that get smarter over time
 - Cross-project pattern recognition
@@ -574,7 +574,7 @@ The system that makes your codebase smarter over time:
 
 **Open-core teaches you to fish** (methodology + tools + StandardsLoader)
 
-**MindMeld gives you 131 fish, serves the right one at the right time, and learns which fish you need next** (intelligent injection + automated curation + adaptive learning)
+**MindMeld gives you 174 fish, serves the right one at the right time, and learns which fish you need next** (intelligent injection + automated curation + adaptive learning)
 
 ### Upgrade Path
 
@@ -582,7 +582,7 @@ Start with open-core. Build your `.standards-local/`. Upgrade when you need:
 - Intelligent standards injection (right rules, right time, minimal tokens)
 - Automated curation (stop writing standards manually)
 - Adaptive learning (agent remembers your corrections)
-- 131+ pre-built standards (skip years of learning)
+- 174 pre-built standards (skip years of learning)
 - Enterprise team memory and knowledge transfer
 
 **Learn more:** [mindmeld.dev](https://mindmeld.dev)
@@ -673,7 +673,7 @@ MIT License - see [LICENSE](LICENSE)
 EquilateralAgents is the open-core engine behind the [GlideCoding](https://glidecoding.com) methodology — AI-assisted development with architectural governance.
 
 - **[glidecoding.com](https://glidecoding.com)** — The methodology
-- **[glidecoding.org](https://glidecoding.org)** — Open standards library (131 YAML standards, 11 categories)
+- **[glidecoding.org](https://glidecoding.org)** — Open standards library (67 YAML standards, 808+ rules)
 - **[glidecoding.ai](https://glidecoding.ai)** — The platform
 
 ---
