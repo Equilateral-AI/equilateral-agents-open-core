@@ -175,7 +175,7 @@ class TemplateValidationAgent {
             // Check required mapping fields
             const requiredFields = ['source_field', 'target_field', 'required', 'confidence_score', 'description'];
             requiredFields.forEach(field => {
-                if (!mapping.hasOwnProperty(field)) {
+                if (!Object.prototype.hasOwnProperty.call(mapping, field)) {
                     results.issues.push(`Mapping ${index}: missing ${field}`);
                 }
             });
@@ -377,7 +377,7 @@ class TemplateValidationAgent {
         errorHandlers.forEach((handler, index) => {
             const requiredFields = ['error_code', 'error_type', 'action', 'retry_count', 'description'];
             requiredFields.forEach(field => {
-                if (!handler.hasOwnProperty(field)) {
+                if (!Object.prototype.hasOwnProperty.call(handler, field)) {
                     results.issues.push(`Error handler ${index}: missing ${field}`);
                 }
             });
@@ -435,7 +435,7 @@ class TemplateValidationAgent {
         workflow.forEach((step, index) => {
             const requiredFields = ['step', 'name', 'description', 'handler', 'dependencies'];
             requiredFields.forEach(field => {
-                if (!step.hasOwnProperty(field)) {
+                if (!Object.prototype.hasOwnProperty.call(step, field)) {
                     results.issues.push(`Workflow step ${index + 1}: missing ${field}`);
                 }
             });

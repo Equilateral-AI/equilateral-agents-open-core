@@ -378,81 +378,53 @@ class FrontendAuditorAgent {
     }
 
     // Placeholder methods for more complex auditing (would be implemented based on specific needs)
-    async findRBACFiles(targetDir) { return []; }async auditRBACFile(...args) {
-        try {
-            console.log(`🔧 Executing operation: ${methodName}`);
-            
-            const result = {
-                method: 'auditRBACFile',
-                arguments: args,
-                timestamp: new Date().toISOString(),
-                success: true
-            };
-            
-            console.log(`✅ Operation completed: ${methodName}`);
-            return result;
-            
-        } catch (error) {
-            console.error(`❌ Operation failed: ${methodName}`, error);
-            throw error;
-        }
+    async findRBACFiles(targetDir) { return []; }
+    async auditRBACFile(...args) {
+        const result = {
+            method: 'auditRBACFile',
+            arguments: args,
+            timestamp: new Date().toISOString(),
+            success: true
+        };
+        console.log(`Executing operation: ${result.method}`);
+        console.log(`Operation completed: ${result.method}`);
+        return result;
     }
-    async findErrorStateComponents(targetDir) { return []; }async auditErrorStateComponent(...args) {
-        try {
-            console.log(`🔧 Executing operation: ${methodName}`);
-            
-            const result = {
-                method: 'auditErrorStateComponent',
-                arguments: args,
-                timestamp: new Date().toISOString(),
-                success: true
-            };
-            
-            console.log(`✅ Operation completed: ${methodName}`);
-            return result;
-            
-        } catch (error) {
-            console.error(`❌ Operation failed: ${methodName}`, error);
-            throw error;
-        }
+    async findErrorStateComponents(targetDir) { return []; }
+    async auditErrorStateComponent(...args) {
+        const result = {
+            method: 'auditErrorStateComponent',
+            arguments: args,
+            timestamp: new Date().toISOString(),
+            success: true
+        };
+        console.log(`Executing operation: ${result.method}`);
+        console.log(`Operation completed: ${result.method}`);
+        return result;
     }
-    async findAllComponents(targetDir) { return []; }async auditComponentAccessibility(...args) {
-        try {
-            console.log(`🔧 Executing operation: ${methodName}`);
-            
-            const result = {
-                method: 'auditComponentAccessibility',
-                arguments: args,
-                timestamp: new Date().toISOString(),
-                success: true
-            };
-            
-            console.log(`✅ Operation completed: ${methodName}`);
-            return result;
-            
-        } catch (error) {
-            console.error(`❌ Operation failed: ${methodName}`, error);
-            throw error;
-        }
+    async findAllComponents(targetDir) { return []; }
+    async auditComponentAccessibility(...args) {
+        const result = {
+            method: 'auditComponentAccessibility',
+            arguments: args,
+            timestamp: new Date().toISOString(),
+            success: true
+        };
+        console.log(`Executing operation: ${result.method}`);
+        console.log(`Operation completed: ${result.method}`);
+        return result;
     }
-    async findPerformanceSensitiveComponents(targetDir) { return []; }async auditComponentPerformance(...args) {
-        try {
-            console.log(`🔧 Executing operation: ${methodName}`);
-            
-            const result = {
-                method: 'auditComponentPerformance',
-                arguments: args,
-                timestamp: new Date().toISOString(),
-                success: true
-            };
-            
-            console.log(`✅ Operation completed: ${methodName}`);
-            return result;
-            
-        } catch (error) {
-            console.error(`❌ Operation failed: ${methodName}`, error);
-            throw error;
-        }
+    async findPerformanceSensitiveComponents(targetDir) { return []; }
+    async auditComponentPerformance(...args) {
+        const result = {
+            method: 'auditComponentPerformance',
+            arguments: args,
+            timestamp: new Date().toISOString(),
+            success: true
+        };
+        console.log(`Executing operation: ${result.method}`);
+        console.log(`Operation completed: ${result.method}`);
+        return result;
     }
 }
 

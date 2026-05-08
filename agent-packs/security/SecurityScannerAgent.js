@@ -94,7 +94,7 @@ class SecurityScannerAgent extends BaseAgent {
         this.secretsPatterns.set('aws_secret_key', /[A-Za-z0-9/+=]{40}/g);
         this.secretsPatterns.set('github_token', /gh[ps]_[A-Za-z0-9]{36}/g);
         this.secretsPatterns.set('slack_token', /xox[baprs]-[A-Za-z0-9-]+/g);
-        this.secretsPatterns.set('generic_api_key', /[Aa][Pp][Ii][Kk][Ee][Yy].*['\"][A-Za-z0-9]{16,}['\"]]/g);
+        this.secretsPatterns.set('generic_api_key', /[Aa][Pp][Ii][Kk][Ee][Yy].*['"][A-Za-z0-9]{16,}['"]]/g);
     }
 
     /**

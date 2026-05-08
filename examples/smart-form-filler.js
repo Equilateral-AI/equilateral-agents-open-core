@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* global document */
 
 /**
  * Smart Form Filler Demo - Example

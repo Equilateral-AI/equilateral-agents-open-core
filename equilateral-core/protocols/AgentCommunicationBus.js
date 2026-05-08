@@ -510,10 +510,11 @@ class AgentCommunicationBus extends EventEmitter {
                     .map(item => item.agentId);
                     
             case 'round_robin':
-            default:
+            default: {
                 // Simple round-robin based on current time
                 const index = Date.now() % agents.length;
                 return [agents[index]];
+            }
         }
     }
 

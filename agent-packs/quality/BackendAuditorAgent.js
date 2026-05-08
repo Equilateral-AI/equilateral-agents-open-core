@@ -255,23 +255,19 @@ class BackendAuditorAgent {
 
     // Helper methods for file analysis
     async findHandlerFiles(dir) {
-        try {
-            const files = await fs.readdir(dir);
-            const handlerFiles = [];
-            
-            for (const file of files) {
-                const filePath = path.join(dir, file);
-                const stat = await fs.stat(filePath);
-                
-                if (stat.isFile() && this.isActualHandler(file)) {
-                    handlerFiles.push(filePath);
-                }
+        const files = await fs.readdir(dir);
+        const handlerFiles = [];
+
+        for (const file of files) {
+            const filePath = path.join(dir, file);
+            const stat = await fs.stat(filePath);
+
+            if (stat.isFile() && this.isActualHandler(file)) {
+                handlerFiles.push(filePath);
             }
-            
-            return handlerFiles;
-        } catch (error) {
-            throw error;
         }
+
+        return handlerFiles;
     }
 
     isActualHandler(filename) {
