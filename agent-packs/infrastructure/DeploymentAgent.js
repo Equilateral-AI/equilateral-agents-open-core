@@ -355,11 +355,11 @@ class DeploymentAgent extends BaseAgent {
      * Basic rollback functionality
      */
     async rollbackDeployment(taskData) {
-        const { stackName, targetVersion } = taskData;
+        const { stackName } = taskData;
 
         try {
             // Get stack events to find previous version
-            const events = await this.cloudformation.describeStackEvents({
+            const _events = await this.cloudformation.describeStackEvents({
                 StackName: stackName
             }).promise();
 
@@ -414,7 +414,7 @@ class DeploymentAgent extends BaseAgent {
                         default:
                             healthStatus = resource.ResourceStatus === 'CREATE_COMPLETE' ? 'healthy' : 'unhealthy';
                     }
-                } catch (err) {
+                } catch (_err) {
                     healthStatus = 'error';
                 }
 
@@ -451,7 +451,7 @@ class DeploymentAgent extends BaseAgent {
         try {
             await this.cloudformation.describeStacks({ StackName: stackName }).promise();
             return true;
-        } catch (error) {
+        } catch (_error) {
             return false;
         }
     }
@@ -527,7 +527,7 @@ class DeploymentAgent extends BaseAgent {
         try {
             const result = await this.lambda.getFunction({ FunctionName: functionName }).promise();
             return result.Configuration.State === 'Active' ? 'healthy' : 'unhealthy';
-        } catch (error) {
+        } catch (_error) {
             return 'error';
         }
     }
@@ -536,7 +536,7 @@ class DeploymentAgent extends BaseAgent {
         try {
             await this.s3.headBucket({ Bucket: bucketName }).promise();
             return 'healthy';
-        } catch (error) {
+        } catch (_error) {
             return 'error';
         }
     }

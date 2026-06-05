@@ -294,7 +294,7 @@ class SecurityScannerAgent extends BaseAgent {
                         });
                     }
                 }
-            } catch (err) {
+            } catch (_err) {
                 // package.json not found or invalid
             }
 
@@ -309,7 +309,7 @@ class SecurityScannerAgent extends BaseAgent {
                     file: 'requirements.txt',
                     upgrade_available: true
                 });
-            } catch (err) {
+            } catch (_err) {
                 // requirements.txt not found
             }
 

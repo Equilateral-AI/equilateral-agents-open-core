@@ -103,11 +103,9 @@ class ComplianceCheckAgent extends BaseAgent {
      * Perform comprehensive compliance scan
      */
     async performComplianceScan(taskData) {
-        const { 
-            projectPath, 
-            frameworks = ['gdpr', 'sox'], 
-            severity = 'medium',
-            includeRecommendations = true 
+        const {
+            projectPath,
+            frameworks = ['gdpr', 'sox']
         } = taskData;
 
         try {
@@ -230,7 +228,7 @@ class ComplianceCheckAgent extends BaseAgent {
                     await fs.access(path.join(projectPath, file));
                     privacyFound = true;
                     break;
-                } catch (err) {
+                } catch (_err) {
                     // File doesn't exist
                 }
             }
@@ -257,7 +255,7 @@ class ComplianceCheckAgent extends BaseAgent {
                         recommendation: 'Implement GDPR-compliant cookie consent'
                     });
                 }
-            } catch (err) {
+            } catch (_err) {
                 // Package.json not found or invalid
             }
 
@@ -290,7 +288,7 @@ class ComplianceCheckAgent extends BaseAgent {
                     await fs.access(path.join(projectPath, file));
                     auditFound = true;
                     break;
-                } catch (err) {
+                } catch (_err) {
                     // File doesn't exist
                 }
             }
@@ -313,7 +311,7 @@ class ComplianceCheckAgent extends BaseAgent {
                     await fs.access(path.join(projectPath, file));
                     changeManagementFound = true;
                     break;
-                } catch (err) {
+                } catch (_err) {
                     // File doesn't exist
                 }
             }
@@ -358,7 +356,7 @@ class ComplianceCheckAgent extends BaseAgent {
                         encryptionConfigFound = true;
                         break;
                     }
-                } catch (err) {
+                } catch (_err) {
                     // File doesn't exist or can't be read
                 }
             }
@@ -381,7 +379,7 @@ class ComplianceCheckAgent extends BaseAgent {
                     await fs.access(path.join(projectPath, file));
                     authFound = true;
                     break;
-                } catch (err) {
+                } catch (_err) {
                     // File doesn't exist
                 }
             }
@@ -424,7 +422,7 @@ class ComplianceCheckAgent extends BaseAgent {
                     await fs.access(path.join(projectPath, file));
                     paymentHandlingFound = true;
                     break;
-                } catch (err) {
+                } catch (_err) {
                     // File doesn't exist
                 }
             }
@@ -447,7 +445,7 @@ class ComplianceCheckAgent extends BaseAgent {
                         await fs.access(path.join(projectPath, file));
                         securityFound = true;
                         break;
-                    } catch (err) {
+                    } catch (_err) {
                         // File doesn't exist
                     }
                 }

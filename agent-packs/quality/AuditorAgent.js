@@ -373,7 +373,7 @@ class AuditorAgent {
                         file: helperFile,
                         message: `Required helper ${helperFile} is present`
                     });
-                } catch (error) {
+                } catch (_error) {
                     results.violations.push({
                         rule: 'all_required_helpers_included',
                         file: helperFile,
@@ -570,7 +570,7 @@ class AuditorAgent {
                     files.push(fullPath);
                 }
             }
-        } catch (error) {
+        } catch (_error) {
             // Directory not accessible
         }
         
@@ -624,7 +624,7 @@ class AuditorAgent {
                     files.push(fullPath);
                 }
             }
-        } catch (error) {
+        } catch (_error) {
             // Directory not accessible
         }
         
@@ -648,7 +648,7 @@ class AuditorAgent {
                     message: 'Context follows proper provider pattern'
                 });
             }
-        } catch (error) {
+        } catch (_error) {
             // File not readable
         }
     }
@@ -665,7 +665,7 @@ class AuditorAgent {
                     message: 'Component uses Flowbite React'
                 });
             }
-        } catch (error) {
+        } catch (_error) {
             // File not readable
         }
     }

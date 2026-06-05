@@ -31,12 +31,6 @@
 
 const AgentOrchestrator = require('./equilateral-core/AgentOrchestrator');
 const CodeAnalyzerAgent = require('./agent-packs/development/CodeAnalyzerAgent');
-const TestOrchestrationAgent = require('./agent-packs/development/TestOrchestrationAgent');
-const DeploymentValidationAgent = require('./agent-packs/development/DeploymentValidationAgent');
-const SecurityScannerAgent = require('./agent-packs/security/SecurityScannerAgent');
-const ComplianceCheckAgent = require('./agent-packs/security/ComplianceCheckAgent');
-const ResourceOptimizationAgent = require('./agent-packs/infrastructure/ResourceOptimizationAgent');
-const DeploymentAgent = require('./agent-packs/infrastructure/DeploymentAgent');
 const chalk = require('chalk');
 
 // Track demo metrics for engagement

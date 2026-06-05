@@ -4,7 +4,6 @@
 const fs = require('fs').promises;
 const path = require('path');
 const AgentConfiguration = require('../config/AgentConfiguration');
-const ModelConfiguration = require('../config/ModelConfiguration');
 const { ModelAwareAgent } = require('../config/ModelIntegrationExample');
 
 class SecurityReviewerAgent extends ModelAwareAgent {
@@ -392,7 +391,7 @@ class SecurityReviewerAgent extends ModelAwareAgent {
                         metrics.userCount = 'development';
                     }
                     
-                } catch (error) {
+                } catch (_error) {
                     // Template file might not exist
                 }
             }
@@ -407,7 +406,7 @@ class SecurityReviewerAgent extends ModelAwareAgent {
                 if (handlerCount > 100) {
                     metrics.monthlyInfrastructureCost += Math.min(handlerCount * 0.1, 20);
                 }
-            } catch (error) {
+            } catch (_error) {
                 // Handlers directory might not exist
             }
 
@@ -425,7 +424,7 @@ class SecurityReviewerAgent extends ModelAwareAgent {
                     const projectPath = path.join(projectPath, '..', project);
                     await fs.access(projectPath);
                     detectedProjects++;
-                } catch (error) {
+                } catch (_error) {
                     // Project doesn't exist
                 }
             }
@@ -435,7 +434,7 @@ class SecurityReviewerAgent extends ModelAwareAgent {
                 metrics.monthlyInfrastructureCost += Math.min(detectedProjects * 10, 30);
             }
 
-        } catch (error) {
+        } catch (_error) {
             // Use defaults if analysis fails
         }
 
@@ -457,7 +456,7 @@ class SecurityReviewerAgent extends ModelAwareAgent {
                     count++;
                 }
             }
-        } catch (error) {
+        } catch (_error) {
             // Directory might not exist
         }
         
@@ -572,7 +571,7 @@ class SecurityReviewerAgent extends ModelAwareAgent {
                             recommendation: 'Replace with secure logging using secureLogger helper'
                         });
                     }
-                } catch (error) {
+                } catch (_error) {
                     // File doesn't exist, which might be expected
                 }
             }
@@ -840,7 +839,7 @@ class SecurityReviewerAgent extends ModelAwareAgent {
         };
 
         const config = depthConfigs[depth] || depthConfigs.standard;
-        const effectiveBudget = budget || config.maxCost;
+        const _effectiveBudget = budget || config.maxCost;
         
         return this.selectSecurityAnalysisModel(config.analysisType, 'confidential');
     }
@@ -1040,7 +1039,7 @@ class SecurityReviewerAgent extends ModelAwareAgent {
                         content: content.length > 2000 ? content.substring(0, 2000) + '...' : content,
                         size: content.length
                     });
-                } catch (error) {
+                } catch (_error) {
                     // File doesn't exist, skip
                 }
             }
@@ -1200,7 +1199,7 @@ Prioritize findings that could lead to data breaches or system compromise.
         try {
             // Enhanced risk scoring with AI-inspired logic
             const aiFindings = findings.filter(f => f.source === 'ai_analysis');
-            const traditionalFindings = findings.filter(f => f.source !== 'ai_analysis');
+            const _traditionalFindings = findings.filter(f => f.source !== 'ai_analysis');
             
             const criticalCount = findings.filter(f => f.severity === 'critical').length;
             const highCount = findings.filter(f => f.severity === 'high').length;
@@ -1434,7 +1433,7 @@ Prioritize findings that could lead to data breaches or system compromise.
                     }
                 }
                 
-            } catch (error) {
+            } catch (_error) {
                 // Skip unreadable files
             }
         }
@@ -1479,7 +1478,7 @@ Prioritize findings that could lead to data breaches or system compromise.
                     });
                 }
                 
-            } catch (error) {
+            } catch (_error) {
                 // Skip unreadable files
             }
         }
@@ -1843,7 +1842,7 @@ Prioritize findings that could lead to data breaches or system compromise.
                     files.push(fullPath);
                 }
             }
-        } catch (error) {
+        } catch (_error) {
             // Directory might not exist or be accessible
         }
         
@@ -1867,7 +1866,7 @@ Prioritize findings that could lead to data breaches or system compromise.
                     recommendation: 'Use specific domain origins for production'
                 });
             }
-        } catch (error) {
+        } catch (_error) {
             findings.push({
                 type: 'cors_config_missing',
                 severity: 'high',
@@ -1895,7 +1894,7 @@ Prioritize findings that could lead to data breaches or system compromise.
                     recommendation: 'Enforce TLS 1.2 or higher'
                 });
             }
-        } catch (error) {
+        } catch (_error) {
             findings.push({
                 type: 'ssl_validator_missing',
                 severity: 'high',
@@ -1987,7 +1986,7 @@ Prioritize findings that could lead to data breaches or system compromise.
                     });
                 }
                 
-            } catch (error) {
+            } catch (_error) {
                 // Skip files that can't be read
             }
         }
@@ -2025,7 +2024,7 @@ Prioritize findings that could lead to data breaches or system compromise.
                     });
                 }
                 
-            } catch (error) {
+            } catch (_error) {
                 // Skip files that can't be read
             }
         }
@@ -2074,7 +2073,7 @@ Prioritize findings that could lead to data breaches or system compromise.
                     });
                 }
                 
-            } catch (error) {
+            } catch (_error) {
                 // Skip files that can't be read
             }
         }
@@ -2123,7 +2122,7 @@ Prioritize findings that could lead to data breaches or system compromise.
                     });
                 }
                 
-            } catch (error) {
+            } catch (_error) {
                 // Skip files that can't be read
             }
         }

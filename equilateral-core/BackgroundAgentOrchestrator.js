@@ -420,7 +420,7 @@ class BackgroundAgentOrchestrator extends AgentOrchestrator {
         
         try {
             await fs.access(workerScript);
-        } catch (error) {
+        } catch (_error) {
             // Create worker directory and script
             await fs.mkdir(workerDir, { recursive: true });
             await this.createWorkerScript(workerScript);

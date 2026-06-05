@@ -114,7 +114,7 @@ class AITestOrchestrationAgent extends TestOrchestrationAgent {
     }
 
     async generateFixSuggestions(testResults) {
-        const prompt = `
+        const _prompt = `
         Test failures detected:
         ${JSON.stringify(testResults.failures, null, 2)}
 

@@ -50,7 +50,7 @@ class SQLiteAdapter extends DatabaseAdapter {
             let Database;
             try {
                 Database = require('better-sqlite3');
-            } catch (error) {
+            } catch (_error) {
                 console.warn('⚠️  better-sqlite3 not installed. Using in-memory fallback.');
                 console.warn('   Install with: npm install better-sqlite3');
                 console.warn('   Using simple JSON file storage instead.');
@@ -171,7 +171,7 @@ class SQLiteAdapter extends DatabaseAdapter {
         try {
             const data = fs.readFileSync(file, 'utf8');
             return JSON.parse(data);
-        } catch (error) {
+        } catch (_error) {
             return [];
         }
     }

@@ -141,7 +141,7 @@ class UIUXSpecialistAgent {
                 const content = await fs.readFile(filePath, 'utf8');
                 const analysis = this.analyzeComponentFile(content, filePath);
                 components.push(analysis);
-            } catch (error) {
+            } catch (_error) {
                 console.warn(`Could not analyze component: ${filePath}`);
             }
         }
@@ -424,7 +424,7 @@ class UIUXSpecialistAgent {
             try {
                 const files = await this.findFilesRecursive(searchPath, /\.(tsx|jsx)$/);
                 componentFiles.push(...files);
-            } catch (error) {
+            } catch (_error) {
                 // Directory might not exist
             }
         }
@@ -448,7 +448,7 @@ class UIUXSpecialistAgent {
                     files.push(fullPath);
                 }
             }
-        } catch (error) {
+        } catch (_error) {
             // Directory not accessible
         }
         

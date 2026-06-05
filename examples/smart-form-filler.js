@@ -239,7 +239,7 @@ class SmartFormAgent extends BaseAgent {
                     await button.click();
                     return;
                 }
-            } catch (e) {
+            } catch (_e) {
                 // Try next strategy
             }
         }
@@ -261,7 +261,7 @@ class SmartFormAgent extends BaseAgent {
             try {
                 await this.page.waitForSelector(indicator, { timeout: 3000 });
                 return true;
-            } catch (e) {
+            } catch (_e) {
                 // Try next indicator
             }
         }

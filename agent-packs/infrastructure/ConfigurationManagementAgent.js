@@ -157,7 +157,7 @@ class ConfigurationManagementAgent extends EventEmitter {
         }
 
         // Load environment-specific configurations
-        for (const [envName, envConfig] of Object.entries(this.accountConfigs)) {
+        for (const [envName, _envConfig] of Object.entries(this.accountConfigs)) {
             try {
                 const envSpecificConfig = await this.loadEnvironmentSpecificConfiguration(envName);
                 configLoading.environment_configs_loaded[envName] = true;
@@ -395,7 +395,7 @@ class ConfigurationManagementAgent extends EventEmitter {
     }
 
     async loadEnvironmentConfigurations() {
-        for (const [envName, envConfig] of Object.entries(this.accountConfigs)) {
+        for (const [envName, _envConfig] of Object.entries(this.accountConfigs)) {
             // Load environment-specific configuration files
             const envConfigPaths = [
                 path.join(this.config.projectRoot, `.env.${envName}`),
@@ -408,7 +408,7 @@ class ConfigurationManagementAgent extends EventEmitter {
                     await fs.access(configPath);
                     // Configuration file exists, load it
                     break;
-                } catch (error) {
+                } catch (_error) {
                     // File doesn't exist, continue
                 }
             }

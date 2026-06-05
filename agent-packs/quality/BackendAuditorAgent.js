@@ -27,12 +27,6 @@ const createSuccessResponse = (data, message, metadata) => ({
     metadata
 });
 
-const createErrorResponse = (message, code) => ({
-    success: false,
-    message,
-    error_code: code
-});
-
 class BackendAuditorAgent {
     constructor() {
         this.auditCategories = {
@@ -224,7 +218,7 @@ class BackendAuditorAgent {
                 await fs.access(dbPath);
                 await this.auditDatabaseFile(dbPath, results);
                 break;
-            } catch (error) {
+            } catch (_error) {
                 // File doesn't exist, continue to next path
                 continue;
             }
@@ -246,7 +240,7 @@ class BackendAuditorAgent {
                 await fs.access(errorPath);
                 await this.auditErrorHandlerFile(errorPath, results);
                 break;
-            } catch (error) {
+            } catch (_error) {
                 // File doesn't exist, continue to next path
                 continue;
             }
@@ -294,7 +288,7 @@ class BackendAuditorAgent {
                     files.push(itemPath);
                 }
             }
-        } catch (error) {
+        } catch (_error) {
             // Directory doesn't exist or permission denied
         }
         

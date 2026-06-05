@@ -28,12 +28,6 @@ const createSuccessResponse = (data, message, metadata) => ({
     metadata
 });
 
-const createErrorResponse = (message, code) => ({
-    success: false,
-    message,
-    error_code: code
-});
-
 class FrontendAuditorAgent {
     constructor() {
         this.auditCategories = {
@@ -202,7 +196,7 @@ class FrontendAuditorAgent {
                 if (componentFiles.length > 0) {
                     break; // Found components, no need to check other paths
                 }
-            } catch (error) {
+            } catch (_error) {
                 // Path doesn't exist, continue to next path
                 continue;
             }
@@ -230,7 +224,7 @@ class FrontendAuditorAgent {
                 if (contextFiles.length > 0) {
                     break;
                 }
-            } catch (error) {
+            } catch (_error) {
                 continue;
             }
         }
@@ -299,7 +293,7 @@ class FrontendAuditorAgent {
                     files.push(itemPath);
                 }
             }
-        } catch (error) {
+        } catch (_error) {
             // Directory doesn't exist
         }
         

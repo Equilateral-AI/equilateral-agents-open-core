@@ -189,7 +189,6 @@ class TestAgent {
      * Analyze changes in component structure
      */
     async analyzeComponentChanges(previousMappings, newComponentStructure) {
-        const changes = [];
         const addedElements = [];
         const removedElements = [];
         const modifiedElements = [];

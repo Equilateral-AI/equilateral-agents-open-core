@@ -10,7 +10,6 @@
 
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
 
 class AgentFactoryAgent {
   constructor() {
@@ -81,8 +80,7 @@ class AgentFactoryAgent {
       description,
       businessLogic,
       queryParams = [],
-      bodyParams = [],
-      responseType
+      bodyParams = []
     } = config;
 
     // Use method-specific parameter patterns from backend_handler_standards.md
@@ -161,9 +159,7 @@ exports.handler = wrapHandler(${handlerName});
       description,
       domain,
       database,
-      api,
-      frontend,
-      tests
+      api
     } = config;
 
     console.log(`🚀 Generating complete feature: ${featureName}`);

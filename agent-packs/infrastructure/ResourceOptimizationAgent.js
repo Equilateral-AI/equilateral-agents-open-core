@@ -293,7 +293,7 @@ class ResourceOptimizationAgent extends BaseAgent {
      * Cost optimization analysis
      */
     async optimizeCosts(taskData) {
-        const { timeRange = '30d', includeForecast = false } = taskData;
+        const { timeRange = '30d' } = taskData;
         
         if (!this.costexplorer) {
             return this.getAWSCredentialsError();
@@ -417,7 +417,7 @@ class ResourceOptimizationAgent extends BaseAgent {
      * Generate optimization recommendations
      */
     async generateRecommendations(taskData) {
-        const { priority = 'cost', includeAutomation = false } = taskData;
+        const { includeAutomation = false } = taskData;
         
         const recommendations = [];
 

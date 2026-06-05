@@ -150,7 +150,7 @@ class TestOrchestrationAgent extends BaseAgent {
      * Basic coverage analysis
      */
     async analyzeCoverage(taskData) {
-        const { projectPath, coverageFile } = taskData;
+        const { projectPath } = taskData;
 
         try {
             let coverage = { lines: 0, functions: 0, branches: 0, statements: 0 };
@@ -238,7 +238,7 @@ class TestOrchestrationAgent extends BaseAgent {
                 if (deps.jest) return 'jest';
                 if (deps.mocha) return 'mocha';
                 if (deps['@testing-library/jest-dom']) return 'jest';
-            } catch (err) {
+            } catch (_err) {
                 // package.json not found or invalid
             }
 
@@ -364,7 +364,7 @@ class TestOrchestrationAgent extends BaseAgent {
                 const fullPath = path.join(projectPath, file);
                 await fs.access(fullPath);
                 coverageFiles.push(fullPath);
-            } catch (err) {
+            } catch (_err) {
                 // File doesn't exist
             }
         }

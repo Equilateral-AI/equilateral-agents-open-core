@@ -8,7 +8,6 @@
 const fs = require('fs').promises;
 const path = require('path');
 const AgentConfiguration = require('../config/AgentConfiguration');
-const ModelConfiguration = require('../config/ModelConfiguration');
 const { ModelAwareAgent } = require('../config/ModelIntegrationExample');
 
 // Simple response utilities to avoid environment dependencies
@@ -1132,7 +1131,7 @@ class CodeReviewAgent extends ModelAwareAgent {
                             recommendation: 'Move database operations to service or repository layer'
                         });
                     }
-                } catch (error) {
+                } catch (_error) {
                     // Ignore file read errors for this check
                 }
             }
@@ -1166,7 +1165,7 @@ class CodeReviewAgent extends ModelAwareAgent {
                 } else {
                     return [{ path: target.path, name: path.basename(target.path) }];
                 }
-            } catch (error) {
+            } catch (_error) {
                 return [];
             }
         }
@@ -1485,7 +1484,7 @@ class CodeReviewAgent extends ModelAwareAgent {
                     lines: content.split('\\n').length,
                     size: content.length
                 });
-            } catch (error) {
+            } catch (_error) {
                 // Skip unreadable files
             }
         }
@@ -2126,7 +2125,7 @@ Focus on actionable insights that will meaningfully improve code quality, securi
                                     recommendation: 'Move shared logic to a service layer'
                                 });
                             }
-                        } catch (error) {
+                        } catch (_error) {
                             // Skip file read errors
                         }
                     }
@@ -2205,7 +2204,7 @@ Focus on actionable insights that will meaningfully improve code quality, securi
                 const exports = content.match(/module\\.exports|export\\s+/g) || [];
                 exports.forEach(exp => allExports.add(exp));
                 
-            } catch (error) {
+            } catch (_error) {
                 // Skip file read errors
             }
         });

@@ -89,7 +89,7 @@ class DeploymentValidationAgent extends BaseAgent {
      * Validate deployment readiness
      */
     async validateDeployment(taskData) {
-        const { projectPath, environment = 'staging', strict = false } = taskData;
+        const { projectPath, environment = 'staging' } = taskData;
         
         try {
             const validation = {
@@ -181,7 +181,7 @@ class DeploymentValidationAgent extends BaseAgent {
                     validation.warnings.push('No start script defined in package.json');
                 }
 
-            } catch (err) {
+            } catch (_err) {
                 validation.errors.push('package.json not found or invalid');
                 validation.checks.push({
                     name: 'package.json',
@@ -199,7 +199,7 @@ class DeploymentValidationAgent extends BaseAgent {
                     status: 'pass',
                     details: 'Dockerfile found'
                 });
-            } catch (err) {
+            } catch (_err) {
                 validation.warnings.push('No Dockerfile found - containerized deployment recommended');
                 validation.checks.push({
                     name: 'Dockerfile',
@@ -289,7 +289,7 @@ class DeploymentValidationAgent extends BaseAgent {
                         details: 'Basic secret scanning completed'
                     });
 
-                } catch (err) {
+                } catch (_err) {
                     // File doesn't exist
                     validation.checks.push({
                         name: file,
@@ -310,7 +310,7 @@ class DeploymentValidationAgent extends BaseAgent {
      * Perform comprehensive safety checks
      */
     async performSafetyChecks(taskData) {
-        const { projectPath, checkLevel = 'basic' } = taskData;
+        const { checkLevel = 'basic' } = taskData;
 
         const safetyReport = {
             check_level: checkLevel,
@@ -350,7 +350,7 @@ class DeploymentValidationAgent extends BaseAgent {
      * Validate specific configuration
      */
     async validateConfiguration(taskData) {
-        const { configFile, schema } = taskData;
+        const { configFile } = taskData;
 
         try {
             const config = JSON.parse(await fs.readFile(configFile, 'utf8'));

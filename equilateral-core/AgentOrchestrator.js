@@ -377,7 +377,7 @@ class AgentOrchestrator extends EventEmitter {
         if (workflow.status === 'running' && workflow.promise) {
             try {
                 await workflow.promise;
-            } catch (error) {
+            } catch (_error) {
                 // Error already captured in workflow object
             }
         }
