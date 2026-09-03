@@ -1,0 +1,25 @@
+name: PR Checks
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  aegis-gate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run AEGIS scan
+        uses: raknor-ai/AEGIS@main
+        with:
+          path: '.'
+          threshold: 'high'
+          framework-set: 'auto'
