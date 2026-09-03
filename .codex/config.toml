@@ -1,0 +1,4 @@
+[mcp_servers.mindmeld-witness]
+url = "https://udczcnwwd7t33utpvf2zmk7vpu0sffob.lambda-url.us-east-2.on.aws/"
+bearer_token_env_var = "MINDMELD_WITNESS_TOKEN_OPENCORE"
+required = true
