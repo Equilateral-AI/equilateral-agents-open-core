@@ -18,6 +18,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Also available standalone: `npx skills add Equilateral-AI/project-object-skill`
 - **npm package now includes** `.standards/yaml/`, `.agents/skills/`, `.claude/skills/`, `.claude/commands/`, `.claude-plugin/`, and `.standards-community/` directories
 
+## [3.0.1] - 2026-02-02
+
+### Changed
+- Updated all GitHub URLs to Equilateral-AI organization
+- Added templates to npm package distribution
+
 ## [3.0.0] - 2026-02-01
 
 ### Breaking Changes
@@ -73,6 +79,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 - Markdown template files (replaced by YAML equivalents)
+
+## [2.5.0] - 2025-11-09
+
+### Added
+- **Complete Standards Methodology** - End-to-end guide for building institutional knowledge
+  - `BUILDING_YOUR_STANDARDS.md` - Comprehensive methodology guide
+  - `PAIN_TO_PATTERN.md` - Transform incidents into standards
+  - `KNOWLEDGE_HARVEST.md` - Routine knowledge extraction
+  - 6 example standards with real incident costs in `.standards-local-template/`
+  - CLAUDE.md template for AI-enforced standards checking
+  - Knowledge synthesis flywheel: Execute, Learn, Document, Prevent, Repeat
+- **Freestyle Decision Index (FDI)** framework and clarified relationship with FI
+- **honeydolist.vip case study** - Real-world deployment documentation
+- **Agent orchestration guardrails** case study post-mortem
+
+### Changed
+- **BackendAuditorAgent** made pattern-agnostic to support all backend architectures
+- Complete README refresh with standards methodology focus
+- Replaced Tim-Combo with Equilateral Standards terminology throughout
+
+### Fixed
+- Major usability issues in open-core framework
+- marketplace.json schema validation errors
 
 ## [2.1.0] - 2025-10-25
 
@@ -165,7 +194,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Package version alignment with repository state
 
-## [2.0.1] - 2025-10-20 (GitHub only)
+## [2.0.1] - 2025-10-04
 
 ### Added
 - **MinimalMCPServer** - Lightweight Model Context Protocol server implementation
@@ -195,7 +224,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Claude Desktop configuration examples
 - Updated three-tier standards documentation
 
-## [2.0.0] - 2025-10-01
+## [2.0.0] - 2025-10-04
 
 ### Added
 - Expanded from 8 to 22 production-ready agents
@@ -211,7 +240,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Enhanced documentation with comprehensive guides
 - Improved zero-config experience
 
-## [1.0.2] - 2024-08-23
+## [1.0.2] - 2025-09-16
 
 ### Added
 - Initial public release
@@ -221,10 +250,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - SQLite persistence layer
 - MIT License
 
-[3.1.0]: https://github.com/Equilateral-AI/equilateral-agents-open-core/compare/v3.0.0...v3.1.0
-[3.0.0]: https://github.com/Equilateral-AI/equilateral-agents-open-core/compare/v2.1.0...v3.0.0
+First published to npm as v1.0.0 on 2025-09-15. Repository initial commit on 2025-09-16.
+Internal origin of the codebase: 2024-08-23.
+
+## [1.0.1] - 2025-09-15
+
+Published to npm on 2025-09-15. No separate changes are recorded in git history.
+
+## [1.0.0] - 2025-09-15
+
+### Added
+- First tagged release of EquilateralAgents Open Core
+- Reorganized codebase into agent-packs structure with 5 agents (CodeAnalyzer, TestOrchestration, DeploymentValidation, ResourceOptimization, ComplianceCheck)
+- Simplified AgentOrchestrator and BaseAgent
+- BYOL (Bring Your Own LLM) terms and setup documentation
+- Simple workflow and enterprise multi-agent workflow examples
+- Agent standardization documentation
+
+### Removed
+- DatabaseManager and AgentRegistry (replaced by simplified orchestration)
+- SQLite database schemas
+
+[3.1.0]: https://github.com/Equilateral-AI/equilateral-agents-open-core/compare/v3.0.1...v3.1.0
+[3.0.1]: https://github.com/Equilateral-AI/equilateral-agents-open-core/compare/v3.0.0...v3.0.1
+[3.0.0]: https://github.com/Equilateral-AI/equilateral-agents-open-core/compare/v2.5.0...v3.0.0
+[2.5.0]: https://github.com/Equilateral-AI/equilateral-agents-open-core/compare/v2.1.0...v2.5.0
 [2.1.0]: https://github.com/Equilateral-AI/equilateral-agents-open-core/compare/v2.0.2...v2.1.0
 [2.0.2]: https://github.com/Equilateral-AI/equilateral-agents-open-core/compare/v2.0.1...v2.0.2
 [2.0.1]: https://github.com/Equilateral-AI/equilateral-agents-open-core/compare/v2.0.0...v2.0.1
-[2.0.0]: https://github.com/Equilateral-AI/equilateral-agents-open-core/compare/v1.0.2...v2.0.0
-[1.0.2]: https://github.com/Equilateral-AI/equilateral-agents-open-core/releases/tag/v1.0.2
+[2.0.0]: https://github.com/Equilateral-AI/equilateral-agents-open-core/compare/v1.0.0...v2.0.0
+[1.0.2]: https://github.com/Equilateral-AI/equilateral-agents-open-core/releases/tag/v1.0.0
+[1.0.1]: https://github.com/Equilateral-AI/equilateral-agents-open-core/compare/v1.0.0...v1.0.1
+[1.0.0]: https://github.com/Equilateral-AI/equilateral-agents-open-core/releases/tag/v1.0.0
