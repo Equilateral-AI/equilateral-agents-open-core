@@ -18,6 +18,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Also available standalone: `npx skills add Equilateral-AI/project-object-skill`
 - **npm package now includes** `.standards/yaml/`, `.agents/skills/`, `.claude/skills/`, `.claude/commands/`, `.claude-plugin/`, and `.standards-community/` directories
 
+## [3.0.1] - 2026-02-02
+
+### Changed
+- Updated all GitHub URLs to Equilateral-AI organization
+- Added templates to npm package distribution
+
 ## [3.0.0] - 2026-02-01
 
 ### Breaking Changes
@@ -247,11 +253,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 First published to npm as v1.0.0 on 2025-09-15. Repository initial commit on 2025-09-16.
 Internal origin of the codebase: 2024-08-23.
 
-[3.1.0]: https://github.com/Equilateral-AI/equilateral-agents-open-core/compare/v3.0.0...v3.1.0
+## [1.0.1] - 2025-09-15
+
+Published to npm on 2025-09-15. No separate changes are recorded in git history.
+
+## [1.0.0] - 2025-09-15
+
+### Added
+- First tagged release of EquilateralAgents Open Core
+- Reorganized codebase into agent-packs structure with 5 agents (CodeAnalyzer, TestOrchestration, DeploymentValidation, ResourceOptimization, ComplianceCheck)
+- Simplified AgentOrchestrator and BaseAgent
+- BYOL (Bring Your Own LLM) terms and setup documentation
+- Simple workflow and enterprise multi-agent workflow examples
+- Agent standardization documentation
+
+### Removed
+- DatabaseManager and AgentRegistry (replaced by simplified orchestration)
+- SQLite database schemas
+
+[3.1.0]: https://github.com/Equilateral-AI/equilateral-agents-open-core/compare/v3.0.1...v3.1.0
+[3.0.1]: https://github.com/Equilateral-AI/equilateral-agents-open-core/compare/v3.0.0...v3.0.1
 [3.0.0]: https://github.com/Equilateral-AI/equilateral-agents-open-core/compare/v2.5.0...v3.0.0
 [2.5.0]: https://github.com/Equilateral-AI/equilateral-agents-open-core/compare/v2.1.0...v2.5.0
 [2.1.0]: https://github.com/Equilateral-AI/equilateral-agents-open-core/compare/v2.0.2...v2.1.0
 [2.0.2]: https://github.com/Equilateral-AI/equilateral-agents-open-core/compare/v2.0.1...v2.0.2
 [2.0.1]: https://github.com/Equilateral-AI/equilateral-agents-open-core/compare/v2.0.0...v2.0.1
-[2.0.0]: https://github.com/Equilateral-AI/equilateral-agents-open-core/compare/v1.0.2...v2.0.0
+[2.0.0]: https://github.com/Equilateral-AI/equilateral-agents-open-core/compare/v1.0.0...v2.0.0
 [1.0.2]: https://github.com/Equilateral-AI/equilateral-agents-open-core/releases/tag/v1.0.0
+[1.0.1]: https://github.com/Equilateral-AI/equilateral-agents-open-core/compare/v1.0.0...v1.0.1
+[1.0.0]: https://github.com/Equilateral-AI/equilateral-agents-open-core/releases/tag/v1.0.0
